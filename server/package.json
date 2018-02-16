@@ -9,7 +9,9 @@
   "author": "skanama",
   "license": "ISC",
   "dependencies": {
+    "connect-busboy": "0.0.2",
     "express": "^4.16.2",
+    "gridfs-stream": "^1.1.1",
     "mongoose": "^5.0.1"
   }
 }

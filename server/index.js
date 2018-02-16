@@ -3,7 +3,7 @@ const path = require('path');
 const config = require('./config/config');
 const app = express();
 
-var account_type = 'user'; // TODO : get this from session
+var account_type = 'enterprise'; // TODO : get this from session
 
 const account_route = require('./routes/' + account_type);
 app.use('/' + account_type, account_route);

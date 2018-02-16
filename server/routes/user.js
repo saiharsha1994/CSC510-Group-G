@@ -49,7 +49,7 @@ router.get('/history/:username', function (req, res) {
                 res.json(user.videosViewed);
             }
             else{
-                res.json(['Null']);
+                res.json([]);
             }
         }
     });
