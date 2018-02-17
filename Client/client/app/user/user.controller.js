@@ -10,7 +10,7 @@ export default class userCtrl {
     }
 
     logout() {
-        // this.loginService.logout()
+        // this.loginService.logout()  
         //TODO: delete the cookie or delete the session.
         this.state.go('home');
     }

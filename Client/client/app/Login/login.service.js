@@ -1,6 +1,6 @@
 export default class loginService {
-    constructor() {
-        // this.http = $http;
+    constructor($http) {
+        this.http = $http;
         console.log(this.http);
         this.message = 'there';
         this.signIn = {
@@ -11,7 +11,7 @@ export default class loginService {
     }
 
     doLogin(details) {
-        return this.http.post('/localhost:3000/', details).then((response) => {
+        return this.http.post('http://localhost:3000/', details).then((response) => {
             console.log(response);
         }).catch((response) => {
             console.log('catch');
@@ -20,7 +20,7 @@ export default class loginService {
     }
 
     doSignUp(details) {
-        return this.http.put('/localhost:3000/', details).then((response) => {
+        return this.http.put('http://localhost:3000/', details).then((response) => {
             console.log(response);
             // this.state.go
         }).catch((response) => {
@@ -29,3 +29,6 @@ export default class loginService {
         });
     }
 }
+
+
+loginService.$inject = ['$http'];
