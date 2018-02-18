@@ -23,7 +23,7 @@ mongoose.connect(config.dev.db, function(err){
 });
 
 connection.once("open", () => {
-
+    
 });
 
 router.get('/', function(req, res){
@@ -40,6 +40,15 @@ router.post('/profile', function(req, res){
 
 router.get('/stats', function(req, res){
     res.send('Statistics of videos uploaded till now');
+});
+
+router.get('/fetch/:id', function (req, res) {
+    gfs = Grid(connection.db);
+    console.log(req.params.id);
+        var readstream = gfs.createReadStream({
+              filename: req.params.id
+        });
+        readstream.pipe(res); 
 });
 
 module.exports = router;

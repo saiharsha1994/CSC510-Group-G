@@ -7,7 +7,7 @@ export default class userCtrl {
     $onInit() {
         this.config = {
             sources: [
-                {src: this.$sce.trustAsResourceUrl('http://static.videogular.com/assets/videos/videogular.mp4'), type: 'video/mp4'}
+                {src: this.$sce.trustAsResourceUrl('http://localhost:3000/enterprise/fetch/SampleVideo_1280x720_10mb.mp4'), type: 'video/mp4'}
             ],
             tracks: [
                 {
