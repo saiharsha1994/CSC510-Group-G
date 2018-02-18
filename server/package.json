@@ -9,6 +9,7 @@
   "author": "skanama",
   "license": "ISC",
   "dependencies": {
+    "body-parser": "^1.18.2",
     "connect-busboy": "0.0.2",
     "cors": "^2.8.4",
     "express": "^4.16.2",
