@@ -36,6 +36,29 @@ router.get('/profile/:username', function (req, res) {
     });
 });
 
+router.post('/like/:id', function(req, res){
+    Video.findOne({'videoId': req.params.id}, function(err, video){
+        if(err){
+            console.error(err);
+            res.status(400).send(err);
+        } else{
+            if(video){ 
+                video.likes = video.likes + 1;
+                video.save((err, video)=>{
+                    if(err){
+                        res.status(400).send(err);
+                    }else{
+                        res.status(200).send('You Liked the video');
+                    }
+                });
+
+            } else{
+                res.status(404).send('Video Not Found');
+            }
+        }
+    });
+});
+
 router.post('/profile/update', function (req, res) {
     console.log(req.body.username);
     //{"userId":1223, "username":"haramam", "emailId":"oko@bokka.com"}
@@ -44,20 +67,22 @@ router.post('/profile/update', function (req, res) {
     User.findOne(query, {"userId": true, "emailId": true}, 
         (err, user) => {
             if (err) {
-                res.status(200).send(err)
+                res.status(400).send(err);
             }
             if (user) {  // Search could come back empty, so we should protect against sending nothing back
                 user.emailId = req.body.emailId || user.emailId;
                 user.username = req.body.username || user.username;
                 user.save((err, user) => {
                     if (err) {
-                        res.status(500).send(err)
+                        res.status(400).send(err)
+                    }else{
+                        res.status(200).send("user details successfully updated "+user);
                     }
-                    res.status(200).send("user details successfully updated"+user);
+                    
                 });
                 //res.status(200).send(user)
             } else {  // In case no user was found with the given query
-                res.status(200).send("No user found")
+                res.status(404).send("No user found")
             }
         }
     );
