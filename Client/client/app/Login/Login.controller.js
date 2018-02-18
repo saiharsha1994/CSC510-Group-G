@@ -3,13 +3,13 @@
 import loginService from './login.service';
 
 export default class loginCtrl {
-    constructor($state, loginService) {
+    constructor($state, $q, loginService) {
         this.state = $state;
-        this.loginSerivce = loginService;
+        this.$q = $q;
+        this.loginService = loginService;
         this.signIn = {
             email: '',
             password: '',
-            forgotPassword: false,
             isUser: true
         };
 
@@ -30,11 +30,11 @@ export default class loginCtrl {
 
     submit() {
         if (this.isSignIn) {
-            this.loginSerivce.doLogin(this.signIn).then((response) => {
+            this.loginService.doLogin(this.signIn).then((response) => {
                 if (this.signIn.isUser === true) {
-                    this.state.go('user', response.body);
+                    this.state.go('user', {id: this.signIn.email});
                 } else {
-                    this.state.go('enterprise', response.body);
+                    this.state.go('enterprise', {id: this.signIn.email});
                 }
             }).catch((response) => {
                 if (response.status === 404) {
@@ -45,11 +45,11 @@ export default class loginCtrl {
                 this.showError = true;
             });
         } else {
-            this.loginSerivce.doSignUp(this.signUp).then(() => {
+            this.loginService.doSignUp(this.signUp).then(() => {
                 if (this.signIn.isUser === true) {
-                    this.state.go('user');
+                    this.state.go('user', {id: this.signIn.username});
                 } else {
-                    this.state.go('enterprise');
+                    this.state.go('enterprise', {id: this.signIn.username});
                 }
             }).catch((response) => {
                 if (response.status === 409) {
@@ -63,4 +63,4 @@ export default class loginCtrl {
     }
 }
 
-loginCtrl.$inject = ['$state', 'loginService'];
+loginCtrl.$inject = ['$state', '$q', 'loginService'];

@@ -34,11 +34,13 @@ angular.module('app', [ComponentsModule.name, 'ui.router', 'ngSanitize', 'ngFile
             url: '/',
             template: '<app></app>'
         })
-        .state( 'user', {
-            url: '/user/',
-            template: '<user-component></user-component>'
-        }).state( 'enterprise', {
-            url: '/enterprise/',
-            template: '<enterprise-component></enterprise-component>'
+        .state('user', {
+            url: '/user/:id',
+            template: '<user-component></user-component>',
+            params: {id: ''},
+        }).state('enterprise', {
+            url: '/enterprise/:id',
+            template: '<enterprise-component></enterprise-component>',
+            params: {id: ''},
         });
 }]);
