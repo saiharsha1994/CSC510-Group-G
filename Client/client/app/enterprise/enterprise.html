@@ -1,1 +1,12 @@
-<div>Its an enterprise</div>
+<form name="vm.upload_form">
+    Single Image with validations
+    <input
+            type="file"
+            ngf-select
+            ng-model="vm.selectedFile"
+            name="uploadFile"
+            accept=".mp4"
+            ngf-max-size="50MB">
+    <button type="submit" ng-click="vm.submit()">submit</button>
+    <p>{{vm.progress}}
+</form>

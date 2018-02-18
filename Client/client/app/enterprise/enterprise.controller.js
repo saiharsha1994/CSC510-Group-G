@@ -1,8 +1,10 @@
 'use strict';
 
 export default class enterpriseCtrl {
-    constructor($state) {
+    constructor($state, Upload) {
         this.state = $state;
+        this.uploadService = Upload;
+        this.selectedFile = {};
     }
 
     $onInit() {
@@ -13,6 +15,16 @@ export default class enterpriseCtrl {
         //TODO: delete the cookie or delete the session.
         this.state.go('home');
     }
+
+    submit() {
+        console.log(this.selectedFile);
+        this.uploadService.upload({url: 'http://localhost:3000/uploadVideo', data:{file: this.selectedFile}})
+            .then((response) => {
+                console.log(response);
+            }).catch((response) => {
+                console.log(response);
+            });
+    }
 }
 
-enterpriseCtrl.$inject = ['$state'];
+enterpriseCtrl.$inject = ['$state', 'Upload'];
