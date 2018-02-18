@@ -1,12 +1,15 @@
 'use strict';
 
 export default class userCtrl {
-    constructor($state) {
+    constructor($state, $stateParams) {
         this.state = $state;
+        this.$stateParams = $stateParams;
+        console.log('enter user from state change');
     }
 
     $onInit() {
         console.log('User Ctrl is initialized');
+        console.log(this.$stateParams);
     }
 
     logout() {
@@ -16,4 +19,4 @@ export default class userCtrl {
     }
 }
 
-userCtrl.$inject = ['$state'];
+userCtrl.$inject = ['$state', '$stateParams'];
