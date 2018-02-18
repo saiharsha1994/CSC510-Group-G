@@ -1,13 +1,14 @@
 'use strict';
-
+var main = "SampleVideo_1280x720_10mb.mp4";
 export default class userCtrl {
     constructor($sce) {
         this.$sce = $sce;
     }
+    
     $onInit() {
         this.config = {
             sources: [
-                {src: this.$sce.trustAsResourceUrl('http://localhost:3000/enterprise/fetch/SampleVideo_1280x720_10mb.mp4'), type: 'video/mp4'}
+                {src: this.$sce.trustAsResourceUrl('http://localhost:3000/enterprise/fetch/'+main), type: 'video/mp4'}
             ],
             tracks: [
                 {
@@ -31,7 +32,6 @@ export default class userCtrl {
         };
         console.log('User Ctrl is initialized');
     }
-
     logout() {
         // this.loginService.logout()  
         //TODO: delete the cookie or delete the session.
@@ -39,8 +39,9 @@ export default class userCtrl {
     }
 }
 
-userCtrl.$inject = ['$sce'];
 
+userCtrl.$inject = ['$sce'];
+// from here
 jQuery(document).ready(function($) {
  
     $('#myCarousel').carousel({
@@ -64,3 +65,19 @@ jQuery(document).ready(function($) {
             $('#carousel-text').html($('#slide-content-'+id).html());
     });
 });
+
+$(document).ready(function () {
+    alert("I am an alert box!");
+// THE TOP (HEADER) LIST ITEM.
+    $('#dynamic').on('click', 'a', function() {
+        alert( "hiii"+$(this).attr('id'));
+        main = "SampleVideo_1280x720_10mb.mp4";
+        
+    });
+    var jsonp = '[{ "video_number":"1" },{"video_number":"2" },{"video_number":"3" },{"video_number":"4" },{"video_number":"5" },{"video_number":"6" },{"video_number":"7" },{"video_number":"8" }]';
+    var obj = $.parseJSON(jsonp);
+    $.each(obj, function() {
+        $('#dynamic').append('<li class="col-sm-12"><a class="thumbnail col-sm-4" id='+this['video_number']+'><img src="http://placehold.it/150x150&text='+this['video_number']+'"/></a><div class="tag"><a class="col-sm-8" id='+this['video_number']+'> CSS Layout - Horizontal & Vertical Align</a></div></li>');
+    });
+$('#dynamic').listview('refresh');
+}); 
