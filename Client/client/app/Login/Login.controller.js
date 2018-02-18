@@ -31,10 +31,12 @@ export default class loginCtrl {
     submit() {
         if (this.isSignIn) {
             this.loginService.doLogin(this.signIn).then((response) => {
+                return this.loginService.getDetails(this.signIn);
+            }).then((response) => {
                 if (this.signIn.isUser === true) {
-                    this.state.go('user', {id: this.signIn.email});
+                    this.state.go('user', {id: this.signIn.email, uDetails: response.body});
                 } else {
-                    this.state.go('enterprise', {id: this.signIn.email});
+                    this.state.go('enterprise', {id: this.signIn.email, eDetails: response.body});
                 }
             }).catch((response) => {
                 if (response.status === 404) {
@@ -46,16 +48,18 @@ export default class loginCtrl {
             });
         } else {
             this.loginService.doSignUp(this.signUp).then(() => {
+                return this.loginService.getDetails(this.signUp);
+            }).then((response) => {
                 if (this.signIn.isUser === true) {
-                    this.state.go('user', {id: this.signIn.username});
+                    this.state.go('user', {id: this.signUp.email, uDetails: response.body});
                 } else {
-                    this.state.go('enterprise', {id: this.signIn.username});
+                    this.state.go('enterprise', {id: this.signUp.email, eDetails: response.body});
                 }
             }).catch((response) => {
-                if (response.status === 409) {
-                    this.errorMessage = response.body;
+                if (response.status === 404) {
+                    this.errorMessage = 'Please check the username you have entered';
                 } else if (response.status === 400) {
-                    this.errorMessage = 'Bad request';
+                    this.errorMessage = 'Please verify your password';
                 }
                 this.showError = true;
             });
