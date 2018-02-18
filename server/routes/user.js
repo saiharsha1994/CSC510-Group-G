@@ -59,6 +59,52 @@ router.post('/like/:id', function(req, res){
     });
 });
 
+router.post('/viewed', function(req, res){
+    Video.findOne({'videoId' : req.body.videoId}, function(err, video){
+        if(err){
+            console.error(err);
+            res.status(400).send(err);
+        } else{
+            if(video){ 
+                video.views = video.views + 1;
+                video.save((err, video)=>{
+                    if(err){
+                        res.status(400).send(err);
+                    }else{
+                        User.findOne({'userId': req.body.userId}, function(err, user){
+                            if(err){
+                                console.error(err);
+                                res.status(400).send(err);
+                            }else{
+                                if(user){
+                                    user['videosViewed'].push({videoId: req.body.videoId});
+                                    user.save((err, user)=>{
+                                        if(err){
+                                            console.error(err);
+                                            res.status(400).send(err);
+                                        }else{
+                                            res.status(200).send('Video viewed');
+                                        }
+                                    });
+                                }else{
+                                    res.status(404).send('User not found ' + req.body.userId);
+                                }
+                            }
+                        });
+
+
+
+                    }
+                });
+            } else{
+                res.status(404).send('Video Not Found');
+            }
+        }
+    });
+
+    
+});
+
 router.post('/profile/update', function (req, res) {
     console.log(req.body.username);
     //{"userId":1223, "username":"haramam", "emailId":"oko@bokka.com"}
