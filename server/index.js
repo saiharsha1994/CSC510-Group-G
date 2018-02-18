@@ -11,18 +11,15 @@ app.use(cors());
 app.use(bodyParser());
 app.use(busboy());
 
-// Testing purpose
-
+// Initialize user route and model
 var user_route = require('./routes/user');
 var user_model = require('./models/user-model');
 app.use('/user', user_route);
 
+// Initialize enterprise route and model
 var enterprise_route = require('./routes/enterprise');
 var enterprise_model = require('./models/enterprise-model');
 app.use('/enterprise', enterprise_route);
-
-
-// Testing purpose
 
 var account_type;
 var account_route;
@@ -60,6 +57,7 @@ app.put('/', function (req, res) {
                             'userId': new_userId,
                             'emailId': req.body.email,
                             'username': req.body.username,
+                            'password': req.body.password,
                             'coins': 0,
                             'videosViewed': []
                         };
@@ -100,7 +98,9 @@ app.put('/', function (req, res) {
                             'enterpriseId': new_enterpriseId,
                             'emailId': req.body.email,
                             'ename': req.body.username,
-                            'coins': 0
+                            'password': req.body.password,
+                            'coins': 0,
+                            'coinsPerHour': 0
                         };
 
                         let enterprise = new account_model(record);
@@ -114,6 +114,55 @@ app.put('/', function (req, res) {
                     }
                 });
 
+            }
+        });
+    }
+});
+
+app.post('/', function (req, res) {
+    if (req.body.isUser) {
+        var query = {
+            "$and": [
+                { 'emailId': req.body.email },
+                { 'password': req.body.password }
+            ]
+        };
+
+        user_model.count(query, function (err, count) {
+            if (err) {
+                console.error(err);
+                res.status(400).send(err);
+            } else {
+                if (count != 1) {
+                    console.log('Login Failed');
+                    res.status(401).send('Login Failed. Invalid username/password');
+                } else {
+                    console.log('login successful');
+                    res.status(200).send('Login Successful');
+                }
+            }
+
+        });
+    } else {
+        var query = {
+            "$and": [
+                { 'emailId': req.body.email },
+                { 'password': req.body.password }
+            ]
+        };
+
+        enterprise_model.count(query, function (err, count) {
+            if (err) {
+                console.log(err);
+                res.status(400).send(err);
+            } else {
+                if(count != 1){
+                    console.log('Login Failed');
+                    res.status(401).send('Login Failed. Invalid username/password');
+                } else{
+                    console.log('login successful');
+                    res.status(200).send('Login Successful');
+                }
             }
         });
     }
