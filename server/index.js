@@ -5,9 +5,24 @@ const app = express();
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const async = require('async');
+const busboy = require('connect-busboy');
 
 app.use(cors());
 app.use(bodyParser());
+app.use(busboy());
+
+// Testing purpose
+
+var user_route = require('./routes/user');
+var user_model = require('./models/user-model');
+app.use('/user', user_route);
+
+var enterprise_route = require('./routes/enterprise');
+var enterprise_model = require('./models/enterprise-model');
+app.use('/enterprise', enterprise_route);
+
+
+// Testing purpose
 
 var account_type;
 var account_route;
