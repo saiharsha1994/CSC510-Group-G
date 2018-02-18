@@ -3,6 +3,7 @@ const router = express.Router();
 const mongoose = require('mongoose');
 const config = require('../config/config');
 const Enterprise = require('../models/enterprise-model');
+const Video = require('../models/video-model');
 
 //var busboy = require('connect-busboy');
 var fs = require('fs');
@@ -26,7 +27,6 @@ connection.once("open", () => {
     gfs = Grid(connection.db);
     
     router.post('/uploadVideo', (req, res) => {
-        console.log('hip hip hurray');
         var fstream;
         req.pipe(req.busboy);
         req.busboy.on('file', function (fieldname, file, filename, encoding, mimetype) {
@@ -48,6 +48,38 @@ connection.once("open", () => {
 
 router.get('/', function(req, res){
     res.send('Welcome to Enterprise home page!');
+});
+
+router.get('/details/:ename', function(req, res){
+    console.log(req.params.ename);
+    Enterprise.findOne({'ename': req.params.ename}, function(err, record){
+        if(err){
+            console.error('error in getting the ' + req.params.ename + ' record');
+            res.status(400).send(err);
+        }
+        else{
+            if(record){
+                var query = {
+                    'enterpriseId' : record.enterpriseId
+                };
+
+                console.log(query);
+                Video.find(query, function(err, videos){
+                    if(err){
+                        console.error('error in retrieving the ' + record.enterpriseId + 'videos');
+                        res.status(400).send(err);
+                    }else{
+                        var response_record = {
+                            'coins' : record.coins,
+                            'coinsPerHour': record.coinsPerHour,
+                            'videos': videos
+                        }
+                        res.status(200).send(response_record);
+                    }
+                });
+            }
+        }
+    });
 });
 
 router.get('/profile', function(req, res){
