@@ -113,6 +113,15 @@ router.post('/profile/update', function(req, res){
     //res.send('Enterprise Profile updated successfully'+req.body);
 });
 
+router.get('/fetch/:filename', function (req, res) {
+    gfs = Grid(connection.db);
+    console.log(req.params.filename);
+        var readstream = gfs.createReadStream({
+              filename: req.params.filename
+        });
+        readstream.pipe(res); 
+});
+
 router.get('/stats', function(req, res){
     res.send('Statistics of videos uploaded till now');
 });
