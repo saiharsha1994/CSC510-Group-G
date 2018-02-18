@@ -3,18 +3,18 @@
             <br>
             <center><h1>ADBARN</h1> </center>
                 <div class="Absolute-Center is-Responsive">
-                  <div class="col-sm-12 col-md-12">  
+                  <div class="col-sm-12 col-md-12">
                         <ul class="nav nav-pills center-pills">
                                 <li class="active"><a href ng-click="vm.signIn.isUser = true" data-toggle="tab" href="#home">User</a></li>
                                 <li><a href ng-click="vm.signIn.isUser = false" data-toggle="tab" href="#home">Enterprise</a></li>
                         </ul>
                         <br>
-    <div class="col-sm-12" style="background-color: white ;border-radius: 10px;opacity:0.8;color: black;text-shadow: none;" >                      
+    <div class="col-sm-12" style="background-color: white ;border-radius: 10px;opacity:0.8;color: black;text-shadow: none;" >
     <br>
         <div class="tab-content">
       <div id="home" class="tab-pane fade in active">
-        
-        <div ng-if="vm.isSignIn === true">  
+
+        <div ng-if="vm.isSignIn === true">
         <form role="form" >
             <div class="form-group input-group">
                     <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
@@ -89,8 +89,8 @@
         <ul ng-init="vm.isSignIn = true">
                 <div id="contain">
             <a href ng-click="vm.isSignIn = !vm.isSignIn" >
-                {{(vm.isSignIn === true ? 'Create a new account' : 'Already have an account?')}}</a> 
-                </div>    
+                {{(vm.isSignIn === true ? 'Create a new account' : 'Already have an account?')}}</a>
+                </div>
         </ul>
             <div ng-show="vm.showError">{{vm.errorMessage}}</div>
       </div>
