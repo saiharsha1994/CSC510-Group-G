@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
 const config = require('../config/config');
-const User = require('../models/enterprise-model');
+const Enterprise = require('../models/enterprise-model');
 
 //var busboy = require('connect-busboy');
 var fs = require('fs');
@@ -51,11 +51,34 @@ router.get('/', function(req, res){
 });
 
 router.get('/profile', function(req, res){
+    
     res.send('Enterprise Profile page!');
 });
 
-router.post('/profile', function(req, res){
-    res.send('Enterprise Profile updated successfully');
+router.post('/profile/update', function(req, res){
+    console.log(req.body.enterpriseId);
+    var query = {"enterpriseId":req.body.enterpriseId}//, "emailId":req.body.emailId};
+    Enterprise.findOne(query, {"enterpriseId": true, "emailId": true}, 
+        (err, enterprise) => {
+            if (err) {
+                res.status(200).send(err)
+            }
+            if (enterprise) {  // Search could come back empty, so we should protect against sending nothing back
+                enterprise.emailId = req.body.emailId || enterprise.emailId;
+                enterprise.ename = req.body.ename || enterprise.ename;
+                enterprise.save((err, enterprise) => {
+                    if (err) {
+                        res.status(500).send(err)
+                    }
+                    res.status(200).send("enterprise details successfully updated"+enterprise);
+                });
+                //res.status(200).send(enterprise)
+            } else {  // In case no enterprise was found with the given query
+                res.status(200).send("No enterprise found")
+            }
+        }
+    );
+    //res.send('Enterprise Profile updated successfully'+req.body);
 });
 
 router.get('/stats', function(req, res){
