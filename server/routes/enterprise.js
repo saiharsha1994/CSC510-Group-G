@@ -89,15 +89,16 @@ router.get('/profile', function(req, res){
 
 router.post('/profile/update', function(req, res){
     console.log(req.body.enterpriseId);
-    var query = {"enterpriseId":req.body.enterpriseId}//, "emailId":req.body.emailId};
+    var query = {"enterpriseId":req.body.enterprise}//, "emailId":req.body.emailId};
     Enterprise.findOne(query, {"enterpriseId": true, "emailId": true}, 
         (err, enterprise) => {
             if (err) {
                 res.status(200).send(err)
             }
-            if (enterprise) {  // Search could come back empty, so we should protect against sending nothing back
+            if (enterprise && (req.body.password === enterprise.password)) {  // Search could come back empty, so we should protect against sending nothing back
+                enterprise.password = req.body.newpassword || enterpriseId.password;
                 enterprise.emailId = req.body.emailId || enterprise.emailId;
-                enterprise.ename = req.body.ename || enterprise.ename;
+                //enterprise.ename = req.body.ename || enterprise.ename; username cannot be updated as it is unique
                 enterprise.save((err, enterprise) => {
                     if (err) {
                         res.status(500).send(err)
