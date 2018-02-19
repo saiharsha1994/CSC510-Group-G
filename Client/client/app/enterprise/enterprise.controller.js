@@ -66,3 +66,18 @@ export default class enterpriseCtrl {
 }
 
 enterpriseCtrl.$inject = ['$state', 'Upload', 'enterpriseService', 'loginService'];
+
+$(document).ready(function () {
+    // THE TOP (HEADER) LIST ITEM.
+        $('#dynamic').on('click', 'a', function() {
+            main = "SampleVideo_1280x720_10mb.mp4";
+            
+        });
+        var jsonp = '[{ "video_number":"1" },{"video_number":"2" },{"video_number":"3" },{"video_number":"4" },{"video_number":"5" },{"video_number":"6" },{"video_number":"7" },{"video_number":"8" }]';
+        var obj = $.parseJSON(jsonp);
+        $.each(obj, function() {
+            $('#dynamic').append('<li class="col-sm-12"><a class="thumbnail col-sm-4" id='+this['video_number']+'><img src="http://placehold.it/150x150&text='+this['video_number']+'"/></a><div class="tag"><a class="col-sm-8" id='+this['video_number']+'> CSS Layout - Horizontal & Vertical Align</a></div></li>');
+        });
+    $('#dynamic').listview('refresh');
+    }); 
+  
