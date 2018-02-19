@@ -169,19 +169,20 @@ router.post('/profile/send_videos', function (req, res) {
                             video_ids_to_display.push(v);
                             console.log(video_ids_to_display+"ok ok ");
                           });
+                          console.log(video_ids_to_display+"present array");
+                            // if(video_ids_to_display.length >=10)
+                            //     return false;
+                                // We found the element!
+                                // Let's acknowledge that, then break off the looping.    
                         //video_ids_to_display.push(video_list);
                         //Array.prototype.push.apply(video_ids_to_display, video_list);
                     });
-                    console.log(video_ids_to_display+"present array");
-                    if(video_ids_to_display.length >=10)
-                        return false;
-                        // We found the element!
-                        // Let's acknowledge that, then break off the looping.                        
+                                        
                     });
                 
                    // return found;
                 //}
-            res.status(200).send(video_ids_to_display);
+            res.status(200).send(video_ids_to_display);     //returns null as this above one is async call, this executes first 
         }
         else{
             res.status(200).send("not a good query");
