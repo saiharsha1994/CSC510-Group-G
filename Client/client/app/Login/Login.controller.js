@@ -3,13 +3,14 @@
 import loginService from './login.service';
 
 export default class loginCtrl {
-    constructor($state, loginService) {
+    constructor($state, $q, loginService) {
         this.state = $state;
-        this.loginSerivce = loginService;
+        this.$q = $q;
+        this.loginService = loginService;
+        this.isUser = true;
         this.signIn = {
             email: '',
             password: '',
-            forgotPassword: false,
             isUser: true
         };
 
@@ -21,7 +22,7 @@ export default class loginCtrl {
             password: '',
             confirmPassword: '',
             isUser: false
-        }
+        };
     }
 
     $onInit() {
@@ -30,11 +31,14 @@ export default class loginCtrl {
 
     submit() {
         if (this.isSignIn) {
-            this.loginSerivce.doLogin(this.signIn).then((response) => {
+            this.signIn.isUser = this.isUser;
+            this.loginService.doLogin(this.signIn).then((response) => {
+                return this.loginService.getDetails(this.signIn);
+            }).then((response) => {
                 if (this.signIn.isUser === true) {
-                    this.state.go('user', response.body);
+                    this.state.go('user', {id: this.signIn.email, uDetails: response.body});
                 } else {
-                    this.state.go('enterprise', response.body);
+                    this.state.go('enterprise', {id: this.signIn.email, eDetails: response.body});
                 }
             }).catch((response) => {
                 if (response.status === 404) {
@@ -45,17 +49,20 @@ export default class loginCtrl {
                 this.showError = true;
             });
         } else {
-            this.loginSerivce.doSignUp(this.signUp).then(() => {
+            this.signUp.isUser = this.isUser;
+            this.loginService.doSignUp(this.signUp).then(() => {
+                return this.loginService.getDetails(this.signUp);
+            }).then((response) => {
                 if (this.signIn.isUser === true) {
-                    this.state.go('user');
+                    this.state.go('user', {id: this.signUp.email, uDetails: response.body});
                 } else {
-                    this.state.go('enterprise');
+                    this.state.go('enterprise', {id: this.signUp.email, eDetails: response.body});
                 }
             }).catch((response) => {
-                if (response.status === 409) {
-                    this.errorMessage = response.body;
+                if (response.status === 404) {
+                    this.errorMessage = 'Please check the username you have entered';
                 } else if (response.status === 400) {
-                    this.errorMessage = 'Bad request';
+                    this.errorMessage = 'Please verify your password';
                 }
                 this.showError = true;
             });
@@ -63,4 +70,4 @@ export default class loginCtrl {
     }
 }
 
-loginCtrl.$inject = ['$state', 'loginService'];
+loginCtrl.$inject = ['$state', '$q', 'loginService'];

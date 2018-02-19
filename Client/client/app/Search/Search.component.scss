@@ -1,0 +1,44 @@
+.text-box-width {
+  width: 250px;
+}
+
+.login-center {
+  margin-left: 200px;
+}
+
+.login-top {
+  margin-top: 200px !important;
+}
+
+.Absolute-Center.is-Responsive {
+  width: 50%; 
+  height: 50%;
+  min-width: 200px;
+  max-width: 400px;
+  padding: 40px;
+}
+.Absolute-Center {
+  margin: auto;
+  position: absolute;
+  top: 0; left: 0; bottom: 0; right: 0;
+}
+.btn-default{
+color:#000000;
+}
+.nav>li>a {
+    padding-top: 3px;
+    padding-bottom: 3px;
+}
+.center-pills {
+    display: flex;
+    justify-content: center;
+}
+#contain a{
+    text-align: left;
+}
+ul{
+    padding-left: 0px;
+}
+h1 {
+  font-size: 70px;
+}

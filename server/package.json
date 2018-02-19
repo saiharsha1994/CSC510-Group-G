@@ -9,10 +9,14 @@
   "author": "skanama",
   "license": "ISC",
   "dependencies": {
+    "async": "^2.6.0",
+    "body-parser": "^1.18.2",
     "connect-busboy": "0.0.2",
     "cors": "^2.8.4",
     "express": "^4.16.2",
     "gridfs-stream": "^1.1.1",
-    "mongoose": "^5.0.1"
+    "lodash": "^4.17.5",
+    "mongoose": "^5.0.1",
+    "underscore": "^1.8.3"
   }
 }
