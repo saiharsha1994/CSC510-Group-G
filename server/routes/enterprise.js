@@ -15,17 +15,17 @@ let gfs;
 mongoose.Promise = global.Promise;
 Grid.mongo = mongoose.mongo;
 
-mongoose.connect(config.dev.db, function(err){
-    if(err){
+mongoose.connect(config.dev.db, function (err) {
+    if (err) {
         console.error(err);
-    }else{
+    } else {
         console.log('connected to ' + config.dev.db);
     }
 });
 
 connection.once("open", () => {
     gfs = Grid(connection.db);
-    
+
     router.post('/uploadVideo', (req, res) => {
         var fstream;
         req.pipe(req.busboy);
@@ -46,31 +46,31 @@ connection.once("open", () => {
     });
 });
 
-router.get('/', function(req, res){
+router.get('/', function (req, res) {
     res.send('Welcome to Enterprise home page!');
 });
 
-router.get('/details/:ename', function(req, res){
+router.get('/details/:ename', function (req, res) {
     console.log(req.params.ename);
-    Enterprise.findOne({'ename': req.params.ename}, function(err, record){
-        if(err){
+    Enterprise.findOne({ 'ename': req.params.ename }, function (err, record) {
+        if (err) {
             console.error('error in getting the ' + req.params.ename + ' record');
             res.status(400).send(err);
         }
-        else{
-            if(record){
+        else {
+            if (record) {
                 var query = {
-                    'enterpriseId' : record.enterpriseId
+                    'enterpriseId': record.enterpriseId
                 };
 
                 console.log(query);
-                Video.find(query, function(err, videos){
-                    if(err){
+                Video.find(query, function (err, videos) {
+                    if (err) {
                         console.error('error in retrieving the ' + record.enterpriseId + 'videos');
                         res.status(400).send(err);
-                    }else{
+                    } else {
                         var response_record = {
-                            'coins' : record.coins,
+                            'coins': record.coins,
                             'coinsPerHour': record.coinsPerHour,
                             'videos': videos
                         }
@@ -82,15 +82,37 @@ router.get('/details/:ename', function(req, res){
     });
 });
 
-router.get('/profile', function(req, res){
-    
+router.get('/profile', function (req, res) {
+
     res.send('Enterprise Profile page!');
 });
 
-router.post('/profile/update', function(req, res){
+router.post('/profile/update', function (req, res) {
+    Enterprise.findOne({ "ename": req.body.username },
+        (err, enterprise) => {
+            if (err) {
+                res.status(400).send(err);
+            }
+            if (enterprise && (req.body.password === enterprise.password)) {  // Search could come back empty, so we should protect against sending nothing back
+                enterprise.password = req.body.newpassword || enterprise.password;
+                enterprise.save((err, enterprise) => {
+                    if (err) {
+                        res.status(400).send(err)
+                    } else {
+                        res.status(200).send("Password changed successfully");
+                    }
+                });
+            } else {  // In case no enterprise was found with the given query
+                res.status(404).send("No Enterprise found")
+            }
+        }
+    );
+});
+
+router.post('/profile/update', function (req, res) {
     console.log(req.body.enterpriseId);
-    var query = {"enterpriseId":req.body.enterprise}//, "emailId":req.body.emailId};
-    Enterprise.findOne(query, {"enterpriseId": true, "emailId": true}, 
+    var query = { "enterpriseId": req.body.enterprise }//, "emailId":req.body.emailId};
+    Enterprise.findOne(query, { "enterpriseId": true, "emailId": true },
         (err, enterprise) => {
             if (err) {
                 res.status(200).send(err)
@@ -103,7 +125,7 @@ router.post('/profile/update', function(req, res){
                     if (err) {
                         res.status(500).send(err)
                     }
-                    res.status(200).send("enterprise details successfully updated"+enterprise);
+                    res.status(200).send("enterprise details successfully updated" + enterprise);
                 });
                 //res.status(200).send(enterprise)
             } else {  // In case no enterprise was found with the given query
@@ -117,13 +139,13 @@ router.post('/profile/update', function(req, res){
 router.get('/fetch/:filename', function (req, res) {
     gfs = Grid(connection.db);
     console.log(req.params.filename);
-        var readstream = gfs.createReadStream({
-              filename: req.params.filename
-        });
-        readstream.pipe(res); 
+    var readstream = gfs.createReadStream({
+        filename: req.params.filename
+    });
+    readstream.pipe(res);
 });
 
-router.get('/stats', function(req, res){
+router.get('/stats', function (req, res) {
     res.send('Statistics of videos uploaded till now');
 });
 
