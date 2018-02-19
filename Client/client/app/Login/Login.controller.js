@@ -7,6 +7,7 @@ export default class loginCtrl {
         this.state = $state;
         this.$q = $q;
         this.loginService = loginService;
+        this.isUser = true;
         this.signIn = {
             email: '',
             password: '',
@@ -21,7 +22,7 @@ export default class loginCtrl {
             password: '',
             confirmPassword: '',
             isUser: false
-        }
+        };
     }
 
     $onInit() {
@@ -30,6 +31,7 @@ export default class loginCtrl {
 
     submit() {
         if (this.isSignIn) {
+            this.signIn.isUser = this.isUser;
             this.loginService.doLogin(this.signIn).then((response) => {
                 return this.loginService.getDetails(this.signIn);
             }).then((response) => {
@@ -47,6 +49,7 @@ export default class loginCtrl {
                 this.showError = true;
             });
         } else {
+            this.signUp.isUser = this.isUser;
             this.loginService.doSignUp(this.signUp).then(() => {
                 return this.loginService.getDetails(this.signUp);
             }).then((response) => {
