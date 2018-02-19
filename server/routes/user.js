@@ -126,7 +126,7 @@ router.post('/profile/update', function (req, res) {
                     if (err) {
                         res.status(400).send(err)
                     } else {
-                        res.status(200).send("user details successfully updated " + user);
+                        res.status(200).send("Password changed successfully");
                     }
                 });
             } else {  // In case no user was found with the given query
