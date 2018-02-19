@@ -112,15 +112,15 @@ router.post('/profile/update', function (req, res) {
     console.log(req.body.username);
     //{"userId":1223, "username":"haramam", "emailId":"oko@bokka.com"}
     // postman request - localhost:3000/user/profile/update
-    var query = {"userId":req.body.userId}//, "emailId":req.body.emailId};
+    var query = {"userId":req.body.username}//, "emailId":req.body.emailId};
     User.findOne(query, {"userId": true, "emailId": true}, 
         (err, user) => {
             if (err) {
                 res.status(400).send(err);
             }
-            if (user) {  // Search could come back empty, so we should protect against sending nothing back
+            if (user && (req.body.password === user.password)) {  // Search could come back empty, so we should protect against sending nothing back
+                user.password = req.body.newpassword || user.password;
                 user.emailId = req.body.emailId || user.emailId;
-                user.username = req.body.username || user.username;
                 user.save((err, user) => {
                     if (err) {
                         res.status(400).send(err)
