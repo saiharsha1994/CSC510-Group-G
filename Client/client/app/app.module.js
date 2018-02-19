@@ -15,12 +15,14 @@ import userComponent from './user/user.component';
 import videoComponent from './videoPlayer/video.component';
 import enterpriseComponent from './enterprise/enterprise.component';
 import loginService from './Login/login.service';
+import enterpriseService from './enterprise/enterprise.service';
 import ComponentsModule from './components/components';
 
 angular.module('app', [ComponentsModule.name, 'ui.router', 'ngSanitize', 'ngFileUpload', 'com.2fdevs.videogular',
     'com.2fdevs.videogular.plugins.controls', 'com.2fdevs.videogular.plugins.overlayplay',
     'com.2fdevs.videogular.plugins.poster'])
     .service('loginService', loginService)
+    .service('enterpriseService', enterpriseService)
     .component('app', appComponent)
     .component('loginComponent', loginComponent)
     .component('userComponent', userComponent)
