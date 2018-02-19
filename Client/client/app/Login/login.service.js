@@ -21,7 +21,7 @@ export default class loginService {
 
     getDetails(details) {
         const type = (details.isUser === true) ? 'user' : 'enterprise';
-        return this.http.get(`http//localhost:3000/${type}/details?id=${details.username}`);
+        return this.http.get(`http://localhost:3000/${type}/details/${details.username}`);
     }
 }
 

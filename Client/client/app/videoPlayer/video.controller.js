@@ -67,10 +67,8 @@ jQuery(document).ready(function($) {
 });
 
 $(document).ready(function () {
-    alert("I am an alert box!");
 // THE TOP (HEADER) LIST ITEM.
     $('#dynamic').on('click', 'a', function() {
-        alert( "hiii"+$(this).attr('id'));
         main = "SampleVideo_1280x720_10mb.mp4";
         
     });
