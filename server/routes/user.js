@@ -24,7 +24,6 @@ router.get('/', function (req, res) {
             console.error('Error retrieving videos');
         } else {
             res.json(videos);
-            //console.log('test');
         }
     });
 });
@@ -94,9 +93,6 @@ router.post('/viewed', function (req, res) {
                                 }
                             }
                         });
-
-
-
                     }
                 });
             } else {
@@ -119,33 +115,25 @@ router.get('/user/coins/:username', function (req, res) {
 });
 
 router.post('/profile/update', function (req, res) {
-    console.log(req.body.username);
-    //{"userId":1223, "username":"haramam", "emailId":"oko@bokka.com"}
-    // postman request - localhost:3000/user/profile/update
-    var query = {"userId":req.body.username}//, "emailId":req.body.emailId};
-    User.findOne(query, {"userId": true, "emailId": true}, 
+    User.findOne({"username" : req.body.username},
         (err, user) => {
             if (err) {
                 res.status(400).send(err);
             }
             if (user && (req.body.password === user.password)) {  // Search could come back empty, so we should protect against sending nothing back
                 user.password = req.body.newpassword || user.password;
-                user.emailId = req.body.emailId || user.emailId;
                 user.save((err, user) => {
                     if (err) {
                         res.status(400).send(err)
                     } else {
                         res.status(200).send("user details successfully updated " + user);
                     }
-
                 });
-                //res.status(200).send(user)
             } else {  // In case no user was found with the given query
                 res.status(404).send("No user found")
             }
         }
     );
-    //res.send('User Profile updated successfully');
 });
 
 router.get('/details/:username', function (req, res) {
@@ -171,10 +159,7 @@ router.get('/details/:username', function (req, res) {
                     res.status(200).send(videos.slice(0, 10));
                 }
             });
-
-            //res.status(200).send(enterprises);
         }
-
     });
 
     //console.log(req.body.username);
