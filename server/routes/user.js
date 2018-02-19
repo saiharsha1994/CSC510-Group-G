@@ -138,56 +138,85 @@ router.post('/profile/update', function (req, res) {
     //res.send('User Profile updated successfully');
 });
 
-router.post('/profile/send_videos', function (req, res) {
+router.get('/details/:username', function (req, res) {
+
+    Enterprise.find({
+        $where : 'this.coins > this.coinsPerHour'
+    }, function(err, enterprises){
+        if(err){
+            res.status(400).send(err);
+        }else{
+            var enterpriseIds = [];
+            _(enterprises).forEach(function(enterprise){
+                enterpriseIds.push({'enterpriseId': enterprise.enterpriseId});
+            });
+            
+            var query = {};
+            query["$or"] = enterpriseIds;
+            console.log(query);
+
+            Video.find(query, function(err, videos){
+                if(err){
+                    res.status(400).send(err);
+                }else{
+                    console.log(videos.slice(0, 10)); 
+                    res.status(200).send(videos.slice(0, 10));
+                }
+            });
+
+            //res.status(200).send(enterprises);
+        }
+        
+    });
+
     //console.log(req.body.username);
     //{"userId":1223, "username":"haramam", "emailId":"oko@bokka.com"}
     // postman request - localhost:3000/user/profile/update
     //var query = {"userId":req.body.userId}//, "emailId":req.body.emailId};
-    Enterprise.find().sort({ enterpriseId: -1 }).limit(10).exec(function (err, enterprise_by_value){
-        if(err){
-            res.status(200).send(err)
-        }
-        if(enterprise_by_value){
-            console.log(enterprise_by_value);
-            var enterprise_list=_.map(enterprise_by_value, function(e){
-                return e.enterpriseId;
-            });
-            console.log(enterprise_list);
-            var video_ids_to_display = [];
-                //fetch_video(array, element) {
-                    var found = false; // The element we've not found just yet.
+    // Enterprise.find().sort({ coinsPerHour: -1 }).exec(function (err, enterprises){
+    //     if(err){
+    //         res.status(400).send(err)
+    //     }
+    //     if(enterprises){
+    //         console.log(enterprises);
+    //         var enterprise_list=_.map(enterprises, function(e){
+    //             return e.enterpriseId;
+    //         });
+    //         console.log(enterprise_list);
+    //         var video_ids_to_display = [];
+    //             //fetch_video(array, element) {
+    //                 var found = false; // The element we've not found just yet.
                     
-                    _(enterprise_list).forEach(function(item) {
-                    var query = {"enterpriseId":item};
-                    Video.find( query, (err,video)=>{
-                        var video_list=_.map(video, function(e){
-                            return e.videoId;
-                        });
-                        console.log(video_list);
-                        _.each(video_list, function(v,i){
-                            console.log(v);
-                            video_ids_to_display.push(v);
-                            console.log(video_ids_to_display+"ok ok ");
-                          });
-                          console.log(video_ids_to_display+"present array");
-                            // if(video_ids_to_display.length >=10)
-                            //     return false;
-                                // We found the element!
-                                // Let's acknowledge that, then break off the looping.    
-                        //video_ids_to_display.push(video_list);
-                        //Array.prototype.push.apply(video_ids_to_display, video_list);
-                    });
-                                        
-                    });
+    //                 _(enterprise_list).forEach(function(item) {
+    //                 var query = {"enterpriseId":item};
+    //                 Video.find( query, (err,video)=>{
+    //                     var video_list=_.map(video, function(e){
+    //                         return e.videoId;
+    //                     });
+    //                     console.log(video_list);
+    //                     _.each(video_list, function(v,i){
+    //                         console.log(v);
+    //                         video_ids_to_display.push(v);
+    //                         console.log(video_ids_to_display+"ok ok ");
+    //                       });
+    //                     //video_ids_to_display.push(video_list);
+    //                     //Array.prototype.push.apply(video_ids_to_display, video_list);
+    //                 });
+    //                 console.log(video_ids_to_display+"present array");
+    //                 if(video_ids_to_display.length >=10)
+    //                     return false;
+    //                     // We found the element!
+    //                     // Let's acknowledge that, then break off the looping.                        
+    //                 });
                 
-                   // return found;
-                //}
-            res.status(200).send(video_ids_to_display);     //returns null as this above one is async call, this executes first 
-        }
-        else{
-            res.status(200).send("not a good query");
-        }
-    });
+    //                // return found;
+    //             //}
+    //         res.status(200).send(video_ids_to_display);
+    //     }
+    //     else{
+    //         res.status(200).send("not a good query");
+    //     }
+    // });
     // User.findOne(query, {"userId": true, "emailId": true}, 
     //     (err, user) => {
     //         if (err) {
