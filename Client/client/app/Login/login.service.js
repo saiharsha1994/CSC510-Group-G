@@ -23,6 +23,10 @@ export default class loginService {
         const type = (details.isUser === true) ? 'user' : 'enterprise';
         return this.http.get(`http://localhost:3000/${type}/details/${details.username}`);
     }
+
+    updateProfile(profileDetails, type) {
+        return this.http.post(`http://lcalhost:3000/${type}/profile`);
+    }
 }
 
 

@@ -1,13 +1,23 @@
 'use strict';
 
 import enterpriseService from './enterprise.service';
+import loginService from './../Login/login.service';
 
 export default class enterpriseCtrl {
-    constructor($state, Upload, enterpriseService) {
+    constructor($state, Upload, enterpriseService, loginService) {
         this.state = $state;
         this.uploadService = Upload;
         this.enterpriseService = enterpriseService;
+        this.loginService = loginService;
         this.selectedFile = {};
+        this.updateType = 'password';
+        this.updateProfile = {
+          oldPassword: '',
+          newPassword: '',
+          confirmNewPassword: '',
+          oldEmail: '',
+          newEmail: '',
+        };
     }
 
     $onInit() {
@@ -45,6 +55,14 @@ export default class enterpriseCtrl {
             console.log(response);
         });
     }
+
+    updateProfile() {
+        this.loginService.updateProfile(this.updateProfileDetails, 'enterprise').then((response) => {
+            console.log(response + 'success');
+        }).catch((response) => {
+            console.log(response + 'failed');
+        });
+    }
 }
 
-enterpriseCtrl.$inject = ['$state', 'Upload', 'enterpriseService'];
+enterpriseCtrl.$inject = ['$state', 'Upload', 'enterpriseService', 'loginService'];
