@@ -17,6 +17,10 @@ export default class enterpriseCtrl {
         this.coinsToBeAdded = 0;
         this.tags = [];
         this.searchTag = '';
+        this.videosList = _.get(this.$stateParams, 'eDetails.videos', []);
+        this.coins = _.get(this.$stateParams, 'eDetails.coins', []);
+        this.coinsPerHour = _.get(this.$stateParams, 'eDetails.coinsPerHour', []);
+        this.currentVideo = {};
         this.updateProfile = {
           oldPassword: '',
           newPassword: '',
@@ -44,6 +48,7 @@ export default class enterpriseCtrl {
         this.enterpriseService.addCoins(this.coinsToBeAdded, this.$stateParams.id)
             .then((response) => {
                 this.coinsToBeAdded = 0;
+                this.coins = _.get(response, 'data.coins');
             }).catch((response) => {
                 console.log(response);
             });
@@ -53,6 +58,7 @@ export default class enterpriseCtrl {
         this.enterpriseService.updateCoinsPerHour(this.updatedCoinsPerHour, this.$stateParams.id)
             .then((response) => {
                 this.updatedCoinsPerHour = 0;
+                this.coinsPerHour = _.get(response, 'data.coinsPerHpur');
             }).catch((response) => {
             console.log(response);
         });
@@ -82,6 +88,20 @@ export default class enterpriseCtrl {
             console.log(response + 'success');
         }).catch((response) => {
             console.log(response + 'failed');
+        });
+    }
+
+    onVideoChange(video) {
+        this.currentVideo = video;
+    }
+
+    deleteSelectedVideo() {
+        this.enterpriseService.deleteVideo(this.currentVideo.videoId).then((response) => {
+            _.remove(this.videosList, (video) => {
+                return video.videoId === this.currentVideo.videoId;
+            });
+        }).catch((response) => {
+            console.log('the video is not deleted');
         });
     }
 }
