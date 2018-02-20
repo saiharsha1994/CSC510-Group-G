@@ -50,10 +50,10 @@ export default class loginCtrl {
             });
         } else {
             this.signUp.isUser = this.isUser;
-            this.loginService.doSignUp(this.signUp).then(() => {
+            this.loginService.doSignUp(this.signUp).then((response) => {
                 return this.loginService.getDetails(this.signUp);
             }).then((response) => {
-                if (this.signIn.isUser === true) {
+                if (this.signUp.isUser === true) {
                     console.log(response);
                     console.log('response');
                     this.state.go('user', {id: this.signUp.email, uDetails: response.data});
