@@ -67,8 +67,8 @@ router.post('/like/:id', function(req, res){
     });
 });
 
-router.post('/comments/:id', function(req, res){
-    Video.findOne({'videoId': req.params.id}, function(err, video){
+router.post('/comments/', function(req, res){
+    Video.findOne({'videoId': req.body.videoId}, function(err, video){
         if(err){
             console.error(err);
             res.status(400).send(err);
@@ -122,9 +122,6 @@ router.post('/viewed', function(req, res){
                                 }
                             }
                         });
-
-
-
                     }
                 });
             } else{
