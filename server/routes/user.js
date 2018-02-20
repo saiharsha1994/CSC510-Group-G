@@ -8,7 +8,12 @@ const User = require('../models/user-model');
 const Enterprise = require('../models/enterprise-model');
 const Video = require('../models/video-model');
 
+let Grid = require('gridfs-stream');
+let connection = mongoose.connection;
+let gfs;
+
 mongoose.Promise = global.Promise;
+Grid.mongo = mongoose.mongo;
 
 mongoose.connect(config.dev.db, function (err) {
     if (err) {
@@ -263,6 +268,14 @@ router.get('/details/:username', function (req, res) {
     //res.send('User Profile updated successfully');
 });
 
+router.get('/fetch/:id', function (req, res) {
+    gfs = Grid(connection.db);
+    console.log(req.params.filename);
+    var readstream = gfs.createReadStream({
+        _id: req.params.id
+    });
+    readstream.pipe(res);
+});
 
 router.get('/history/:username', function (req, res) {
     User.findOne({ username: req.params.username }).exec(function (err, user) {
