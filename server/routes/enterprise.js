@@ -1,5 +1,3 @@
-import { isNullOrUndefined } from 'util';
-
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
@@ -203,8 +201,9 @@ router.get('/stats', function (req, res) {
 
 // TODO : Add route to delete video
 router.delete('/deleteVideo/:videoId', function (req, res) {
-    if(gfs.isNullOrUndefined)
+    if(_.isNull(gfs))
         gfs = Grid(connection.db);      // connection to gridfs
+        console.log(req.params.videoId);
     Video.findOneAndRemove({ 'videoId': req.params.videoId }, function (err, video) { // find videoid from videos table
         if (err) {
             console.error('error in fetching videoId :' + req.params.videoId + ' record to delete');
@@ -212,33 +211,33 @@ router.delete('/deleteVideo/:videoId', function (req, res) {
         }
         else {      // video found in videos table
             if(video){
+                console.log(video.fileId);
                 var options = {
                     _id : video.fileId      // get the corresponding object id 
                 }
-                var query = {
-                    'enterpriseId': record.enterpriseId
-                };
+                
                 gfs.remove(options, function(err, gridStore){   // remove video from files and chunks (fs.files nad fs.chunks)
                     if(err){
-                        console.log("Error in removing file");
+                        console.log("Error in removing video file from db");
                     }
                     else{
                         console.log("removed from fs, chunks successfully");
-
+                        var query = {
+                            videoId : video.videoId     // delete the videos and their mapping tags for this video
+                        }
+                        console.log(db);
+                        db.collection("tags").remove(query, function(err, tags){
+                            if(err){
+                                console.log("video is removed but error removing tags");
+                            } else {
+                                //console.log(tags+"deleted");
+                                res.send(200).send("Video removed from database and corresponding tags"+tags+" also removed");
+                            }
+        
+                        });
                     }
                 });
-                query = {
-                    videoId : video.videoId     // delete the videos and their mapping tags for this video
-                }
-                db.collection("tags").remove(query, function(err, tags){
-                    if(err){
-                        console.log("error");
-                    } else {
-                        console.log(tags+"deleted");
-                    }
-
-                });
-                console.log(query);
+                //console.log(query);
             }
             else{
                 res.status(404).send("No Video found to delete");
@@ -246,5 +245,5 @@ router.delete('/deleteVideo/:videoId', function (req, res) {
         }
     });
 });
-db.close();
+//db.close();
 module.exports = router;
