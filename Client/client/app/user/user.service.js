@@ -2,7 +2,6 @@ export default class loginService {
 
     constructor($http) {
         this.http = $http;
-        console.log(this.http);
         this.message = 'there';
         this.signIn = {
             email: '',
