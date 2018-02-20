@@ -7,6 +7,7 @@ const config = require('../config/config');
 const User = require('../models/user-model');
 const Enterprise = require('../models/enterprise-model');
 const Video = require('../models/video-model');
+const Tag = require('../models/tag-model');
 
 let Grid = require('gridfs-stream');
 let connection = mongoose.connection;
@@ -287,6 +288,37 @@ router.get('/fetch/:id', function (req, res) {
         _id: req.params.id
     });
     readstream.pipe(res);
+});
+
+router.post('/search', function(req, res){
+    
+    var tags = [];
+    _(req.body.tags).forEach(function(tag){
+        tags.push({'tag' : tag});
+    });
+
+    var query = {};
+    query["$or"] = tags;
+    Tag.find(query).distinct('videoId', function(err, results){
+        if(err){
+            res.status(400).send(err);
+        }else{
+            var videoIds = [];
+            var videoQuery = {};
+            _(results).forEach(function(result){
+                videoIds.push({'videoId': result});
+            });
+            videoQuery["$or"] = videoIds;
+            Video.find(videoQuery, function(err, videos){
+                if(err){
+                    res.status(400).send(err);
+                }else{
+                    res.status(200).send(videos);
+                }
+            });
+        }
+    });
+
 });
 
 router.get('/history/:username', function (req, res) {
