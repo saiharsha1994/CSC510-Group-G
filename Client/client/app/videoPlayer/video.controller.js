@@ -1,5 +1,5 @@
 'use strict';
-const baseUrl = 'http://localhost:3000/enterprise/fetch/';
+const baseUrl = 'http://localhost:3000/user/fetch/';
 export default class userCtrl {
     constructor($sce, $stateParams, videoService) {
         this.$sce = $sce;
@@ -13,7 +13,7 @@ export default class userCtrl {
         console.log(this.videosList);
         this.videoIds = _.map(this.videosList, 'videoId');
         let currentVideo = _.first(this.videosList);
-        this.config.sources = [{src: 'http://static.videogular.com/assets/videos/videogular.mp4', type: 'video/mp4'}];
+        this.config.sources = [{src: `${baseUrl}${_.get(currentVideo, 'fileId')}`, type: 'video/mp4'}];
         this.comments = _.get(currentVideo, 'comments', []);
         this.comments.push({username: 'modda', body: 'rty'});
         this.comments.push({username: 'modda', body: 'rty'});
@@ -39,23 +39,22 @@ export default class userCtrl {
         console.log(video);
         this.api.pause();
         this.config.sources = [];
-        this.config.sources = [{src: this.$sce.trustAsResourceUrl("http://static.videogular.com/assets/videos/videogular.webm"), type: "video/webm"}];
+        this.config.sources = [{src: `${baseUrl}${_.get(video, 'fileId')}`, type: 'video/mp4'}];
         this.api.currentTime = 0;
         this.comments = _.get(_.first(_.filter(this.videosList, (eachVideo) => {
             return eachVideo.videoId === video.videoId;
         })), 'comments', []);
-        // this.api.play();
     }
 
-    // onVideoComplete() {
-    //     this.videoService.updateViewedList({username: this.$stateParams.id,
-    //         videoId: this.currentUrl, time: this.api.totalTime}).then((response) => {
-    //         console.log(response);
-    //     }).catch((response) => {
-    //         console.log(response);
-    //     });
-    //     console.log(this.api);
-    // }
+    onVideoComplete() {
+        this.videoService.updateViewedList({username: this.$stateParams.id,
+            videoId: this.currentUrl, time: this.api.totalTime}).then((response) => {
+            console.log(response);
+        }).catch((response) => {
+            console.log(response);
+        });
+        console.log(this.api);
+    }
 
     logout() {
         // this.loginService.logout()  

@@ -10,6 +10,8 @@ export default class loginService {
     }
 
     doLogin(details) {
+        console.log('login details');
+        console.log(details);
         return this.http.post('http://localhost:3000/login', details);
     }
 

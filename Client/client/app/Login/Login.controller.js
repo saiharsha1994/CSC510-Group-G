@@ -9,7 +9,7 @@ export default class loginCtrl {
         this.loginService = loginService;
         this.isUser = true;
         this.signIn = {
-            email: '',
+            username: '',
             password: '',
             isUser: true
         };
