@@ -50,6 +50,7 @@ app.put('/', function (req, res) {
                 account_model.findOne().sort({ userId: -1 }).limit(1).exec(function (err, object) {
                     if (err) {
                         console.error(err);
+                        res.status(400).send(err);
                     } else {
 
                         let new_userId = ((object == null) ? 0 : object.userId) + 1;
@@ -91,6 +92,7 @@ app.put('/', function (req, res) {
                 account_model.findOne().sort({ enterpriseId: -1 }).limit(1).exec(function (err, object) {
                     if (err) {
                         console.error(err);
+                        res.status(400).send(err);
                     } else {
 
                         let new_enterpriseId = ((object == null) ? 0 : object.enterpriseId) + 1;

@@ -6,6 +6,7 @@ var videoSchema = new Schema({
     enterpriseId: Number,
     description: String,
     title: String,
+    fileId: String,
     likes: Number, 
     views: Number, 
     comments:  [{

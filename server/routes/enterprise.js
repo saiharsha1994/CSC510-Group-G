@@ -44,6 +44,47 @@ connection.once("open", () => {
             });
         });
     });
+
+
+});
+
+router.post('/videoDetails', function (req, res) {
+    Video.findOne().sort({ videoId: -1 }).limit(1).exec(function (err, video) {
+        if (err) {
+            console.log(err);
+            res.status(400).send(err);
+        } else {
+            Enterprise.findOne({ 'ename': req.body.username }, function (err, enterprise) {
+                if (err) {
+                    console.log(err);
+                    res.status(400).send(err);
+                } else {
+
+                    let new_videoId = ((video == null) ? 0 : video.videoId) + 1;
+                    var record = {
+                        'videoId': new_videoId,
+                        'enterpriseId': enterprise.enterpriseId,
+                        'description': req.body.description,
+                        'title': req.body.title,
+                        'fileId': req.body.fileId,
+                        'likes': 0,
+                        'views': 0,
+                        'comments': []
+                    };
+
+                    let new_video = Video(record);
+                    new_video.save((err, video) => {
+                        if (err) {
+                            console.log(err);
+                            res.status(400).send(err);
+                        } else {
+                            res.status(200).send('Video upload successful');
+                        }
+                    });
+                }
+            });
+        }
+    });
 });
 
 router.get('/', function (req, res) {
