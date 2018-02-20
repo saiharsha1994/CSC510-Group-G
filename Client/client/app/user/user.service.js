@@ -21,8 +21,18 @@ export default class loginService {
     }
 
     addComment(obj) {
-        return this.http.post('http://localhost:3000', obj);
+        return this.http.post('http://localhost:3000/user/comments', obj);
     }
+
+    getUserCoins(username) {
+        return this.http.get(`http://localhost:3000/user/coins/${username}`, obj);
+    }
+
+    getViewedHistory(id) {
+        return this/http/get(`http://localhost:3000/user/history/${id}`);
+    }
+
+    //TODO: update user profile user/profile/update
 }
 
 loginService.$inject = ['$http'];

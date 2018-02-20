@@ -6,7 +6,11 @@ export default class videoService {
     }
 
     updateViewedList(obj) {
-        return this.http.post('http://localhost:3000/user/videoUpdate', obj);
+        return this.http.post('http://localhost:3000/user/viewed', obj);
+    }
+
+    getVideo(id) {
+        return this.http.get(`http://localhost:3000/fetch/${id}`);
     }
 }
 
