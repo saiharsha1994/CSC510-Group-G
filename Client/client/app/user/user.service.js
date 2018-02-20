@@ -1,7 +1,5 @@
 export default class loginService {
 
-    // static inject = ['$http'];
-
     constructor($http) {
         this.http = $http;
         console.log(this.http);
@@ -22,3 +20,5 @@ export default class loginService {
         });
     }
 }
+
+loginService.$inject = ['$http'];
