@@ -99,6 +99,40 @@ router.post('/videoDetails', function (req, res) {
     });
 });
 
+router.post('/addCoins', function(req, res){
+    Enterprise.findOne({'ename': req.body.username}, function(err, enterprise){
+        if(err){
+            res.status(400).send(err);
+        }else{
+            enterprise.coins = enterprise.coins + req.body.coins;
+            enterprise.save((err, enterprise) => {
+                if (err) {
+                    res.status(400).send(err)
+                } else {
+                    res.status(200).send(enterprise);
+                }
+            });
+        }
+    });
+});
+
+router.post('/updateCoinsPerHour', function(req, res){
+    Enterprise.findOne({'ename': req.body.username}, function(err, enterprise){
+        if(err){
+            res.status(400).send(err);
+        }else{
+            enterprise.coinsPerHour = req.body.coinsPerHour || enterprise.coinsPerHour;
+            enterprise.save((err, enterprise) => {
+                if (err) {
+                    res.status(400).send(err)
+                } else {
+                    res.status(200).send(enterprise);
+                }
+            });
+        }
+    });
+});
+
 router.get('/details/:ename', function (req, res) {
     console.log(req.params.ename);
     Enterprise.findOne({ 'ename': req.params.ename }, function (err, record) {
