@@ -1,10 +1,11 @@
 'use strict';
 
 export default class userCtrl {
-    constructor($state, $stateParams, loginService) {
+    constructor($state, $stateParams, loginService, userService) {
         this.state = $state;
         this.$stateParams = $stateParams;
         this.loginService = loginService;
+        this.userService = userService;
         this.vidoesList = this.$stateParams.uDetails;
         console.log('enter user from state change');
 
@@ -19,6 +20,10 @@ export default class userCtrl {
     $onInit() {
         console.log('User Ctrl is initialized');
         console.log(this.$stateParams);
+        this.comments = _.get(_.filter(this.vidoesList, (video) => {
+            return (video.id === this.currentUrl);
+        }), 'comments', []);
+        this.commentText = '';
     }
 
     claimCoins() {
@@ -39,6 +44,16 @@ export default class userCtrl {
         });
     }
 
+    addComment() {
+        this.userService.addComment({videoId: this.currentUrl, usernmae: this.$stateParams.id,
+            comment: this.commentText}).then((response) => {
+            console.log(response);
+            this.commentText = '';
+        }).catch((response) => {
+            console.log(response);
+        });
+    }
+
     logout() {
         // this.loginService.logout()  
         //TODO: delete the cookie or delete the session.
@@ -46,4 +61,4 @@ export default class userCtrl {
     }
 }
 
-userCtrl.$inject = ['$state', '$stateParams', 'loginService'];
+userCtrl.$inject = ['$state', '$stateParams', 'loginService', 'userService'];
