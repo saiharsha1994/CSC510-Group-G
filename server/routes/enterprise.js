@@ -4,7 +4,8 @@ const mongoose = require('mongoose');
 const config = require('../config/config');
 const Enterprise = require('../models/enterprise-model');
 const Video = require('../models/video-model');
-
+const Tag = require('../models/tag-model');
+var _ = require('underscore');
 //var busboy = require('connect-busboy');
 var fs = require('fs');
 
@@ -78,7 +79,18 @@ router.post('/videoDetails', function (req, res) {
                             console.log(err);
                             res.status(400).send(err);
                         } else {
-                            res.status(200).send('Video upload successful');
+                            var tags = [];
+                            _(req.body.tags).forEach(function(tag){
+                                tags.push({'tag' : tag, 'videoId' : new_videoId});
+                            });
+                            Tag.insertMany(tags, function(err, docs){
+                                if(err){
+                                    console.log(err);
+                                    res.status(400).send(err);
+                                }else{
+                                    res.status(200).send('Video Upload successful');
+                                }
+                            });
                         }
                     });
                 }
