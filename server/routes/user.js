@@ -122,6 +122,9 @@ router.post('/viewed', function(req, res){
                                 }
                             }
                         });
+
+
+
                     }
                 });
             } else{
