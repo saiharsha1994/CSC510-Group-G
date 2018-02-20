@@ -8,9 +8,28 @@
     <title><%- htmlWebpackPlugin.options.pkg.title %></title>
     <style>
         </style>
+        <script>
+            setInterval( checkPageFocus, 1000 );
+
+            function checkPageFocus() {
+            var info = document.getElementById("main_body");
+                if ( !document.hasFocus() ) {
+                    console.log("no focus");
+                    alert("nofocus");
+                }
+            }
+            function myFunction(){
+                //function to pause video when closing.
+                console.log("ok");
+                alert("before closing");
+                return "Write something fdgsdfgsdfg";
+            }
+            
+          </script>
 </head>
-<body ng-app="app" ng-strict-di ng-cloak>
+<body id="main_body" onbeforeunload="return myFunction()" ng-app="app" ng-strict-di ng-cloak>
     <div ui-view> Loading the App</div>
 </body>
+
 <!-- {%= o.htmlWebpackPlugin.options.pkg.name + ' v' + o.htmlWebpackPlugin.options.pkg.version + ' built on ' + new Date() %} -->
 </html>
