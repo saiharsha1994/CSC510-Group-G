@@ -81,20 +81,21 @@
                                                         accept=".mp4"
                                                         ngf-max-size="50MB">
                                                 <input type="text"
-                                                       ng-model="vm.searchTag.tag1"
+                                                       ng-model="vm.searchTag"
                                                        class="form-control text-box-width"
                                                        id="serachTag1"
                                                        placeholder="Search Tags">
+                                                <button type="submit" ng-click="vm.addTag()">Add Tag</button>
                                                 <input type="text"
-                                                       ng-model="vm.searchTag.tag2"
+                                                       ng-model="vm.description"
                                                        class="form-control text-box-width"
-                                                       id="serachTag2"
-                                                       placeholder="Search Tags">
+                                                       id="videoDescription"
+                                                       placeholder="Add Desccriptio" required>
                                                 <input type="text"
-                                                       ng-model="vm.searchTag.tag3"
+                                                       ng-model="vm.title"
                                                        class="form-control text-box-width"
-                                                       id="serachTag3"
-                                                       placeholder="Search Tags">
+                                                       id="videoTitle"
+                                                       placeholder="Add Title" reuired>
                                                 <button type="submit" ng-click="vm.uploadVideo()">submit</button>
                                                 <p>{{vm.progress}}
                                             </form>

@@ -4,13 +4,19 @@ import enterpriseService from './enterprise.service';
 import loginService from './../Login/login.service';
 
 export default class enterpriseCtrl {
-    constructor($state, Upload, enterpriseService, loginService) {
+    constructor($state, $q, Upload, enterpriseService, loginService, $stateParams) {
         this.state = $state;
+        this.$q = $q;
+        this.$stateParams = $stateParams;
         this.uploadService = Upload;
         this.enterpriseService = enterpriseService;
         this.loginService = loginService;
         this.selectedFile = {};
         this.updateType = 'password';
+        this.updatedCoinsPerHour = 0;
+        this.coinsToBeAdded = 0;
+        this.tags = [];
+        this.searchTag = '';
         this.updateProfile = {
           oldPassword: '',
           newPassword: '',
@@ -18,6 +24,11 @@ export default class enterpriseCtrl {
           oldEmail: '',
           newEmail: '',
         };
+    }
+
+    addTag() {
+        this.tags.push(this.searchTag);
+        this.searchTag = '';
     }
 
     $onInit() {
@@ -30,30 +41,39 @@ export default class enterpriseCtrl {
     }
 
     addCoins() {
-        this.enterpriseService.addCoins(this.coinsToBeAdded)
+        this.enterpriseService.addCoins(this.coinsToBeAdded, this.$stateParams.id)
             .then((response) => {
-                console.log(response);
+                this.coinsToBeAdded = 0;
             }).catch((response) => {
                 console.log(response);
             });
     }
 
     updateCoinsPerHour() {
-        this.enterpriseService.updateCoinsPerHour(this.updatedCoinsPerHour)
+        this.enterpriseService.updateCoinsPerHour(this.updatedCoinsPerHour, this.$stateParams.id)
             .then((response) => {
-                console.log(response);
+                this.updatedCoinsPerHour = 0;
             }).catch((response) => {
             console.log(response);
         });
     }
 
     uploadVideo() {
+        this.showLoading = true;
         this.uploadService.upload({url: 'http://localhost:3000/enterprise/uploadVideo', data:{file: this.selectedFile}})
             .then((response) => {
+                let videoDetails = {username: this.$stateParams.id, description: this.description,
+                    title: this.title, fileId: _.get(response, 'data._id'), tags: this.tags};
+                if (_.isUndefined(videoDetails.fileId)) {
+                    return this.$q.reject('File not uploaded properly');
+                }
+                return this.enterpriseService.uploadVideoDetails(videoDetails);
                 //TODO: // /vidoeDetails  {username: '', description: '', title: '', fileId: response.data.id, tags: []}
                 console.log(response);
             }).catch((response) => {
             console.log(response);
+        }).finally((response) => {
+            this.showLoading = false;
         });
     }
 
@@ -66,7 +86,7 @@ export default class enterpriseCtrl {
     }
 }
 
-enterpriseCtrl.$inject = ['$state', 'Upload', 'enterpriseService', 'loginService'];
+enterpriseCtrl.$inject = ['$state', '$q', 'Upload', 'enterpriseService', 'loginService', '$stateParams'];
 
 $(document).ready(function () {
     // THE TOP (HEADER) LIST ITEM.
