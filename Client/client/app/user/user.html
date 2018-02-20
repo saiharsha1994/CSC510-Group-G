@@ -1,1 +1,11 @@
-<video-component></video-component>
+<div class="col-md-4">
+
+</div>
+<div class="col-md-8">
+    <div class="col-md-8">
+    <video-component is-video-completed="vm.isVideoCompleted" videos-list = "vm.vidoesList"></video-component></div>
+    <div class="col-md-4">
+        <input ng-disabled="vm.isVideoCompleted === false" type="button" class="btn btn-default"
+               ng-click="vm.claimCoins()">Claim Coins For the video</input>
+    </div>
+</div>

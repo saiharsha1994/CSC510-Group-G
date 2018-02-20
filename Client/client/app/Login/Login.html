@@ -1,124 +1,144 @@
 <html lang="en" class="no-js">
-	<head>
-		<link rel="shortcut icon" href="../favicon.ico">
-		<link rel="stylesheet" type="text/css" href="css/normalize.css" />
-		<link rel="stylesheet" type="text/css" href="css/demo.css" />
-		<link rel="stylesheet" type="text/css" href="css/component.css" />
-		<link href='http://fonts.googleapis.com/css?family=Raleway:200,400,800' rel='stylesheet' type='text/css'>
-	</head>
+<head>
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" type="text/css" href="css/normalize.css"/>
+    <link rel="stylesheet" type="text/css" href="css/demo.css"/>
+    <link rel="stylesheet" type="text/css" href="css/component.css"/>
+    <link href='http://fonts.googleapis.com/css?family=Raleway:200,400,800' rel='stylesheet' type='text/css'>
+</head>
 <body>
-        <div class="container demo-1">
-                <div class="content">
-                    <div id="large-header" class="large-header">
-                        <canvas id="demo-canvas"></canvas>
-                        <h1 class="main-title">ADBARN</h1>
-                        <div class="container">
-                                <div class="row">
-                                    <br>
-                                        <div class="Absolute-Center is-Responsive">
-                                          <div class="col-sm-12 col-md-12">  
-                                                <ul class="nav nav-pills center-pills">
-                                                        <li class="active"><a href ng-click="vm.signIn.isUser = true" data-toggle="tab" href="#home">User</a></li>
-                                                        <li><a href ng-click="vm.signIn.isUser = false" data-toggle="tab" href="#home">Enterprise</a></li>
-                                                </ul>
-                                                <br>
-                            <div class="col-sm-12" style="background-color: white ;border-radius: 10px;opacity:0.95;color: black;text-shadow: none;" >                      
+<div class="container demo-1">
+    <div class="content">
+        <div id="large-header" class="large-header">
+            <canvas id="demo-canvas"></canvas>
+            <h1 class="main-title">ADBARN</h1>
+            <div class="container">
+                <div class="row">
+                    <br>
+                    <div class="Absolute-Center is-Responsive">
+                        <div class="col-sm-12 col-md-12">
+                            <ul class="nav nav-pills center-pills">
+                                <li class="active"><a href ng-click="vm.signIn.isUser = true" data-toggle="tab"
+                                                      href="#home">User</a></li>
+                                <li><a href ng-click="vm.signIn.isUser = false" data-toggle="tab" href="#home">Enterprise</a>
+                                </li>
+                            </ul>
                             <br>
+                            <div class="col-sm-12"
+                                 style="background-color: white ;border-radius: 10px;opacity:0.95;color: black;text-shadow: none;">
+                                <br>
                                 <div class="tab-content">
-                              <div id="home" class="tab-pane fade in active">
-                                
-                                <div ng-if="vm.isSignIn === true">  
-                                <form role="form" >
-                                    <div class="form-group input-group">
-                                            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                                        <input type="email"
-                                               ng-model="vm.signIn.email"
-                                               class="form-control text-box-width"
-                                               id="signInEmail"
-                                               placeholder="Enter email" required>
-                                    </div>
-                                    <div class="form-group input-group">
-                                            <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-                                        <input type="password"
-                                               ng-model="vm.signIn.password"
-                                               class="form-control text-box-width"
-                                               id="signInPassword"
-                                               placeholder="Password"  required>
-                                    </div>
-                                    <div class="form-group">
-                                    <button  type="submit" class="btn btn-block btn-default" ng-click="vm.submit()">Submit</button>
-                                    </div>
-                                    <div class="checkbox">
-                                        <label><input type="checkbox" ng-model="vm.signIn.forgotPassword" value="">Forgot Password</label>
-                                    </div>
-                                    <div ng-if="vm.signIn.forgotPassword">
-                                        <div class="form-group input-group">
-                                            <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
-                                            <input type="email" ng-model="vm.signIn.confirmEmail" class="form-control" id="confirmEmail" placeholder="Confirm email">
+                                    <div id="home" class="tab-pane fade in active">
+
+                                        <div ng-if="vm.isSignIn === true">
+                                            <form role="form">
+                                                <div class="form-group input-group">
+                                                    <span class="input-group-addon"><i
+                                                            class="glyphicon glyphicon-user"></i></span>
+                                                    <input type="email"
+                                                           ng-model="vm.signIn.email"
+                                                           class="form-control text-box-width"
+                                                           id="signInEmail"
+                                                           placeholder="Enter email" required>
+                                                </div>
+                                                <div class="form-group input-group">
+                                                    <span class="input-group-addon"><i
+                                                            class="glyphicon glyphicon-lock"></i></span>
+                                                    <input type="password"
+                                                           ng-model="vm.signIn.password"
+                                                           class="form-control text-box-width"
+                                                           id="signInPassword"
+                                                           placeholder="Password" required>
+                                                </div>
+                                                <div class="form-group">
+                                                    <button type="submit" class="btn btn-block btn-default"
+                                                            ng-click="vm.submit()">Submit
+                                                    </button>
+                                                </div>
+                                                <div class="checkbox">
+                                                    <label><input type="checkbox" ng-model="vm.signIn.forgotPassword"
+                                                                  value="">Forgot Password</label>
+                                                </div>
+                                                <div ng-if="vm.signIn.forgotPassword">
+                                                    <div class="form-group input-group">
+                                                        <span class="input-group-addon"><i
+                                                                class="glyphicon glyphicon-envelope"></i></span>
+                                                        <input type="email" ng-model="vm.signIn.confirmEmail"
+                                                               class="form-control" id="confirmEmail"
+                                                               placeholder="Confirm email">
+                                                    </div>
+                                                    <button type="submit" class="btn btn-block btn-default"
+                                                            ng-click="vm.resetPassword()">Reset Password
+                                                    </button>
+                                                </div>
+                                            </form>
                                         </div>
-                                        <button type="submit" class="btn btn-block btn-default" ng-click="vm.resetPassword()">Reset Password</button>
+                                        <div ng-if="vm.isSignIn === false">
+                                            <form role="form">
+                                                <div class="form-group input-group">
+                                                    <span class="input-group-addon"><i
+                                                            class="glyphicon glyphicon-user"></i></span>
+                                                    <input type="text"
+                                                           ng-model="vm.signUp.username"
+                                                           class="form-control text-box-width"
+                                                           id="signUpUserName"
+                                                           placeholder="Enter username" required>
+                                                </div>
+                                                <div class="form-group input-group">
+                                                    <span class="input-group-addon"><i
+                                                            class="glyphicon glyphicon-envelope"></i></span>
+                                                    <input type="email"
+                                                           ng-model="vm.signUp.email"
+                                                           class="form-control text-box-width"
+                                                           id="signUpEmail"
+                                                           placeholder="Enter email" required>
+                                                </div>
+                                                <div class="form-group input-group">
+                                                    <span class="input-group-addon"><i
+                                                            class="glyphicon glyphicon-lock"></i></span>
+                                                    <input type="password"
+                                                           ng-model="vm.signUp.password"
+                                                           class="form-control text-box-width"
+                                                           id="signUpPassword"
+                                                           placeholder="Password" required>
+                                                </div>
+                                                <div class="form-group input-group">
+                                                    <span class="input-group-addon"><i
+                                                            class="glyphicon glyphicon-lock"></i></span>
+                                                    <input type="password"
+                                                           ng-model="vm.signUp.confirmPassword"
+                                                           class="form-control text-box-width"
+                                                           id="confirmPassword"
+                                                           placeholder="Confirm password" required>
+                                                </div>
+                                                <div class="form-group">
+                                                    <button type="submit" class="btn btn-block btn-default"
+                                                            ng-click="vm.submit()">Submit
+                                                    </button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <ul ng-init="vm.isSignIn = true">
+                                            <div id="contain">
+                                                <a href ng-click="vm.isSignIn = !vm.isSignIn">
+                                                    {{(vm.isSignIn === true ? 'Create a new account' : 'Already have an
+                                                    account?')}}</a>
+                                            </div>
+                                        </ul>
+                                        <div ng-show="vm.showError">{{vm.errorMessage}}</div>
                                     </div>
-                                </form>
                                 </div>
-                                <div ng-if="vm.isSignIn === false">
-                                    <form role="form">
-                                        <div class="form-group input-group">
-                                                <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                                            <input type="text"
-                                                   ng-model="vm.signUp.username"
-                                                   class="form-control text-box-width"
-                                                   id="signUpUserName"
-                                                   placeholder="Enter username" required>
-                                        </div>
-                                        <div class="form-group input-group">
-                                                <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
-                                            <input type="email"
-                                                   ng-model="vm.signUp.email"
-                                                   class="form-control text-box-width"
-                                                   id="signUpEmail"
-                                                   placeholder="Enter email" required>
-                                        </div>
-                                        <div class="form-group input-group">
-                                                <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-                                            <input type="password"
-                                                   ng-model="vm.signUp.password"
-                                                   class="form-control text-box-width"
-                                                   id="signUpPassword"
-                                                   placeholder="Password"  required>
-                                        </div>
-                                        <div class="form-group input-group">
-                                                <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-                                            <input type="password"
-                                                   ng-model="vm.signUp.confirmPassword"
-                                                   class="form-control text-box-width"
-                                                   id="confirmPassword"
-                                                   placeholder="Confirm password"  required>
-                                        </div>
-                                        <div class="form-group">
-                                        <button type="submit" class="btn btn-block btn-default" ng-click="vm.submit()">Submit</button>
-                                        </div>
-                                    </form>
-                                </div>
-                                <ul ng-init="vm.isSignIn = true">
-                                        <div id="contain">
-                                    <a href ng-click="vm.isSignIn = !vm.isSignIn" >
-                                        {{(vm.isSignIn === true ? 'Create a new account' : 'Already have an account?')}}</a> 
-                                        </div>    
-                                </ul>
-                                    <div ng-show="vm.showError">{{vm.errorMessage}}</div>
-                              </div>
                             </div>
-                        </div>
-                        </div>
-                        </div>
-                        </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <script src="js/TweenLite.min.js"></script>
-            <script src="js/EasePack.min.js"></script>
-            <script src="js/rAF.js"></script>
-            <script src="js/demo-1.js"></script>
+        </div>
+    </div>
+</div>
+<script src="js/TweenLite.min.js"></script>
+<script src="js/EasePack.min.js"></script>
+<script src="js/rAF.js"></script>
+<script src="js/demo-1.js"></script>
 </body>
 </html>
