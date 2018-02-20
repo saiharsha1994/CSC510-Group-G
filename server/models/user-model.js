@@ -6,7 +6,8 @@ var userSchema = new Schema({
     username: String, 
     emailId: String, 
     password: String,
-    coins: Number, 
+    coins: Number,
+    time: Number, 
     videosViewed: [{
         videoId: Number
     }]
