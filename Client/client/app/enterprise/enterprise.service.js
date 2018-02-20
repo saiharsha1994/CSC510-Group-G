@@ -8,7 +8,7 @@ export default class enterpriseService {
     }
 
     updateCoinsPerHour(coinsPerHour) {
-        return this.http.post('http://localhost:3000/enterprise/addCoins', {coinsPerHour: coinsPerHour});
+        return this.http.post('http://localhost:3000/enterprise/updateCoinsPerHour', {coinsPerHour: coinsPerHour});
     }
 }
 

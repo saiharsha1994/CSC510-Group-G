@@ -50,6 +50,7 @@ export default class enterpriseCtrl {
     uploadVideo() {
         this.uploadService.upload({url: 'http://localhost:3000/uploadVideo', data:{file: this.selectedFile}})
             .then((response) => {
+                //TODO: // /vidoeDetails  {username: '', description: '', title: '', fileId: response.data.id, tags: []}
                 console.log(response);
             }).catch((response) => {
             console.log(response);

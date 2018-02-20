@@ -25,7 +25,7 @@ export default class loginService {
     }
 
     updateProfile(profileDetails, type) {
-        return this.http.post(`http://lcalhost:3000/${type}/profile`);
+        return this.http.post(`http://lcalhost:3000/${type}/profile/update`, profileDetails);
     }
 }
 
