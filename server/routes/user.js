@@ -102,7 +102,7 @@ router.post('/viewed', function(req, res){
                     if(err){
                         res.status(400).send(err);
                     }else{
-                        User.findOne({'userId': req.body.userId}, function(err, user){
+                        User.findOne({'username': req.body.username}, function(err, user){
                             if(err){
                                 console.error(err);
                                 res.status(400).send(err);
@@ -133,15 +133,24 @@ router.post('/viewed', function(req, res){
         }
     });
 
-    
+});
+
+router.get('/coins/:username', function (req, res) {
+    User.findOne({ 'username': req.body.username }, function (err, user) {
+        if (err) {
+            res.status(400).send(err);
+        } else {
+            res.status(200).send(user.coins);
+        }
+    });    
 });
 
 router.post('/profile/update', function (req, res) {
     console.log(req.body.username);
     //{"userId":1223, "username":"haramam", "emailId":"oko@bokka.com"}
     // postman request - localhost:3000/user/profile/update
-    var query = {"userId":req.body.username}//, "emailId":req.body.emailId};
-    User.findOne(query, {"userId": true, "emailId": true}, 
+    var query = {"username":req.body.username}//, "emailId":req.body.emailId};
+    User.findOne(query, {"username": true, "emailId": true}, 
         (err, user) => {
             if (err) {
                 res.status(400).send(err);
@@ -153,7 +162,7 @@ router.post('/profile/update', function (req, res) {
                     if (err) {
                         res.status(400).send(err)
                     }else{
-                        res.status(200).send("user details successfully updated "+user);
+                        res.status(200).send("Password successfully updated ");
                     }
                     
                 });
@@ -278,13 +287,30 @@ router.get('/fetch/:id', function (req, res) {
 });
 
 router.get('/history/:username', function (req, res) {
-    User.findOne({ username: req.params.username }).exec(function (err, user) {
+    User.findOne({ 'username': req.params.username }).exec(function (err, user) {
         if (err) {
             console.error('Error retrieving data for ' + req.params.username);
         } else {
             if(user){
-                res.json(user.videosViewed);
-            }
+                var videoIds = [];
+                _(user.videosViewed).forEach(function (videoId) {
+                     videoIds.push( videoId );
+                 });
+                 if (videoIds.length != 0) {
+                     var query = {};
+                     query["$or"] = videoIds;
+                 
+                     Video.find(query, function (err, videos) {
+                         if (err) {
+                             res.status(400).send(err);
+                         } else {
+                             res.status(200).send(videos);
+                         }
+                     });
+                 }else{
+                     res.status(404).send('You have not watched any videos till now');
+                 }            
+                }
             else{
                 res.json([]);
             }
