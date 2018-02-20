@@ -36,9 +36,9 @@ export default class loginCtrl {
                 return this.loginService.getDetails(this.signIn);
             }).then((response) => {
                 if (this.signIn.isUser === true) {
-                    this.state.go('user', {id: this.signIn.email, uDetails: response.data});
+                    this.state.go('user', {id: this.signIn.username, uDetails: response.data});
                 } else {
-                    this.state.go('enterprise', {id: this.signIn.email, eDetails: response.data});
+                    this.state.go('enterprise', {id: this.signIn.username, eDetails: response.data});
                 }
             }).catch((response) => {
                 if (response.status === 404) {
@@ -56,9 +56,9 @@ export default class loginCtrl {
                 if (this.signUp.isUser === true) {
                     console.log(response);
                     console.log('response');
-                    this.state.go('user', {id: this.signUp.email, uDetails: response.data});
+                    this.state.go('user', {id: this.signUp.username, uDetails: response.data});
                 } else {
-                    this.state.go('enterprise', {id: this.signUp.email, eDetails: response.data});
+                    this.state.go('enterprise', {id: this.signUp.username, eDetails: response.data});
                 }
             }).catch((response) => {
                 if (response.status === 404) {
