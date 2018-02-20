@@ -11,7 +11,13 @@
   <link rel="icon" href="favicon.jpg">
   <base href="/">
 </head>
-<body ng-app="app" ng-strict-di ng-cloak>
+<script>
+  function onbeforeunload(){
+    alert("before closing");
+  }
+  
+</script>
+<body onbeforeunload="ConfirmClose()" ng-app="app" ng-strict-di ng-cloak >
 <!--<div ui-view></div>-->
 <div ui-view>
   <div>Loading.................</div>
@@ -22,5 +28,6 @@
 <!--</app>-->
 
 <script src="bundle.js"></script>
+
 </body>
 </html>
