@@ -1,3 +1,5 @@
+import { isNullOrUndefined } from 'util';
+
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
@@ -12,14 +14,15 @@ var fs = require('fs');
 let Grid = require('gridfs-stream');
 let connection = mongoose.connection;
 let gfs;
-
+var db;
 mongoose.Promise = global.Promise;
 Grid.mongo = mongoose.mongo;
 
-mongoose.connect(config.dev.db, function (err) {
+mongoose.connect(config.dev.db, function (err, db_connect) {
     if (err) {
         console.error(err);
     } else {
+        db = db_connect;
         console.log('connected to ' + config.dev.db);
     }
 });
@@ -165,24 +168,29 @@ router.get('/details/:ename', function (req, res) {
     });
 });
 
-router.post('/profile/update', function (req, res) {
+// post request to update password of corresponding enterprise record.
+router.post('/password/update', function (req, res) {
     Enterprise.findOne({ "ename": req.body.username },
         (err, enterprise) => {
             if (err) {
                 res.status(400).send(err);
             }
-            // TODO : Handle this request
-            if (enterprise && (req.body.password === enterprise.password)) {  // Search could come back empty, so we should protect against sending nothing back
-                enterprise.password = req.body.newpassword || enterprise.password;
-                enterprise.save((err, enterprise) => {
-                    if (err) {
-                        res.status(400).send(err)
-                    } else {
-                        res.status(200).send("Password changed successfully");
-                    }
-                });
-            } else {  // In case no enterprise was found with the given query
-                res.status(404).send("No Enterprise found")
+            else{
+                if (enterprise && (req.body.password === enterprise.password)) {  
+                    // Search could come back empty, so we should protect against sending nothing back
+                    enterprise.password = req.body.newpassword || enterprise.password;
+                    enterprise.save((err, enterprise) => {
+                        if (err) {
+                            res.status(400).send(err);
+                        } else {
+                            res.status(200).send("Password updated successfully");
+                        }
+                    });
+                } else if(enterprise.password != read.body.password) {
+                    res.send(401).send("Passwords do not match!");
+                } else{
+                    res.status(404).send("No Enterprise found");
+                }
             }
         }
     );
@@ -194,5 +202,49 @@ router.get('/stats', function (req, res) {
 });
 
 // TODO : Add route to delete video
+router.delete('/deleteVideo/:videoId', function (req, res) {
+    if(gfs.isNullOrUndefined)
+        gfs = Grid(connection.db);      // connection to gridfs
+    Video.findOneAndRemove({ 'videoId': req.params.videoId }, function (err, video) { // find videoid from videos table
+        if (err) {
+            console.error('error in fetching videoId :' + req.params.videoId + ' record to delete');
+            res.status(400).send(err);
+        }
+        else {      // video found in videos table
+            if(video){
+                var options = {
+                    _id : video.fileId      // get the corresponding object id 
+                }
+                var query = {
+                    'enterpriseId': record.enterpriseId
+                };
+                gfs.remove(options, function(err, gridStore){   // remove video from files and chunks (fs.files nad fs.chunks)
+                    if(err){
+                        console.log("Error in removing file");
+                    }
+                    else{
+                        console.log("removed from fs, chunks successfully");
 
+                    }
+                });
+                query = {
+                    videoId : video.videoId     // delete the videos and their mapping tags for this video
+                }
+                db.collection("tags").remove(query, function(err, tags){
+                    if(err){
+                        console.log("error");
+                    } else {
+                        console.log(tags+"deleted");
+                    }
+
+                });
+                console.log(query);
+            }
+            else{
+                res.status(404).send("No Video found to delete");
+            }
+        }
+    });
+});
+db.close();
 module.exports = router;
