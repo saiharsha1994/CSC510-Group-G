@@ -3,9 +3,22 @@
 </div>
 <div class="col-md-8">
     <div class="col-md-8">
-    <video-component is-video-completed="vm.isVideoCompleted" videos-list = "vm.vidoesList"></video-component></div>
+    <video-component is-video-completed="vm.isVideoCompleted"
+                     videos-list = "vm.vidoesList" current-url="vm.currentUrl"></video-component></div>
     <div class="col-md-4">
         <input ng-disabled="vm.isVideoCompleted === false" type="button" class="btn btn-default"
                ng-click="vm.claimCoins()">Claim Coins For the video</input>
+    </div>
+    <div>
+        <form>
+            <textarea ng-model="vm.commentText" rows="4" cols="50"></textarea>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-block btn-default" ng-click="vm.addComment()"></button>
+                </div>
+        </form>
+        <div class="col-sm-4" id="slider-thumbs">
+            <ul class="hide-bullets" id="dynamic">
+                <li ng-repeat = "video in vm.comments"  class="col-sm-12">{{video.title}}</li>
+        </div>
     </div>
 </div>

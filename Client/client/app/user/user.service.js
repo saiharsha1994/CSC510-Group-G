@@ -19,6 +19,10 @@ export default class loginService {
             console.log(response);
         });
     }
+
+    addComment(obj) {
+        return this.http.post('http://localhost:3000', obj);
+    }
 }
 
 loginService.$inject = ['$http'];
