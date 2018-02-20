@@ -25,7 +25,7 @@ var account_type;
 var account_route;
 var account_model;
 
-app.put('/', function (req, res) {
+app.put('/signup', function (req, res) {
 
     // Determine if the account belongs to User or enterprise and initialize accordingly
     account_type = (req.body.isUser) ? 'user' : 'enterprise';
@@ -121,11 +121,11 @@ app.put('/', function (req, res) {
     }
 });
 
-app.post('/', function (req, res) {
+app.post('/login', function (req, res) {
     if (req.body.isUser) {
         var query = {
             "$and": [
-                { 'emailId': req.body.email },
+                { 'username': req.body.username },
                 { 'password': req.body.password }
             ]
         };
@@ -148,7 +148,7 @@ app.post('/', function (req, res) {
     } else {
         var query = {
             "$and": [
-                { 'emailId': req.body.email },
+                { 'ename': req.body.username },
                 { 'password': req.body.password }
             ]
         };
