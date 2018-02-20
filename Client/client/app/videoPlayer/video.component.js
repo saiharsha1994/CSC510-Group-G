@@ -5,7 +5,8 @@ import './video.component.scss';
 const videoComponent = {
     bindings: {
         isVideoCompleted: '=?',
-        videosList: '=?'
+        videosList: '=?',
+        currentUrl: '=?'
     },
   template,
     controller,

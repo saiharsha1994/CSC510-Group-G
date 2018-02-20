@@ -9,19 +9,22 @@ export default class userCtrl {
     }
     
     $onInit() {
-        this.config.sources = _.map(this.videosList, (eachVideo) => {
-            return {src: this.$sce.trustAsResourceUrl(`${baseUrl}${eachVideo.videoId}`), type: 'video/mp4'};
-        });
-        this.currentUrl = _.get(_.first(this.videosList), 'videoId');
-        this.config.url = 'https://unpkg.com/videogular@2.1.2/dist/themes/default/videogular.css';
-        this.config.plugins = {
-            poster: 'http://www.videogular.com/assets/images/videogular.png',
-            controls: {
-                autoHide: false,
-                autoHideTime: 3000
-            }
-        };
-        console.log('User Ctrl is initialized');
+        console.log(' video component (this.videosList');
+        console.log(this.videosList);
+        this.videoIds = _.map(this.videosList, 'videoId');
+        let currentVideo = _.first(this.videosList);
+        this.config.sources = [{src: 'http://static.videogular.com/assets/videos/videogular.mp4', type: 'video/mp4'}];
+        this.comments = _.get(currentVideo, 'comments', []);
+        this.comments.push({username: 'modda', body: 'rty'});
+        this.comments.push({username: 'modda', body: 'rty'});
+        this.comments.push({username: 'modda', body: 'rty'});
+        this.comments.push({username: 'modda', body: 'rty'});
+        console.log('this.config');
+        console.log(this.config);
+            this.config.theme = 'node_modules/videogular-themes-default/videogular.css';
+            this.config.plugins = {
+                poster: 'http://www.videogular.com/assets/images/videogular.png'
+            };
     }
 
     onPlayerReady(API) {
@@ -31,19 +34,28 @@ export default class userCtrl {
         console.log(API);
     }
 
-    onVideoComplete() {
-        this.videoService.updateViewedList({username: this.$stateParams.id, videoId: this.currentUrl, time: this.api.totalTime}).then((response) => {
-            console.log(response);
-        }).catch((response) => {
-            console.log(response);
-        });
-        console.log(this.api);
+    onVideoChange(video) {
+        console.log('onVideoChange');
+        console.log(video);
+        this.api.pause();
+        this.config.sources = [];
+        this.config.sources = [{src: this.$sce.trustAsResourceUrl("http://static.videogular.com/assets/videos/videogular.webm"), type: "video/webm"}];
+        this.api.currentTime = 0;
+        this.comments = _.get(_.first(_.filter(this.videosList, (eachVideo) => {
+            return eachVideo.videoId === video.videoId;
+        })), 'comments', []);
+        // this.api.play();
     }
 
-    onUpdateTime(currentTime, duration) {
-        console.log(currentTime);
-        console.log(duration);
-    }
+    // onVideoComplete() {
+    //     this.videoService.updateViewedList({username: this.$stateParams.id,
+    //         videoId: this.currentUrl, time: this.api.totalTime}).then((response) => {
+    //         console.log(response);
+    //     }).catch((response) => {
+    //         console.log(response);
+    //     });
+    //     console.log(this.api);
+    // }
 
     logout() {
         // this.loginService.logout()  

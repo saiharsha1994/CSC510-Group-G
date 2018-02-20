@@ -6,8 +6,6 @@ export default class userCtrl {
         this.$stateParams = $stateParams;
         this.loginService = loginService;
         this.userService = userService;
-        this.vidoesList = this.$stateParams.uDetails;
-        console.log('enter user from state change');
 
         this.updateProfile = {
             oldPassword: '',
@@ -18,8 +16,8 @@ export default class userCtrl {
     }
 
     $onInit() {
-        console.log('User Ctrl is initialized');
-        console.log(this.$stateParams);
+        this.videosList = this.$stateParams.uDetails;
+        console.log(this.videosList);
         this.comments = _.get(_.filter(this.vidoesList, (video) => {
             return (video.id === this.currentUrl);
         }), 'comments', []);
@@ -31,7 +29,7 @@ export default class userCtrl {
             this.userService.claimCoins(this.$stateParams.id).then((response) => {
                 this.isVideoCompleted = false;
             }).catch((response) => {
-                console.log(response);
+                // console.log(response);
             });
         }
     }

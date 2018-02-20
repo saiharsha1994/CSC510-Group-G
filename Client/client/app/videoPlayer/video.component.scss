@@ -25,10 +25,10 @@
 }
 
 #div1 {
-  word-wrap: break-word; 
-  width: 20em; 
+  word-wrap: break-word;
+  width: 20em;
   overflow: hidden;
-  text-overflow: clip; 
+  text-overflow: clip;
 }
 
 .carousel-inner>.item>img, .carousel-inner>.item>a>img {
@@ -49,31 +49,31 @@
 
 .hide-bullets {
   list-style:none;
-  margin-top:40px;  
+  margin-top:40px;
 }
 
 .panel {
-	position:relative;
+  position:relative;
 }
 .panel>.panel-heading:after,.panel>.panel-heading:before{
-	position:absolute;
-	top:11px;left:-16px;
-	right:100%;
-	width:0;
-	height:0;
-	display:block;
-	content:" ";
-	border-color:transparent;
-	border-style:solid solid outset;
-	pointer-events:none;
+  position:absolute;
+  top:11px;left:-16px;
+  right:100%;
+  width:0;
+  height:0;
+  display:block;
+  content:" ";
+  border-color:transparent;
+  border-style:solid solid outset;
+  pointer-events:none;
 }
 .panel>.panel-heading:after{
-	border-width:7px;
-	border-right-color:#f7f7f7;
-	margin-top:1px;
-	margin-left:2px;
+  border-width:7px;
+  border-right-color:#f7f7f7;
+  margin-top:1px;
+  margin-left:2px;
 }
 .panel>.panel-heading:before{
-	border-right-color:#ddd;
-	border-width:8px;
+  border-right-color:#ddd;
+  border-width:8px;
 }
