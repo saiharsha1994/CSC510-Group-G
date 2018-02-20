@@ -1,57 +1,30 @@
-<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
-<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-<!------ Include the above in your HEAD tag ---------->
+<div>
+    <div class="col-sm-8">
+        <div class="videogular-container">
+            <videogular vg-player-ready="vm.onPlayerReady($API)"
+                        vg-theme="vm.config.theme.url"
+                        vg-complete="vm.onVideoComplete()">
+                <vg-media vg-src="vm.config.sources"></vg-media>
+                <vg-controls vg-autohide="false">
+                    <vg-play-pause-button></vg-play-pause-button>
+                    <vg-time-display>Current Time: {{ currentTime | date:'mm:ss' }}</vg-time-display>
+                    <!--<vg-scrub-bar>-->
+                    <!--<vg-scrub-bar-current-time></vg-scrub-bar-current-time>-->
+                    <!--</vg-scrub-bar>-->
+                    <vg-time-display>Time Left: {{ timeLeft | date:'mm:ss' }}</vg-time-display>
+                    <vg-volume>
+                        <vg-mute-button></vg-mute-button>
+                        <vg-volume-bar></vg-volume-bar>
+                    </vg-volume>
+                    <vg-fullscreen-button></vg-fullscreen-button>
+                </vg-controls>
 
-
-    <div id="main_area">
-        <!-- Slider -->
-        <div class="row">
-            <div class="col-sm-8">
-                <div class="col-xs-12" id="slider">
-                    <!-- Top part of the slider -->
-                    <div class="row">
-                        <div class="col-sm-12" id="carousel-bounding-box">
-                            <div class="carousel slide" id="myCarousel">
-                                <!-- Carousel items -->
-                                <div class="carousel-inner">
-                                        <div class="videogular-container">
-                                                <videogular vg-theme="vm.config.theme.url">
-                                                    <vg-media vg-src="vm.config.sources"
-                                                              vg-tracks=" vm.config.tracks">
-                                                    </vg-media>
-                                                    <vg-controls vg-autohide="false">
-                                                        <vg-play-pause-button></vg-play-pause-button>
-                                                        <vg-time-display>{{ currentTime | date:'mm:ss' }}</vg-time-display>
-                                                        <vg-scrub-bar>
-                                                            <vg-scrub-bar-current-time></vg-scrub-bar-current-time>
-                                                        </vg-scrub-bar>
-                                                        <vg-time-display>{{ timeLeft | date:'mm:ss' }}</vg-time-display>
-                                                        <vg-volume>
-                                                            <vg-mute-button></vg-mute-button>
-                                                            <vg-volume-bar></vg-volume-bar>
-                                                        </vg-volume>
-                                                        <vg-playback-button></vg-playback-button>
-                                                        <vg-fullscreen-button></vg-fullscreen-button>
-                                                    </vg-controls>
-                                            
-                                                    <vg-overlay-play></vg-overlay-play>
-                                                    <vg-poster vg-url='vm.config.plugins.poster'></vg-poster>
-                                                </videogular>
-                                            </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!--/Slider-->
-        </div>
-        <div class="col-sm-4" id="slider-thumbs">
-                <!-- Bottom switcher of slider -->
-                <ul class="hide-bullets" id="dynamic">
-                    
-                </ul>
-            </div>
+                <vg-overlay-play></vg-overlay-play>
+                <vg-poster vg-url='vm.config.plugins.poster'></vg-poster>
+            </videogular>
+        </div></div>
+    <div class="col-sm-4" id="slider-thumbs">
+        <ul class="hide-bullets" id="dynamic">
+            <li ng-repeat = "video in vm.videosList"  class="col-sm-12">{{video.title}}</li>
     </div>
 </div>
-
