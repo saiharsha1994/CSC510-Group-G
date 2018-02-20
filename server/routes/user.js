@@ -104,7 +104,7 @@ router.post('/viewed', function (req, res) {
 
 });
 
-router.get('/user/coins/:username', function (req, res) {
+router.get('/coins/:username', function (req, res) {
     User.findOne({ 'username': req.body.username }, function (err, user) {
         if (err) {
             res.status(400).send(err);

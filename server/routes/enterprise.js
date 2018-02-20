@@ -38,9 +38,9 @@ connection.once("open", () => {
             });
             //fstream = fs.createWriteStream(__dirname + '/files/' + filename);
             file.pipe(fstream);
-            fstream.on('close', function () {
+            fstream.on('close', function (video) {
                 console.log('uploaded successfully');
-                res.redirect('back');
+                res.status(200).send(video);
             });
         });
     });
