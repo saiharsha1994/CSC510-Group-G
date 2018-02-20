@@ -108,6 +108,7 @@
                                         </div><!-- /col-sm-1 -->
 
                                         <div class="col-sm-5">
+                                            <textarea ng-keypress="vm.onCommentType($event)"  ng-model="vm.newComment"></textarea>
                                             <div class="panel panel-default">
                                                 <div ng-repeat="comment in vm.comments" class="panel-heading">
                                                     <strong>{{comment.username}}</strong>

@@ -1,11 +1,14 @@
 'use strict';
 const baseUrl = 'http://localhost:3000/user/fetch/';
 export default class userCtrl {
-    constructor($sce, $stateParams, videoService) {
+    constructor($sce, $stateParams, videoService, userService) {
         this.$sce = $sce;
         this.$stateParams = $stateParams;
         this.videoService = videoService;
+        this.userService = userService;
         this.config = {};
+        this.currentVideoId = '';
+        this.newComment = '';
     }
     
     $onInit() {
@@ -13,6 +16,7 @@ export default class userCtrl {
         console.log(this.videosList);
         this.videoIds = _.map(this.videosList, 'videoId');
         let currentVideo = _.first(this.videosList);
+        this.currentVideoId = _.get(currentVideo, 'videoId');
         this.config.sources = [{src: `${baseUrl}${_.get(currentVideo, 'fileId')}`, type: 'video/mp4'}];
         this.comments = _.get(currentVideo, 'comments', []);
         this.comments.push({username: 'modda', body: 'rty'});
@@ -32,6 +36,18 @@ export default class userCtrl {
         this.api = API;
         console.log('ererwerwerwe');
         console.log(API);
+    }
+
+    onCommentType(event) {
+        if (_.get(event, 'keyCode') === 13) {
+            this.userService.addComment({username: this.$stateParams.id, videoId: this.currentVideoId,
+                comment: this.newComment}).then((response) => {
+                    this.comments.push({username: this.$stateParams.id, body: this.newComment});
+                    this.newComment = '';
+            });
+        }
+        console.log(event);
+        //newComment
     }
 
     onVideoChange(video) {
@@ -64,4 +80,4 @@ export default class userCtrl {
 }
 
 
-userCtrl.$inject = ['$sce', '$stateParams', 'videoService'];
+userCtrl.$inject = ['$sce', '$stateParams', 'videoService', 'userService'];

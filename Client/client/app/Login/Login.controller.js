@@ -49,6 +49,11 @@ export default class loginCtrl {
                 this.showError = true;
             });
         } else {
+            if (this.signUp.password !== this.signUp.confirmPassword) {
+                this.errorMessage = 'Passwords do not match';
+                this.showError = true;
+                return;
+            }
             this.signUp.isUser = this.isUser;
             this.loginService.doSignUp(this.signUp).then((response) => {
                 return this.loginService.getDetails(this.signUp);
