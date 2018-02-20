@@ -9,7 +9,8 @@ var videoSchema = new Schema({
     likes: Number, 
     views: Number, 
     comments:  [{
-        body: String
+       username: String,
+       body: String
     }]
 });
 
