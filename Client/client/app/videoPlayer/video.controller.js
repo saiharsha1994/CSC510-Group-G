@@ -57,14 +57,16 @@ export default class userCtrl {
         this.config.sources = [];
         this.config.sources = [{src: `${baseUrl}${_.get(video, 'fileId')}`, type: 'video/mp4'}];
         this.api.currentTime = 0;
+        this.currentVideoId = _.get(video, 'videoId');
         this.comments = _.get(_.first(_.filter(this.videosList, (eachVideo) => {
             return eachVideo.videoId === video.videoId;
         })), 'comments', []);
     }
 
     onVideoComplete() {
+        console.log(this.currentVideoId);
         this.videoService.updateViewedList({username: this.$stateParams.id,
-            videoId: this.currentUrl, time: this.api.totalTime}).then((response) => {
+            videoId: this.currentVideoId, time: this.api.totalTime}).then((response) => {
             console.log(response);
         }).catch((response) => {
             console.log(response);
