@@ -156,6 +156,7 @@ app.post('/login', function (req, res) {
 
         });
     } else {
+        console.log("user not"+req.body.isUser);
         var query = {
             "$and": [
                 { 'ename': req.body.username },
@@ -181,7 +182,13 @@ app.post('/login', function (req, res) {
     }
 });
 
+app.delete('/logout', function (req, res) {
+    req.session.destroy();
+    res.send("logout success!");
+});
+
 app.get('/*', function (req, res) {
+    console.log("redirect to"+sess);
     res.redirect('/' + account_type);
 });
 
