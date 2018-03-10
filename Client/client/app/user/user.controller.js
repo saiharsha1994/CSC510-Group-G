@@ -7,6 +7,7 @@ export default class userCtrl {
         this.loginService = loginService;
         this.userService = userService;
         this.sessionService = sessionService;
+        this.dialogs = dialogs;
 
         this.multiSelect = true;
         this.searchTags = [];
@@ -34,7 +35,7 @@ export default class userCtrl {
             this.userService.claimCoins(this.$stateParams.id).then((response) => {
                 this.isVideoCompleted = false;
             }).catch((response) => {
-                // console.log(response);
+                this.dialogs.error('Error', 'Unable to add this video to your viewed video list.');
             });
         }
     }
@@ -43,7 +44,7 @@ export default class userCtrl {
         this.loginService.updateProfile(this.updateProfile).then((response) => {
             console.log(response);
         }).catch((response) => {
-            console.log(response);
+            this.dialogs.error('Error', 'Unable to update profile now. Please try again');
         });
     }
 
@@ -53,7 +54,15 @@ export default class userCtrl {
             console.log(response);
             this.commentText = '';
         }).catch((response) => {
-            console.log(response);
+            this.dialogs.error('Error', 'Unable to add comments now. Please try again');
+        });
+    }
+
+    redeemCoins() {
+        this.userService.redeemCoins(this.$stateParams.id).then((response)=> {
+            this.userCoins = _.get(response, 'data.coins', 0);
+        }).catch(() => {
+            this.dialogs.error('Error', 'Unable to redeem coins now. Please try again');
         });
     }
 

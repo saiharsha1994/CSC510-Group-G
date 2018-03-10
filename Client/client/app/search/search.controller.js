@@ -12,7 +12,8 @@ export default class searchCtrl {
             {type: 'Grocery', isSelected: false},
             {type: 'Movies', isSelected: false},
             {type: 'Sports', isSelected: false},
-            {type: 'Foot wear', isSelected: false}]
+            {type: 'Foot wear', isSelected: false}];
+        this.enterpriseTag = _.first(this.defaultTags);
     }
 
     $onInit() {

@@ -10,15 +10,15 @@ export default class sessionService {
     }
 
     deleteSession(id) {
-        return this.http.delete(`http://lcalhost:3000/${type}/session/delete/${id}`);
+        return this.http.delete(`http://lcalhost:3000/${id}/session/delete/${id}`);
     }
 
     isSessionValid(sessionId) {
-        return this.http.get(`http://lcalhost:3000/${type}/session/check/${sessionId}`);
+        return this.http.get(`http://lcalhost:3000/${sessionId}/session/check/${sessionId}`);
     }
 
     createSession(id) {
-        return this.http.put(`http://lcalhost:3000/${type}/session/create/`, {id: id});
+        return this.http.put(`http://lcalhost:3000/${id}/session/create/`, {id: id});
     }
 }
 
