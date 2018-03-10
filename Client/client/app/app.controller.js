@@ -3,7 +3,6 @@
 export default class appCtrl {
     constructor(dialogs) {
         this.dialogs = dialogs;
-        this.dialogs.error('modda', 'modda again', [,'lg']);
         console.log(this.dialogs);
     }
 
