@@ -35,12 +35,13 @@
                                 <div class="tab-content">
                                     <div id="enterpriseView" class="tab-pane fade active in">
                                         <div ng-if="vm.type === 'addCoins'">
-                                            <span>Current Coins: {{vm.currentCoins}}</span>
+                                            <p>Current Coins: {{vm.coins}}</p>
                                             <form role="form">
                                                 <div class="form-group input-group">
                                                         <span class="input-group-addon"><i class="glyphicon glyphicon-euro"></i></span>
                                                     <input type="number"
                                                            ng-model="vm.coinsToBeAdded"
+                                                           min="1"
                                                            class="form-control text-box-width"
                                                            id="addCoins"
                                                            placeholder="Add Coins to be Added" required>
@@ -53,12 +54,13 @@
                                             </form>
                                         </div>
                                         <div ng-if="vm.type === 'updateCoinsPerHour'">
-                                            <span>Current Coins Per Hour: {{vm.currentCoinsPerHour}}</span>
+                                            <p>Current Coins Per Hour: {{vm.coinsPerHour}}</p>
                                             <form role="form">
                                                 <div class="form-group input-group">
                                                         <span class="input-group-addon"><i class="glyphicon glyphicon-euro"></i></span>
                                                     <input type="number"
                                                            ng-model="vm.updatedCoinsPerHour"
+                                                           min="1"
                                                            class="form-control text-box-width"
                                                            id="updateCoinsPerHour"
                                                            placeholder="Add Coins to be Added" required>
@@ -71,7 +73,7 @@
                                             </form>
                                         </div>
                                         <div ng-if="vm.type === 'uploadVideo'">
-                                            <div>
+                                            <div ng-if="vm.coins > vm.coinsPerHour && !vm.showLoading">
                                             <form name="vm.upload_form">
                                                 Single Image with validations
                                                 <input
@@ -82,21 +84,24 @@
                                                         accept=".mp4"
                                                         ngf-max-size="50MB">
                                                 <input type="text"
+                                                       style="padding-top: 10px;"
                                                        ng-model="vm.description"
                                                        class="form-control text-box-width"
                                                        id="videoDescription"
                                                        placeholder="Add Description" required>
                                                 <input type="text"
+                                                       style="padding-top: 10px;"
                                                        ng-model="vm.title"
                                                        class="form-control text-box-width"
                                                        id="videoTitle"
                                                        placeholder="Add Title" reuired>
                                                 <search-component multi-select="vm.mutliSelect" search-tags = vm.searchTags></search-component>
                                                 <button type="submit" ng-click="vm.uploadVideo()">submit</button>
-                                                <p>{{vm.progress}}
                                             </form>
                                             </div>
-                                            <div ng-if = "vm.coins = vm.coinsPerHour">Please add coins to upload your videos</div>
+                                            <div ng-if = "vm.coins <= vm.coinsPerHour">
+                                                <p>Please add coins to upload your videos</p></div>
+                                            <div ng-if="vm.showLoading"><p>Uploading...</p></div>
                                         </div>
                                         <div ng-if="vm.type === 'updateProfile'">
                                             <div name="update Profile">
