@@ -21,7 +21,7 @@ export default class searchCtrl {
                 val = $target.attr( 'data-value' ),
                 $inp = $target.find( 'input' ),
                 idx;
-
+                alert("hoiioodoasid");
             if ( ( idx = options.indexOf( val ) ) > -1 ) {
                 options.splice( idx, 1 );
                 setTimeout( function() { $inp.prop( 'checked', false ) }, 0);
