@@ -1,12 +1,15 @@
 'use strict';
 
 export default class userCtrl {
-    constructor($state, $stateParams, loginService, userService, dialogs) {
+    constructor($state, $stateParams, loginService, userService, dialogs, sessionService) {
         this.state = $state;
         this.$stateParams = $stateParams;
         this.loginService = loginService;
         this.userService = userService;
-        console.log(dialogs);
+        this.sessionService = sessionService;
+
+        this.multiSelect = true;
+        this.searchTags = [];
 
         this.updateProfile = {
             oldPassword: '',
@@ -23,6 +26,7 @@ export default class userCtrl {
             return (video.id === this.currentUrl);
         }), 'comments', []);
         this.commentText = '';
+        var options = [];
     }
 
     claimCoins() {
@@ -54,12 +58,14 @@ export default class userCtrl {
     }
 
     logout() {
-        this.sessionService.deleteSession().then(() => {
+        this.sessionService.deleteSession(this.$stateParams.id).then(() => {
             this.state.go('home');
         }).catch(() => {
             //have to do logout
+        }).finally(() => {
+            this.state.go('home');
         });
     }
 }
 
-userCtrl.$inject = ['$state', '$stateParams', 'loginService', 'userService', 'dialogs'];
+userCtrl.$inject = ['$state', '$stateParams', 'loginService', 'userService', 'dialogs', 'sessionService'];

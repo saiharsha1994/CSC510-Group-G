@@ -71,7 +71,7 @@
                                             </form>
                                         </div>
                                         <div ng-if="vm.type === 'uploadVideo'">
-                                            <!-- <div ng-if="vm.coins > vm.coinsPerHour"> -->
+                                            <div>
                                             <form name="vm.upload_form">
                                                 Single Image with validations
                                                 <input
@@ -82,21 +82,16 @@
                                                         accept=".mp4"
                                                         ngf-max-size="50MB">
                                                 <input type="text"
-                                                       ng-model="vm.searchTag"
-                                                       class="form-control text-box-width"
-                                                       id="serachTag1"
-                                                       placeholder="Search Tags">
-                                                <button type="submit" ng-click="vm.addTag()">Add Tag</button>
-                                                <input type="text"
                                                        ng-model="vm.description"
                                                        class="form-control text-box-width"
                                                        id="videoDescription"
-                                                       placeholder="Add Desccriptio" required>
+                                                       placeholder="Add Description" required>
                                                 <input type="text"
                                                        ng-model="vm.title"
                                                        class="form-control text-box-width"
                                                        id="videoTitle"
                                                        placeholder="Add Title" reuired>
+                                                <search-component multi-select="vm.mutliSelect" search-tags = vm.searchTags></search-component>
                                                 <button type="submit" ng-click="vm.uploadVideo()">submit</button>
                                                 <p>{{vm.progress}}
                                             </form>
