@@ -12,22 +12,22 @@ export default class loginService {
     doLogin(details) {
         console.log('login details');
         console.log(details);
-        return this.http.post('http://localhost:3000/login', details);
+        return this.http.post('https://afternoon-cliffs-24932.herokuapp.com/login', details);
     }
 
     doSignUp(details) {
-        return this.http.put('http://localhost:3000/signup', details);
+        return this.http.put('https://afternoon-cliffs-24932.herokuapp.com/signup', details);
     }
 
 
     getDetails(details) {
         console.log(details);
         const type = (details.isUser === true) ? 'user' : 'enterprise';
-        return this.http.get(`http://localhost:3000/${type}/details/${details.username}`);
+        return this.http.get(`https://afternoon-cliffs-24932.herokuapp.com/${type}/details/${details.username}`);
     }
 
     updateProfile(profileDetails, type) {
-        return this.http.post(`http://lcalhost:3000/${type}/profile/update`, profileDetails);
+        return this.http.post(`https://afternoon-cliffs-24932.herokuapp.com/${type}/profile/update`, profileDetails);
     }
 }
 

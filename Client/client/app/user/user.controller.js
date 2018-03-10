@@ -11,6 +11,8 @@ export default class userCtrl {
 
         this.multiSelect = true;
         this.searchTags = [];
+        this.shouldShowCoins = false;
+        this.coins = 0;
 
         this.updateProfile = {
             oldPassword: '',
@@ -45,6 +47,16 @@ export default class userCtrl {
             console.log(response);
         }).catch((response) => {
             this.dialogs.error('Error', 'Unable to update profile now. Please try again');
+        });
+    }
+
+    showCoins() {
+        this.userService.getUserCoins(this.$stateParams.id)
+            .then((response) => {
+                this.coins = _.get(response, 'data');
+                this.shouldShowCoins = true;
+            }).catch(() => {
+                this.dialogs.error('Error', 'Unable to fetch users coins. Please try again.');
         });
     }
 

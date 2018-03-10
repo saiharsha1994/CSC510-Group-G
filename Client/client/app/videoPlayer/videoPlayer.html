@@ -16,7 +16,7 @@
                             <div class="carousel slide" id="myCarousel">
                                 <!-- Carousel items -->
                                 <div class="carousel-inner">
-                                    <div class="videogular-container">
+                                    <div ng-if="vm.currentVideoId.length > 0" class="videogular-container">
                                         <videogular vg-player-ready="vm.onPlayerReady($API)"
                                                     vg-theme="vm.config.theme"
                                                     vg-complete="vm.onVideoComplete()">

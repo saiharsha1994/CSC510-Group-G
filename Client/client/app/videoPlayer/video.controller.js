@@ -12,19 +12,11 @@ export default class userCtrl {
     }
     
     $onInit() {
-        console.log(' video component (this.videosList');
-        console.log(this.videosList);
         this.videoIds = _.map(this.videosList, 'videoId');
-        let currentVideo = _.first(this.videosList);
-        this.currentVideoId = _.get(currentVideo, 'videoId');
+        let currentVideo = (!_.isEmpty(this.videoList)) ? _.first(this.videosList) : {}
+        this.currentVideoId = _.get(currentVideo, 'videoId', '');
         this.config.sources = [{src: `${baseUrl}${_.get(currentVideo, 'fileId')}`, type: 'video/mp4'}];
         this.comments = _.get(currentVideo, 'comments', []);
-        this.comments.push({username: 'modda', body: 'rty'});
-        this.comments.push({username: 'modda', body: 'rty'});
-        this.comments.push({username: 'modda', body: 'rty'});
-        this.comments.push({username: 'modda', body: 'rty'});
-        console.log('this.config');
-        console.log(this.config);
             this.config.theme = 'node_modules/videogular-themes-default/videogular.css';
             this.config.plugins = {
                 poster: 'http://www.videogular.com/assets/images/videogular.png'
@@ -32,10 +24,7 @@ export default class userCtrl {
     }
 
     onPlayerReady(API) {
-        console.log(API);
         this.api = API;
-        console.log('ererwerwerwe');
-        console.log(API);
     }
 
     onCommentType(event) {
@@ -46,12 +35,9 @@ export default class userCtrl {
                     this.newComment = '';
             });
         }
-        console.log(event);
-        //newComment
     }
 
     onVideoChange(video) {
-        console.log('onVideoChange');
         console.log(video);
         this.api.pause();
         this.config.sources = [];
