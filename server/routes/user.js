@@ -112,12 +112,38 @@ router.post('/viewed', function(req, res){
                             }else{
                                 if(user){
                                     user['videosViewed'].push({videoId: req.body.videoId});
+                                    user.time = user.time + req.body.time;
                                     user.save((err, user)=>{
                                         if(err){
                                             console.error(err);
                                             res.status(400).send(err);
                                         }else{
-                                            res.status(200).send('Video viewed');
+                                            Enterprise.findOne({'enterpriseId' : video.enterpriseId}, function(err, enterprise){
+                                                if(err){
+                                                    console.error(err);
+                                                    res.status(400).send(err);
+                                                }else{
+                                                    if(enterprise){
+                                                        var time = req.body.time / 60000;
+                                                        enterprise.time = enterprise.time + time;
+                                                        while(enterprise.time > 5){
+                                                            enterprise.time = enterprise.time - 5;
+                                                            enterprise.coins = enterprise.coins - enterprise.coinsPerHour;
+                                                        }
+                                                        enterprise.save((err, ent) => {
+                                                            if(err){
+                                                                console.log(err);
+                                                                res.status(400).send(err);
+                                                            }else{
+                                                                res.status(200).send('Video viewed');            
+                                                            }
+                                                        });
+                                                    }else{
+                                                        res.send(404).send('No enterprise found');
+                                                    }
+                                                }
+                                            });
+                                            
                                         }
                                     });
                                 }else{
@@ -319,6 +345,28 @@ router.post('/search', function(req, res){
         }
     });
 
+});
+
+router.post('/redeem', function(req, res){
+    User.findOne({'username' : req.body.username}).exec(function(err, user){
+        if(err){
+            console.error('Error retrieving data for ' + req.params.username);
+            res.status(400).send(err);
+        }else{
+            if(user){
+                var time = Math.floor(user.time / 60000);
+                user.time = user.time - time * 60000;
+                user.coins = user.coins + time;
+                user.save((err, user) => {
+                    if(err){
+                        res.status(400).send(err);
+                    }else{
+                        res.status(200).send(user);
+                    }
+                });
+            }
+        }
+    });
 });
 
 router.get('/history/:username', function (req, res) {

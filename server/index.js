@@ -69,6 +69,7 @@ app.put('/signup', function (req, res) {
                             'username': req.body.username,
                             'password': req.body.password,
                             'coins': 0,
+                            'time': 0,
                             'videosViewed': []
                         };
 
@@ -111,7 +112,8 @@ app.put('/signup', function (req, res) {
                             'ename': req.body.username,
                             'password': req.body.password,
                             'coins': 0,
-                            'coinsPerHour': 0
+                            'coinsPerHour': 0,
+                            'time': 0
                         };
 
                         let enterprise = new account_model(record);
