@@ -33,7 +33,9 @@ export default class enterpriseCtrl {
         };
     }
 
-    $onInit() {}
+    $onInit() {
+        this.currentVideo = _.first(this.videosList);
+    }
 
     logout() {
         //TODO: delete the cookie or delete the session.
@@ -72,16 +74,21 @@ export default class enterpriseCtrl {
         this.uploadService.upload({url: 'http://localhost:3000/enterprise/uploadVideo', data:{file: this.selectedFile}})
             .then((response) => {
                 let videoDetails = {username: this.$stateParams.id, description: this.description,
-                    title: this.title, fileId: _.get(response, 'data._id'), tags: this.tags};
+                    title: this.title, fileId: _.get(response, 'data._id'),
+                    tags: _.map(this.searchTags, (tag) => {return tag.type})};
                 if (_.isUndefined(videoDetails.fileId)) {
                     return this.$q.reject('File not uploaded properly');
                 }
                 return this.enterpriseService.uploadVideoDetails(videoDetails);
+            }).then(() => {
+                this.description = '';
+                this.title = '';
+                this.searchTags = [];
             }).catch(() => {
             this.dialogs.error('Error', 'Unable to upload video. Please try again.');
-        }).finally(() => {
-            this.showLoading = false;
-        });
+            }).finally(() => {
+                this.showLoading = false;
+            });
     }
 
     updateProfile() {
