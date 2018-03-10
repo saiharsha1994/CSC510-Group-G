@@ -35,19 +35,19 @@ There are two types of accounts:
 
 As an enterprise, you can :
 
-  a) Upload and delete your advertisements
+  - Upload and delete your advertisements
 
-  b) Add coins in your account
+  - Add coins in your account
 
-  c) Update total coins per hour
+  - Update total coins per hour
 
 ### Users : 
 
 As a user, you can :
 
 
-  a) View advertisements from various enterprises
+  - View advertisements from various enterprises
 
-  b) Perform a tag-based search to filter the advertisements according to your taste
+  - Perform a tag-based search to filter the advertisements according to your taste
   
-  c) Redeem money for the total time spent on watching the advertisements
+  - Redeem money for the total time spent on watching the advertisements
