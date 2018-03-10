@@ -6,6 +6,7 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const async = require('async');
 const busboy = require('connect-busboy');
+var session = require('express-session');
 
 app.use(cors());
 app.use(bodyParser());
@@ -24,6 +25,14 @@ app.use('/enterprise', enterprise_route);
 var account_type;
 var account_route;
 var account_model;
+var sess ;
+
+app.use(session({
+    cookieName: 'session',
+    secret: 'random_string_goes_here',
+    duration: 30 * 60 * 1000,
+    activeDuration: 5 * 60 * 1000,
+  }));
 
 app.put('/signup', function (req, res) {
 
@@ -122,6 +131,7 @@ app.put('/signup', function (req, res) {
 });
 
 app.post('/login', function (req, res) {
+    sess = req.session;
     if (req.body.isUser) {
         var query = {
             "$and": [
@@ -146,6 +156,7 @@ app.post('/login', function (req, res) {
 
         });
     } else {
+        console.log("user not"+req.body.isUser);
         var query = {
             "$and": [
                 { 'ename': req.body.username },
@@ -162,6 +173,7 @@ app.post('/login', function (req, res) {
                     console.log('Login Failed');
                     res.status(401).send('Login Failed. Invalid username/password');
                 } else{
+                    sess.user = req.body.username;
                     console.log('login successful');
                     res.status(200).send('Login Successful');
                 }
@@ -170,7 +182,13 @@ app.post('/login', function (req, res) {
     }
 });
 
+app.delete('/logout', function (req, res) {
+    req.session.destroy();
+    res.send("logout success!");
+});
+
 app.get('/*', function (req, res) {
+    console.log("redirect to"+sess);
     res.redirect('/' + account_type);
 });
 

@@ -200,7 +200,7 @@ router.get('/details/:username', function (req, res) {
                 if(err){
                     res.status(400).send(err);
                 }else{
-                    console.log(videos.slice(0, 10)); 
+                    //console.log(videos.slice(0, 10)); 
                     res.status(200).send(videos.slice(0, 10));
                 }
             });
