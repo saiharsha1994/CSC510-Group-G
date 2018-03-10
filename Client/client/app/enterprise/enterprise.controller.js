@@ -38,7 +38,6 @@ export default class enterpriseCtrl {
     }
 
     logout() {
-        //TODO: delete the cookie or delete the session.
         this.state.go('home');
     }
 
@@ -91,11 +90,17 @@ export default class enterpriseCtrl {
             });
     }
 
-    updateProfile() {
-        this.loginService.updateProfile(this.updateProfileDetails, 'enterprise').then((response) => {
-            console.log(response + 'success');
-        }).catch((response) => {
-            console.log(response + 'failed');
+    updatePassword() {
+        if (this.updateProfile.confirmNewPassword === this.updateProfile.newPassword) {
+            this.dialogs.error('Error', 'The passwords do not match');
+            return;
+        } else if (this.updateProfile.newPassword.length < 8) {
+            this.dialogs.error('Error', 'The password should have at least 8 characters');
+            return;
+        }
+
+        this.loginService.updateProfile(this.updateProfileDetails, 'enterprise').catch(() => {
+            this.dialogs.error('Error', 'Failed to update the profile. Please try again');
         });
     }
 
