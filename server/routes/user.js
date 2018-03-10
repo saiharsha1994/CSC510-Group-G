@@ -46,46 +46,46 @@ router.get('/profile/:username', function (req, res) {
     });
 });
 
-router.post('/like/:id', function(req, res){
-    Video.findOne({'videoId': req.params.id}, function(err, video){
-        if(err){
+router.post('/like/:id', function (req, res) {
+    Video.findOne({ 'videoId': req.params.id }, function (err, video) {
+        if (err) {
             console.error(err);
             res.status(400).send(err);
-        } else{
-            if(video){ 
+        } else {
+            if (video) {
                 video.likes = video.likes + 1;
-                video.save((err, video)=>{
-                    if(err){
+                video.save((err, video) => {
+                    if (err) {
                         res.status(400).send(err);
-                    }else{
+                    } else {
                         res.status(200).send('You Liked the video');
                     }
                 });
 
-            } else{
+            } else {
                 res.status(404).send('Video Not Found');
             }
         }
     });
 });
 
-router.post('/comments/', function(req, res){
-    Video.findOne({'videoId': req.body.videoId}, function(err, video){
-        if(err){
+router.post('/comments/', function (req, res) {
+    Video.findOne({ 'videoId': req.body.videoId }, function (err, video) {
+        if (err) {
             console.error(err);
             res.status(400).send(err);
-        } else{
-            if(video){
-                video['comments'].push({username: req.body.username, body: req.body.comment});
-                video.save((err, video)=>{
-                    if(err){
+        } else {
+            if (video) {
+                video['comments'].push({ username: req.body.username, body: req.body.comment });
+                video.save((err, video) => {
+                    if (err) {
                         res.status(400).send(err);
-                    }else{
+                    } else {
                         res.status(200).send('Your comment was added');
                     }
                 });
 
-            } else{
+            } else {
                 res.status(404).send('Video Not Found');
             }
         }
@@ -93,67 +93,67 @@ router.post('/comments/', function(req, res){
 });
 
 // TODO : Handle time
-router.post('/viewed', function(req, res){
-    Video.findOne({'videoId' : req.body.videoId}, function(err, video){
-        if(err){
+router.post('/viewed', function (req, res) {
+    Video.findOne({ 'videoId': req.body.videoId }, function (err, video) {
+        if (err) {
             console.error(err);
             res.status(400).send(err);
-        } else{
-            if(video){ 
+        } else {
+            if (video) {
                 video.views = video.views + 1;
-                video.save((err, video)=>{
-                    if(err){
+                video.save((err, video) => {
+                    if (err) {
                         res.status(400).send(err);
-                    }else{
-                        User.findOne({'username': req.body.username}, function(err, user){
-                            if(err){
+                    } else {
+                        User.findOne({ 'username': req.body.username }, function (err, user) {
+                            if (err) {
                                 console.error(err);
                                 res.status(400).send(err);
-                            }else{
-                                if(user){
-                                    user['videosViewed'].push({videoId: req.body.videoId});
+                            } else {
+                                if (user) {
+                                    user['videosViewed'].push({ videoId: req.body.videoId });
                                     user.time = user.time + req.body.time;
-                                    user.save((err, user)=>{
-                                        if(err){
+                                    user.save((err, user) => {
+                                        if (err) {
                                             console.error(err);
                                             res.status(400).send(err);
-                                        }else{
-                                            Enterprise.findOne({'enterpriseId' : video.enterpriseId}, function(err, enterprise){
-                                                if(err){
+                                        } else {
+                                            Enterprise.findOne({ 'enterpriseId': video.enterpriseId }, function (err, enterprise) {
+                                                if (err) {
                                                     console.error(err);
                                                     res.status(400).send(err);
-                                                }else{
-                                                    if(enterprise){
+                                                } else {
+                                                    if (enterprise) {
                                                         var time = req.body.time / 60000;
                                                         enterprise.time = enterprise.time + time;
-                                                        while(enterprise.time > 5){
+                                                        while (enterprise.time > 5) {
                                                             enterprise.time = enterprise.time - 5;
                                                             enterprise.coins = enterprise.coins - enterprise.coinsPerHour;
                                                         }
                                                         enterprise.save((err, ent) => {
-                                                            if(err){
+                                                            if (err) {
                                                                 console.log(err);
                                                                 res.status(400).send(err);
-                                                            }else{
-                                                                res.status(200).send('Video viewed');            
+                                                            } else {
+                                                                res.status(200).send('Video viewed');
                                                             }
                                                         });
-                                                    }else{
+                                                    } else {
                                                         res.send(404).send('No enterprise found');
                                                     }
                                                 }
                                             });
-                                            
+
                                         }
                                     });
-                                }else{
+                                } else {
                                     res.status(404).send('User not found ' + req.body.userId);
                                 }
                             }
                         });
                     }
                 });
-            } else{
+            } else {
                 res.status(404).send('Video Not Found');
             }
         }
@@ -168,15 +168,15 @@ router.get('/coins/:username', function (req, res) {
         } else {
             res.status(200).send(user.coins);
         }
-    });    
+    });
 });
 
 router.post('/profile/update', function (req, res) {
     console.log(req.body.username);
     //{"userId":1223, "username":"haramam", "emailId":"oko@bokka.com"}
     // postman request - localhost:3000/user/profile/update
-    var query = {"username":req.body.username}//, "emailId":req.body.emailId};
-    User.findOne(query, {"username": true, "emailId": true}, 
+    var query = { "username": req.body.username }//, "emailId":req.body.emailId};
+    User.findOne(query, { "username": true, "emailId": true },
         (err, user) => {
             if (err) {
                 res.status(400).send(err);
@@ -189,10 +189,10 @@ router.post('/profile/update', function (req, res) {
                 user.save((err, user) => {
                     if (err) {
                         res.status(400).send(err)
-                    }else{
+                    } else {
                         res.status(200).send("Password successfully updated ");
                     }
-                    
+
                 });
                 //res.status(200).send(user)
             } else {  // In case no user was found with the given query
@@ -206,26 +206,26 @@ router.post('/profile/update', function (req, res) {
 router.get('/details/:username', function (req, res) {
 
     Enterprise.find({
-        $where : 'this.coins > this.coinsPerHour'
-    }, function(err, enterprises){
-        if(err){
+        $where: 'this.coins > this.coinsPerHour'
+    }, function (err, enterprises) {
+        if (err) {
             res.status(400).send(err);
-        }else{
+        } else {
             var enterpriseIds = [];
-            _(enterprises).forEach(function(enterprise){
-                enterpriseIds.push({'enterpriseId': enterprise.enterpriseId});
+            _(enterprises).forEach(function (enterprise) {
+                enterpriseIds.push({ 'enterpriseId': enterprise.enterpriseId });
             });
-            
+
             var query = {};
-            if(enterpriseIds.length != 0) {
+            if (enterpriseIds.length != 0) {
                 query["$or"] = enterpriseIds;
             }
             console.log(query);
 
-            Video.find(query, function(err, videos){
-                if(err){
+            Video.find(query, function (err, videos) {
+                if (err) {
                     res.status(400).send(err);
-                }else{
+                } else {
                     //console.log(videos.slice(0, 10)); 
                     res.status(200).send(videos.slice(0, 10));
                 }
@@ -233,7 +233,7 @@ router.get('/details/:username', function (req, res) {
 
             //res.status(200).send(enterprises);
         }
-        
+
     });
 
     //console.log(req.body.username);
@@ -253,7 +253,7 @@ router.get('/details/:username', function (req, res) {
     //         var video_ids_to_display = [];
     //             //fetch_video(array, element) {
     //                 var found = false; // The element we've not found just yet.
-                    
+
     //                 _(enterprise_list).forEach(function(item) {
     //                 var query = {"enterpriseId":item};
     //                 Video.find( query, (err,video)=>{
@@ -275,7 +275,7 @@ router.get('/details/:username', function (req, res) {
     //                     // We found the element!
     //                     // Let's acknowledge that, then break off the looping.                        
     //                 });
-                
+
     //                // return found;
     //             //}
     //         res.status(200).send(video_ids_to_display);
@@ -308,37 +308,53 @@ router.get('/details/:username', function (req, res) {
 });
 
 router.get('/fetch/:id', function (req, res) {
-    gfs = Grid(connection.db);
-    console.log(req.params.filename);
-    var readstream = gfs.createReadStream({
-        _id: req.params.id
-    });
-    readstream.pipe(res);
+
+    if (req.params.id == 'undefined') {
+        res.status(401).send('Unauthorized');
+    }
+    else {
+        gfs = Grid(connection.db);
+        gfs.exist({ _id: req.params.id }, function (err, found) {
+            if (err) {
+                res.status(400).send(err);
+            } else {
+                if (found) {
+                    var readstream = gfs.createReadStream({
+                        _id: req.params.id
+                    });
+                    readstream.pipe(res);
+                } else {
+                    res.status(404).send('Video file not found');
+                }
+            }
+        });
+    }
+
 });
 
-router.post('/search', function(req, res){
-    
+router.post('/search', function (req, res) {
+
     var tags = [];
-    _(req.body.tags).forEach(function(tag){
-        tags.push({'tag' : tag});
+    _(req.body.tags).forEach(function (tag) {
+        tags.push({ 'tag': tag });
     });
 
     var query = {};
     query["$or"] = tags;
-    Tag.find(query).distinct('videoId', function(err, results){
-        if(err){
+    Tag.find(query).distinct('videoId', function (err, results) {
+        if (err) {
             res.status(400).send(err);
-        }else{
+        } else {
             var videoIds = [];
             var videoQuery = {};
-            _(results).forEach(function(result){
-                videoIds.push({'videoId': result});
+            _(results).forEach(function (result) {
+                videoIds.push({ 'videoId': result });
             });
             videoQuery["$or"] = videoIds;
-            Video.find(videoQuery, function(err, videos){
-                if(err){
+            Video.find(videoQuery, function (err, videos) {
+                if (err) {
                     res.status(400).send(err);
-                }else{
+                } else {
                     res.status(200).send(videos);
                 }
             });
@@ -347,20 +363,20 @@ router.post('/search', function(req, res){
 
 });
 
-router.post('/redeem', function(req, res){
-    User.findOne({'username' : req.body.username}).exec(function(err, user){
-        if(err){
+router.post('/redeem', function (req, res) {
+    User.findOne({ 'username': req.body.username }).exec(function (err, user) {
+        if (err) {
             console.error('Error retrieving data for ' + req.params.username);
             res.status(400).send(err);
-        }else{
-            if(user){
+        } else {
+            if (user) {
                 var time = Math.floor(user.time / 60000);
                 user.time = user.time - time * 60000;
                 user.coins = user.coins + time;
                 user.save((err, user) => {
-                    if(err){
+                    if (err) {
                         res.status(400).send(err);
-                    }else{
+                    } else {
                         res.status(200).send(user);
                     }
                 });
@@ -374,27 +390,27 @@ router.get('/history/:username', function (req, res) {
         if (err) {
             console.error('Error retrieving data for ' + req.params.username);
         } else {
-            if(user){
+            if (user) {
                 var videoIds = [];
                 _(user.videosViewed).forEach(function (videoId) {
-                     videoIds.push( videoId );
-                 });
-                 if (videoIds.length != 0) {
-                     var query = {};
-                     query["$or"] = videoIds;
-                 
-                     Video.find(query, function (err, videos) {
-                         if (err) {
-                             res.status(400).send(err);
-                         } else {
-                             res.status(200).send(videos);
-                         }
-                     });
-                 }else{
-                     res.status(404).send('You have not watched any videos till now');
-                 }            
+                    videoIds.push(videoId);
+                });
+                if (videoIds.length != 0) {
+                    var query = {};
+                    query["$or"] = videoIds;
+
+                    Video.find(query, function (err, videos) {
+                        if (err) {
+                            res.status(400).send(err);
+                        } else {
+                            res.status(200).send(videos);
+                        }
+                    });
+                } else {
+                    res.status(404).send('You have not watched any videos till now');
                 }
-            else{
+            }
+            else {
                 res.json([]);
             }
         }
