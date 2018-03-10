@@ -1,11 +1,25 @@
-<div>
-    <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
-        <span class="glyphicon glyphicon-cog"></span> <span class="caret"></span></button>
-    <ul class="dropdown-menu">
-        <li ng-repeat="tags in vm.defaultTags">
-            <a href="search" class="small" data-value="tags.isSelected" tabIndex="-1">
-                <input ng-disabled="!tags.isSelected && !vm.canSelectMore()" ng-click="tags.isSelected = !tags.isSelected"
-                       ng-model="tags.isSelected" type="checkbox"/>&nbsp;{{tags.type}}</a></li>
-        <button class="btn" ng-click="vm.onSave()"></button>
-    </ul>
-</div>
+<!--<div>-->
+    <!--<button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">-->
+        <!--<span class="glyphicon glyphicon-cog"></span> <span class="caret"></span></button>-->
+    <!--<ul class="dropdown-menu">-->
+        <!--<li ng-repeat="tags in vm.defaultTags">-->
+            <!--<a href="search" class="small" data-value="tags.isSelected" tabIndex="-1">-->
+                <!--<input ng-disabled="!tags.isSelected && !vm.canSelectMore()" ng-click="tags.isSelected = !tags.isSelected"-->
+                       <!--ng-model="tags.isSelected" type="checkbox"/>&nbsp;{{tags.type}}</a></li>-->
+        <!--<button class="btn" ng-click="vm.onSave()"></button>-->
+    <!--</ul>-->
+<!--</div>-->
+
+<!--<div>-->
+    <!--<ul uib-dropdown-menu role="menu" aria-labelledby="btn-append-to-body">-->
+        <!--<li role="menuitem"><a href="select">Action</a></li>-->
+        <!--<li role="menuitem"><a href="select">Another action</a></li>-->
+        <!--<li role="menuitem"><a href="select">Something else here</a></li>-->
+        <!--<li class="divider"></li>-->
+        <!--<li role="menuitem"><a href="select">Separated link</a></li>-->
+    <!--</ul>-->
+<!--</div>-->
+
+<select ng-model="vm.enterpriseTag">
+    <option ng-repeat="x in vm.defaultTags">{{x.type}}</option>
+</select>
