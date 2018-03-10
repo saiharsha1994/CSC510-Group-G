@@ -3,7 +3,9 @@
 import loginService from './login.service';
 
 export default class loginCtrl {
-    constructor($state, $q, loginService) {
+    constructor($state, $q, loginService, dialogs) {
+        this.dialogs = dialogs;
+        // this.dialogs.error('Error','An unknown error occurred preventing the completion of the requested action.');
         this.state = $state;
         this.$q = $q;
         this.loginService = loginService;
@@ -13,6 +15,7 @@ export default class loginCtrl {
             password: '',
             isUser: true
         };
+        this.alerts = [{type: 'modda'}];
 
         this.isSignIn = true;
 
@@ -77,4 +80,4 @@ export default class loginCtrl {
     }
 }
 
-loginCtrl.$inject = ['$state', '$q', 'loginService'];
+loginCtrl.$inject = ['$state', '$q', 'loginService', 'dialogs'];

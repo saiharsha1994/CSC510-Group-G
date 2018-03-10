@@ -1,11 +1,12 @@
 'use strict';
 
 export default class userCtrl {
-    constructor($state, $stateParams, loginService, userService) {
+    constructor($state, $stateParams, loginService, userService, dialogs) {
         this.state = $state;
         this.$stateParams = $stateParams;
         this.loginService = loginService;
         this.userService = userService;
+        console.log(dialogs);
 
         this.updateProfile = {
             oldPassword: '',
@@ -53,10 +54,12 @@ export default class userCtrl {
     }
 
     logout() {
-        // this.loginService.logout()  
-        //TODO: delete the cookie or delete the session.
-        this.state.go('home');
+        this.sessionService.deleteSession().then(() => {
+            this.state.go('home');
+        }).catch(() => {
+            //have to do logout
+        });
     }
 }
 
-userCtrl.$inject = ['$state', '$stateParams', 'loginService', 'userService'];
+userCtrl.$inject = ['$state', '$stateParams', 'loginService', 'userService', 'dialogs'];
