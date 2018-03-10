@@ -12,7 +12,7 @@
         <!-- Slider -->
         <div class="row">
             <div class="col-sm-8">
-                <div class="col-xs-6" id="slider">
+                <div class="col-xs-12" id="slider">
                     <!-- Top part of the slider -->
                     <div class="row">
                             <br><br><br><br><br><br>    
@@ -101,7 +101,7 @@
                                                 <p>{{vm.progress}}
                                             </form>
                                             </div>
-                                            <div ng-if = "vm.coins <= vm.coinsPerHour">Please add coins to upload your videos</div>
+                                            <div ng-if = "vm.coins = vm.coinsPerHour">Please add coins to upload your videos</div>
                                         </div>
                                         <div ng-if="vm.type === 'updateProfile'">
                                             <div name="update Profile">
@@ -148,27 +148,27 @@
 
                                 </div>
                             </div>    
+                            <div ng-if="vm.currentVideo != {}" >
+                                <div>Video title: {{vm.currentVideo.title}}</div>
+                                <div>Video was viewed: {{vm.currentVideo.views}}</div>
+                                <button class="btn btn-default" ng-click="vm.deleteSelectedVideo()">Delete Video</button>
+                            </div>
                 </div>
             </div>
-                <div ng-if="vm.currentVideo != {}" class="col-xs-6">
-                    <div>Video title: {{vm.currentVideo.title}}</div>
-                    <div>Video was viewed: {{vm.currentVideo.views}}</div>
-                    <button class="btn btn-default" ng-click="vm.deleteSelectedVideo()">Delete Video</button>
-                </div>
             <!--/Slider-->
         </div>
-            <div class="col-sm-4" id="layoutNav">
-                <div id="slider-thumbs" class="no-scroll">
-                    <!-- Bottom switcher of slider -->
-                    <ul class="hide-bullets" id="dynamic">
-                        <li ng-repeat ="video in vm.videosList" class="col-sm-12">
-                            <a class="thumbnail col-sm-3" id="carousel-selector-1"><img
-                                    src="http://www.videogular.com/assets/images/videogular.png"> </a>
-                            <div id="div1" class=" col-sm-9"><a ng-click="vm.onVideoChange(video)">{{video.title}}</a></div>
-                        </li>
-                    </ul>
-                </div>
+        <div class="col-sm-4" id="layoutNav">
+            <div id="slider-thumbs" class="no-scroll">
+                <!-- Bottom switcher of slider -->
+                <ul class="hide-bullets" id="dynamic">
+                    <li ng-repeat ="video in vm.videosList" class="col-sm-12">
+                        <a class="thumbnail col-sm-3" id="carousel-selector-1"><img
+                                src="http://www.videogular.com/assets/images/videogular.png"> </a>
+                        <div id="div1" class=" col-sm-9"><a ng-click="vm.onVideoChange(video)">{{video.title}}</a></div>
+                    </li>
+                </ul>
             </div>
+        </div>
     </div>
 </div>
 
