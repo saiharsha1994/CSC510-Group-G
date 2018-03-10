@@ -18,7 +18,17 @@
                     <br><br><br><br><br><br>
                     <div class="Absolute-Center is-Responsive">
                         <div class="col-sm-8">
-                            <ul class="nav nav-pills center-pills">
+                            <div class="navbar-header">
+                                <ul style="float: right !important;" class="nav navbar-nav navbar-right">
+                                    <form class="navbar-form navbar-right">
+                                        <div class="form-group">
+                                            <button style="padding-top: 5px; float: right !important;" type="submit"
+                                                    class="btn btn-default" ng-click="vm.logout()">Logout</button>
+                                        </div>
+                                    </form>
+                                </ul>
+                            </div>
+                            <ul style="margin-top: 80px;" class="nav nav-pills center-pills">
                                 <li class="active" id="one"><a href ng-click="vm.type = 'addCoins'" data-toggle="tab"
                                                                href="#enterpriseView">AddCoins</a></li>
                                 <li><a href ng-click="vm.type = 'updateCoinsPerHour'" data-toggle="tab"
@@ -26,7 +36,7 @@
                                 <li><a href ng-click="vm.type = 'uploadVideo'" data-toggle="tab" href="#enterpriseView">Upload
                                     Video</a></li>
                                 <li><a href ng-click="vm.type = 'updateProfile'" data-toggle="tab"
-                                       href="#enterpriseView">Update Profile</a></li>
+                                       href="enterpriseView">Update Profile</a></li>
                             </ul>
                             <br>
                             <div style="background-color: white ;border-radius: 10px;opacity:0.95;color: black;text-shadow: none;">
@@ -108,52 +118,34 @@
                                             <div ng-if="vm.showLoading"><p>Uploading...</p></div>
                                         </div>
                                         <div ng-if="vm.type === 'updateProfile'">
-                                            <div name="update Profile">
-                                                Update Profile
-                                                <li><a href ng-click="vm.updateType = 'password'" data-toggle="tab"
-                                                       href="#updateProfile">Update Password</a></li>
-                                                <div ng-if="vm.updateType === 'password'">
+                                            <div name="update Password">
+                                                Update Password
+                                                <div>
                                                     <input type="password"
+                                                           style="margin-top: 12px;"
                                                            ng-model="vm.updateProfile.oldPassword"
                                                            class="form-control text-box-width"
                                                            id="eOldPassword"
                                                            placeholder="Old Password" required>
                                                     <input type="password"
+                                                           style="margin-top: 12px;"
                                                            ng-model="vm.updateProfile.newPassword"
                                                            class="form-control text-box-width"
                                                            id="eNewPassword"
                                                            placeholder="New Password" required>
                                                     <input type="password"
+                                                           style="margin-top: 12px;"
                                                            ng-model="vm.updateProfile.confirmNewPassword"
                                                            class="form-control text-box-width"
                                                            id="eNewConfrimPassword"
                                                            placeholder="Confirm New Password" required>
                                                 </div>
-                                                <li><a href ng-click="vm.updateType = 'email'" data-toggle="tab"
-                                                       href="#updateProfile">Update Email</a></li>
-                                                <div ng-if="vm.updateType === 'email'">
-                                                    <input type="email"
-                                                           ng-model="vm.updateProfile.oldEmail"
-                                                           class="form-control text-box-width"
-                                                           id="eOldEmail"
-                                                           placeholder="Old Email" required>
-                                                    <input type="email"
-                                                           ng-model="vm.updateProfile.newEmail"
-                                                           class="form-control text-box-width"
-                                                           id="eNewEmail"
-                                                           placeholder="New Email" required>
-                                                </div>
-                                                <button type="submit" ng-click="vm.updateProfile()">submit</button>
+                                                <button style="margin-top: 12px" type="submit" ng-click="vm.updatePassword()">Update Password</button>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div style="margin-top: 200px;" class="col-sm-4" ng-if="vm.currentVideo != {} && vm.videosList.length !== 0">
-                            <div style="margin-top: 10px;"><p>Video title: {{vm.currentVideo.title}}</p></div>
-                            <div style="margin-top: 10px;"><p>Video was viewed: {{vm.currentVideo.views}}</p></div>
-                            <button style="margin-top: 10px;" class="btn btn-default" ng-click="vm.deleteSelectedVideo()">Delete Video</button>
                         </div>
                     </div>
                 </div>
@@ -165,8 +157,13 @@
                 <!-- Bottom switcher of slider -->
                 <ul class="hide-bullets" id="dynamic">
                     <li ng-repeat="video in vm.videosList" class="col-sm-12">
-                        <a class="thumbnail col-sm-3" id="carousel-selector-1"><img
-                                src="http://www.videogular.com/assets/images/videogular.png"> </a>
+                        <span><a class="thumbnail col-sm-3" id="carousel-selector-1"><img
+                                src="http://www.videogular.com/assets/images/videogular.png"> </a></span>
+                        <span><div style="margin-top: 200px;" class="col-sm-4" ng-if="vm.currentVideo != {} && vm.videosList.length !== 0">
+                            <div style="margin-top: 10px;"><p>Video was viewed: {{vm.currentVideo.views}}</p></div>
+                            <button style="margin-top: 10px;" class="btn btn-default"
+                                    ng-click="vm.deleteSelectedVideo(video.id)">Delete</button>
+                        </div></span>
                         <div id="div1" class=" col-sm-9"><a ng-click="vm.onVideoChange(video)">{{video.title}}</a></div>
                     </li>
                 </ul>
