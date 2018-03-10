@@ -23,6 +23,7 @@ export default class enterpriseCtrl {
         this.updatedCoinsPerHour = 0;
         this.coinsToBeAdded = 0;
         this.currentVideo = {};
+        this.enterpriseSearchTag = {};
 
         this.updateProfile = {
           oldPassword: '',
@@ -42,8 +43,7 @@ export default class enterpriseCtrl {
     }
 
     addCoins() {
-        console.log(this.coinsPerHour);
-        if (this.coinsPerHour) {
+        if (this.coinsToBeAdded) {
             this.enterpriseService.addCoins(this.coinsToBeAdded, this.$stateParams.id)
                 .then((response) => {
                     this.coinsToBeAdded = 0;
@@ -74,15 +74,18 @@ export default class enterpriseCtrl {
             .then((response) => {
                 let videoDetails = {username: this.$stateParams.id, description: this.description,
                     title: this.title, fileId: _.get(response, 'data._id'),
-                    tags: _.map(this.searchTags, (tag) => {return tag.type})};
+                    tags: [_.get(this.enterpriseSearchTag, 'type')]};
                 if (_.isUndefined(videoDetails.fileId)) {
+                    this.dialogs.error('Error', 'Error in uploading the file. Please try again.');
                     return this.$q.reject('File not uploaded properly');
                 }
                 return this.enterpriseService.uploadVideoDetails(videoDetails);
-            }).then(() => {
+            }).then((response) => {
                 this.description = '';
                 this.title = '';
                 this.searchTags = [];
+                this.enterpriseSearchTag = {};
+                this.videosList.push(response.data);
             }).catch(() => {
             this.dialogs.error('Error', 'Unable to upload video. Please try again.');
             }).finally(() => {
