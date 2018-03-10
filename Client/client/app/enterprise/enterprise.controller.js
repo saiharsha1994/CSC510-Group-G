@@ -4,22 +4,24 @@ import enterpriseService from './enterprise.service';
 import loginService from './../Login/login.service';
 
 export default class enterpriseCtrl {
-    constructor($state, $q, $stateParams, Upload, enterpriseService, loginService) {
+    constructor($state, $q, $stateParams, Upload, enterpriseService, loginService, dialogs) {
         this.state = $state;
         this.$q = $q;
         this.$stateParams = $stateParams;
         this.uploadService = Upload;
         this.enterpriseService = enterpriseService;
         this.loginService = loginService;
+        this.dialogs = dialogs;
 
         this.selectedFile = {};
-        this.updatedCoinsPerHour = 0;
-        this.coinsToBeAdded = 0;
         this.tags = [];
         this.multiSelect = false;
         this.videosList = _.get(this.$stateParams, 'eDetails.videos', []);
-        this.coins = _.get(this.$stateParams, 'eDetails.coins', []);
-        this.coinsPerHour = _.get(this.$stateParams, 'eDetails.coinsPerHour', []);
+        this.coins = _.get(this.$stateParams, 'eDetails.coins', 0);
+        this.coinsPerHour = _.get(this.$stateParams, 'eDetails.coinsPerHour', 0);
+
+        this.updatedCoinsPerHour = 0;
+        this.coinsToBeAdded = 0;
         this.currentVideo = {};
 
         this.updateProfile = {
@@ -31,14 +33,7 @@ export default class enterpriseCtrl {
         };
     }
 
-    addTag() {
-        this.tags.push(this.searchTag);
-        this.searchTag = '';
-    }
-
-    $onInit() {
-        console.log('Enterprise initialized');
-    }
+    $onInit() {}
 
     logout() {
         //TODO: delete the cookie or delete the session.
@@ -46,23 +41,30 @@ export default class enterpriseCtrl {
     }
 
     addCoins() {
-        this.enterpriseService.addCoins(this.coinsToBeAdded, this.$stateParams.id)
-            .then((response) => {
-                this.coinsToBeAdded = 0;
-                this.coins = _.get(response, 'data.coins');
-            }).catch((response) => {
-                console.log(response);
+        console.log(this.coinsPerHour);
+        if (this.coinsPerHour) {
+            this.enterpriseService.addCoins(this.coinsToBeAdded, this.$stateParams.id)
+                .then((response) => {
+                    this.coinsToBeAdded = 0;
+                    console.log(response.data);
+                    this.coins = _.get(response, 'data.coins');
+                }).catch(() => {
+                this.dialogs.error('Error', 'Can not add coins. Please try again.');
             });
+        }
     }
 
     updateCoinsPerHour() {
-        this.enterpriseService.updateCoinsPerHour(this.updatedCoinsPerHour, this.$stateParams.id)
-            .then((response) => {
-                this.updatedCoinsPerHour = 0;
-                this.coinsPerHour = _.get(response, 'data.coinsPerHpur');
-            }).catch((response) => {
-            console.log(response);
-        });
+        if (this.updatedCoinsPerHour) {
+            this.enterpriseService.updateCoinsPerHour(this.updatedCoinsPerHour, this.$stateParams.id)
+                .then((response) => {
+                    this.updatedCoinsPerHour = 0;
+                    console.log(response.data);
+                    this.coinsPerHour = _.get(response, 'data.coinsPerHour');
+                }).catch((response) => {
+                this.dialogs.error('Error', 'Can not update coinsPerHour. Please try again.');
+            });
+        }
     }
 
     uploadVideo() {
@@ -75,11 +77,9 @@ export default class enterpriseCtrl {
                     return this.$q.reject('File not uploaded properly');
                 }
                 return this.enterpriseService.uploadVideoDetails(videoDetails);
-                //TODO: // /vidoeDetails  {username: '', description: '', title: '', fileId: response.data.id, tags: []}
-                console.log(response);
-            }).catch((response) => {
-            console.log(response);
-        }).finally((response) => {
+            }).catch(() => {
+            this.dialogs.error('Error', 'Unable to upload video. Please try again.');
+        }).finally(() => {
             this.showLoading = false;
         });
     }
@@ -107,6 +107,6 @@ export default class enterpriseCtrl {
     }
 }
 
-enterpriseCtrl.$inject = ['$state', '$q', '$stateParams', 'Upload', 'enterpriseService', 'loginService'];
+enterpriseCtrl.$inject = ['$state', '$q', '$stateParams', 'Upload', 'enterpriseService', 'loginService', 'dialogs'];
 
   
