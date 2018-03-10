@@ -4,23 +4,24 @@ import enterpriseService from './enterprise.service';
 import loginService from './../Login/login.service';
 
 export default class enterpriseCtrl {
-    constructor($state, $q, Upload, enterpriseService, loginService, $stateParams) {
+    constructor($state, $q, $stateParams, Upload, enterpriseService, loginService) {
         this.state = $state;
         this.$q = $q;
         this.$stateParams = $stateParams;
         this.uploadService = Upload;
         this.enterpriseService = enterpriseService;
         this.loginService = loginService;
+
         this.selectedFile = {};
-        this.updateType = 'password';
         this.updatedCoinsPerHour = 0;
         this.coinsToBeAdded = 0;
         this.tags = [];
-        this.searchTag = '';
+        this.multiSelect = false;
         this.videosList = _.get(this.$stateParams, 'eDetails.videos', []);
         this.coins = _.get(this.$stateParams, 'eDetails.coins', []);
         this.coinsPerHour = _.get(this.$stateParams, 'eDetails.coinsPerHour', []);
         this.currentVideo = {};
+
         this.updateProfile = {
           oldPassword: '',
           newPassword: '',
@@ -106,6 +107,6 @@ export default class enterpriseCtrl {
     }
 }
 
-enterpriseCtrl.$inject = ['$state', '$q', 'Upload', 'enterpriseService', 'loginService', '$stateParams'];
+enterpriseCtrl.$inject = ['$state', '$q', '$stateParams', 'Upload', 'enterpriseService', 'loginService'];
 
   

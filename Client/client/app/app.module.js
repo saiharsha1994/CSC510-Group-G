@@ -26,6 +26,7 @@ import loginComponent from './Login/Login.component';
 import userComponent from './user/user.component';
 import videoComponent from './videoPlayer/video.component';
 import enterpriseComponent from './enterprise/enterprise.component';
+import searchComponent from './search/search.component';
 import loginService from './Login/login.service';
 import sessionService from './services/sessionService';
 import enterpriseService from './enterprise/enterprise.service';
@@ -42,6 +43,7 @@ angular.module('app', [ComponentsModule.name, 'ui.router', 'ngSanitize', 'ngFile
     .service('userService', userService)
     .service('sessionService', sessionService)
     .component('app', appComponent)
+    .component('searchComponent', searchComponent)
     .component('loginComponent', loginComponent)
     .component('userComponent', userComponent)
     .component('enterpriseComponent', enterpriseComponent)

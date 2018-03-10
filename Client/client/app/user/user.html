@@ -1,6 +1,7 @@
 <div>
     <!--<div class="col-md-8">-->
-    <button type="btn" ng-click="vm.logout()">Logout</button>
+    <search-component multi-select = "vm.multiSelect" search-tags = "vm.searchTags"></search-component>
+    <button style="float: right" type="btn" ng-click="vm.logout()">Logout</button>
     <video-component is-video-completed="vm.isVideoCompleted"
                      videos-list = "vm.videosList"
                      current-url="vm.currentUrl"></video-component>
