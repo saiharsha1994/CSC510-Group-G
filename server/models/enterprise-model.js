@@ -7,7 +7,8 @@ var enterpriseSchema = new Schema({
     emailId: String,
     password: String, 
     coins: Number,
-    coinsPerHour: Number
+    coinsPerHour: Number,
+    time: Number
 });
 
 module.exports = mongoose.model('enterprise', enterpriseSchema, 'enterprises');

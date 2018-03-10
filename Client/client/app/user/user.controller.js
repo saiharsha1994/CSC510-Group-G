@@ -1,11 +1,16 @@
 'use strict';
 
 export default class userCtrl {
-    constructor($state, $stateParams, loginService, userService) {
+    constructor($state, $stateParams, loginService, userService, dialogs, sessionService) {
         this.state = $state;
         this.$stateParams = $stateParams;
         this.loginService = loginService;
         this.userService = userService;
+        this.sessionService = sessionService;
+        this.dialogs = dialogs;
+
+        this.multiSelect = true;
+        this.searchTags = [];
 
         this.updateProfile = {
             oldPassword: '',
@@ -22,6 +27,7 @@ export default class userCtrl {
             return (video.id === this.currentUrl);
         }), 'comments', []);
         this.commentText = '';
+        var options = [];
     }
 
     claimCoins() {
@@ -29,7 +35,7 @@ export default class userCtrl {
             this.userService.claimCoins(this.$stateParams.id).then((response) => {
                 this.isVideoCompleted = false;
             }).catch((response) => {
-                // console.log(response);
+                this.dialogs.error('Error', 'Unable to add this video to your viewed video list.');
             });
         }
     }
@@ -38,7 +44,7 @@ export default class userCtrl {
         this.loginService.updateProfile(this.updateProfile).then((response) => {
             console.log(response);
         }).catch((response) => {
-            console.log(response);
+            this.dialogs.error('Error', 'Unable to update profile now. Please try again');
         });
     }
 
@@ -48,15 +54,27 @@ export default class userCtrl {
             console.log(response);
             this.commentText = '';
         }).catch((response) => {
-            console.log(response);
+            this.dialogs.error('Error', 'Unable to add comments now. Please try again');
+        });
+    }
+
+    redeemCoins() {
+        this.userService.redeemCoins(this.$stateParams.id).then((response)=> {
+            this.userCoins = _.get(response, 'data.coins', 0);
+        }).catch(() => {
+            this.dialogs.error('Error', 'Unable to redeem coins now. Please try again');
         });
     }
 
     logout() {
-        // this.loginService.logout()  
-        //TODO: delete the cookie or delete the session.
-        this.state.go('home');
+        this.sessionService.deleteSession(this.$stateParams.id).then(() => {
+            this.state.go('home');
+        }).catch(() => {
+            //have to do logout
+        }).finally(() => {
+            this.state.go('home');
+        });
     }
 }
 
-userCtrl.$inject = ['$state', '$stateParams', 'loginService', 'userService'];
+userCtrl.$inject = ['$state', '$stateParams', 'loginService', 'userService', 'dialogs', 'sessionService'];

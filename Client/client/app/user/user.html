@@ -1,23 +1,49 @@
 <div>
     <!--<div class="col-md-8">-->
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <ul class="nav navbar-nav navbar-left">
+                    <form class="navbar-form navbar-left">
+                        <div class="form-group">
+                            <button style="padding-top: 5px" type="submit" class="btn btn-default"
+                                    ng-click="vm.redeemCoins()">Claim Coins</button>
+                        </div>
+                        <div style="margin-left: 15px;" class="form-group">
+                            <span>Current Coins: {{vm.coins}}</span>
+                        </div>
+                        <div style="margin-left: 15px;" class="form-group">
+                            <search-component multi-select="vm.multiSelect" search-tags="vm.searchTags"></search-component>
+                        </div>
+                        <div style="margin-left: 15px;" class="form-group">
+                            <button style="margin-left: 10px;" type="submit" class="btn btn-default"
+                                    ng-click="vm.searchTags()">Search</button>
+                        </div>
+                    </form>
+                </ul>
+                <ul style="float: right !important;" class="nav navbar-nav navbar-right">
+                    <form class="navbar-form navbar-right">
+                        <div class="form-group">
+                            <button style="padding-top: 5px; float: right !important;" type="submit"
+                                    class="btn btn-default" ng-click="vm.logout()">Logout</button>
+                        </div>
+                    </form>
+                </ul>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <!--<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">-->
+                <!--<form class="navbar-form navbar-left">-->
+                    <!--<div class="form-group">-->
+                    <!--</div>-->
+                <!--</form>-->
+                <!--<ul class="nav navbar-nav navbar-right">-->
+                <!--</ul>-->
+            <!--</div>&lt;!&ndash; /.navbar-collapse &ndash;&gt;-->
+        </div><!-- /.container-fluid -->
+    </nav>
     <video-component is-video-completed="vm.isVideoCompleted"
-                     videos-list = "vm.videosList" current-url="vm.currentUrl"></video-component>
-<!--</div>-->
-    <!--<div class="col-md-4">-->
-        <!--<input ng-disabled="vm.isVideoCompleted === false" type="button" class="btn btn-default"-->
-               <!--ng-click="vm.claimCoins()">Claim Coins For the video</input>-->
-    <!--</div>-->
-    <!--<div>-->
-        <!--<form>-->
-            <!--<textarea ng-model="vm.commentText" rows="4" cols="50"></textarea>-->
-                <!--<div class="form-group">-->
-                    <!--<button type="submit" class="btn btn-block btn-default" ng-click="vm.addComment()"></button>-->
-                <!--</div>-->
-        <!--</form>-->
-        <!--<div class="col-sm-4" id="slider-thumbs">-->
-            <!--<ul class="hide-bullets" id="dynamic">-->
-                <!--<li ng-repeat = "video in vm.comments"  class="col-sm-12">{{video.title}}</li>-->
-            <!--</ul>-->
-        <!--</div>-->
-    <!--</div>-->
+                     videos-list="vm.videosList"
+                     current-url="vm.currentUrl"></video-component>
 </div>

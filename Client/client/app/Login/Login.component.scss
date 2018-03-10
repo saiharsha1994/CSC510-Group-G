@@ -43,3 +43,8 @@ ul{
 h1 {
   font-size: 70px;
 }
+
+div.modal > div.modal-dialog {
+  width: 300px !important;
+  margin-top:200px;
+}
