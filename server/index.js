@@ -192,7 +192,12 @@ app.get('/*', function (req, res) {
     res.redirect('/' + account_type);
 });
 
-app.listen(config.dev.port, () => {
-    console.log('Server running on locahost:' + config.dev.port);
-});
+// app.listen(config.dev.port, () => {
+//     console.log('Server running on locahost:' + config.dev.port);
+// });
 
+// below code is modified for deployement, 0.0.0.0 is added to make this accept public requests, Port number doesnt matter, no need to include in URL
+var port = process.env.PORT || 3000;
+app.listen(port, "0.0.0.0", function () {
+    console.log('listening on', port);
+});
