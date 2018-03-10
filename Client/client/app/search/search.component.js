@@ -4,8 +4,9 @@ import './search.component.scss';
 
 const searchComponent = {
     scope: {
-        multiSelect: '=',
-        searchTags: '='
+        multiSelect: '=?',
+        searchTags: '=?',
+        enterpriseTag: '=?'
     },
     template,
     controller,
