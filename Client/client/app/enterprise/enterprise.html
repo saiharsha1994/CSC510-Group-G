@@ -30,22 +30,22 @@
                                 </ul>
                             </div>
                             <ul style="margin-top: 80px;" class="nav nav-pills center-pills">
-                                <li class="active" id="one"><a href ng-click="vm.type = 'addCoins'" data-toggle="tab"
-                                                               href="#enterpriseView">AddCoins</a></li>
-                                <li><a href ng-click="vm.type = 'updateCoinsPerHour'" data-toggle="tab"
-                                       href="#enterpriseView">UpdateCoinsPerHour</a></li>
-                                <li><a href ng-click="vm.type = 'uploadVideo'" data-toggle="tab" href="#enterpriseView">Upload
-                                    Video</a></li>
-                                <li><a href ng-click="vm.type = 'updateProfile'" data-toggle="tab"
-                                       href="enterpriseView">Update Profile</a></li>
-                            </ul>
+                                    <li class="active" id="one"><a href  style="font-size: 15px" ng-click="vm.type = 'addCoins'" data-toggle="tab"
+                                                                   href="#enterpriseView">AddCoins</a></li>
+                                    <li><a href style="font-size: 15px" ng-click="vm.type = 'updateCoinsPerHour'" data-toggle="tab"
+                                           href="#enterpriseView">UpdateCoinsPerHour</a></li>
+                                    <li><a href style="font-size: 15px" ng-click="vm.type = 'uploadVideo'" data-toggle="tab" href="#enterpriseView">Upload
+                                        Video</a></li>
+                                    <li><a href style="font-size: 15px" ng-click="vm.type = 'updateProfile'" data-toggle="tab"
+                                           href="enterpriseView">Update Profile</a></li>
+                                </ul>
                             <br>
                             <div style="background-color: white ;border-radius: 10px;opacity:0.95;color: black;text-shadow: none;">
                                 <br>
                                 <div class="tab-content">
                                     <div id="enterpriseView" class="tab-pane fade active in">
                                         <div ng-if="vm.type === 'addCoins'">
-                                            <p>Current Coins: {{vm.coins}}</p>
+                                            <p style="font-size: 12px">Current Coins: {{vm.coins}}</p>
                                             <form role="form">
                                                 <div class="form-group input-group">
                                                     <span class="input-group-addon"><i
@@ -65,7 +65,7 @@
                                             </form>
                                         </div>
                                         <div ng-if="vm.type === 'updateCoinsPerHour'">
-                                            <p>Current Coins Per Hour: {{vm.coinsPerHour}}</p>
+                                            <p style="font-size: 12px">Current Coins Per Hour: {{vm.coinsPerHour}}</p>
                                             <form role="form">
                                                 <div class="form-group input-group">
                                                     <span class="input-group-addon"><i
@@ -117,12 +117,12 @@
                                                 </form>
                                             </div>
                                             <div ng-if="vm.coins <= vm.coinsPerHour">
-                                                <p>Please add coins to upload your videos</p></div>
+                                                <p style="font-size: 12px">Please add coins to upload your videos</p></div>
                                             <div ng-if="vm.showLoading"><p>Uploading...</p></div>
                                         </div>
                                         <div ng-if="vm.type === 'updateProfile'">
                                             <div name="update Password">
-                                                Update Password
+                                                <p style="font-size: 12px">Update Password</p>
                                                 <div>
                                                     <input type="password"
                                                            style="margin-top: 12px;"

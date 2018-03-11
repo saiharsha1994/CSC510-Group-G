@@ -16,19 +16,19 @@
                     <br>
                     <div class="Absolute-Center is-Responsive">
                         <div class="col-sm-12 col-md-12">
-                            <ul class="nav nav-pills center-pills">
-                                <li class="active"><a href ng-click="vm.isUser = true" data-toggle="tab"
-                                                      href="#home">User</a></li>
-                                <li><a href ng-click="vm.isUser = false" data-toggle="tab" href="#home">Enterprise</a>
-                                </li>
-                            </ul>
+                                <ul class="nav nav-pills center-pills">
+                                        <li class="active"><a style="color:#ffffff;font-size: 15px" href ng-click="vm.isUser = true" data-toggle="tab"
+                                                              href="#home">User</a></li>
+                                        <li><a href  style="color:#ffffff;font-size: 15px" ng-click="vm.isUser = false" data-toggle="tab" href="#home">Enterprise</a>
+                                        </li>
+                                    </ul>
                             <br>
                             <div class="col-sm-12"
                                  style="background-color: white ;border-radius: 10px;opacity:0.95;color: black;text-shadow: none;">
                                 <br>
                                 <div class="tab-content">
                                     <div id="home" class="tab-pane fade in active">
-
+                                        <br>
                                         <div ng-if="vm.isSignIn === true">
                                             <form role="form">
                                                 <div class="form-group input-group">
@@ -49,6 +49,7 @@
                                                            id="signInPassword"
                                                            placeholder="Password" required>
                                                 </div>
+                                                <br>
                                                 <div class="form-group">
                                                     <button type="submit" class="btn btn-block btn-default"
                                                             ng-click="vm.submit()">Submit
@@ -119,7 +120,7 @@
                                         </div>
                                         <ul ng-init="vm.isSignIn = true">
                                             <div id="contain">
-                                                <a href ng-click="vm.isSignIn = !vm.isSignIn">
+                                                <a href style="font-size: 12px" ng-click="vm.isSignIn = !vm.isSignIn">
                                                     {{(vm.isSignIn === true ? 'Create a new account' : 'Already have an
                                                     account?')}}</a>
                                             </div>
