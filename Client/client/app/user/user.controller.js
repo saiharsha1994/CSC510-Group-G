@@ -57,7 +57,7 @@ export default class userCtrl {
         console.log('enter showCoins');
         this.userService.getUserCoins(this.$stateParams.id)
             .then((response) => {
-                this.coins = _.get(response, 'data');
+                this.coins = _.get(response, 'data.coins');
                 this.shouldShowCoins = true;
             }).catch(() => {
                 this.dialogs.error('Error', 'Unable to fetch users coins. Please try again.');
