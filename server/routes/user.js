@@ -27,20 +27,9 @@ mongoose.connect(config.dev.db, function (err) {
 router.get('/', function (req, res) {
     Video.find({}).exec(function (err, videos) {
         if (err) {
-            console.error('Error retrieving videos');
+            res.status(400).send(err);
         } else {
             res.json(videos);
-        }
-    });
-});
-
-// TODO : Remove this request
-router.get('/profile/:username', function (req, res) {
-    User.find({ username: req.params.username }).exec(function (err, user) {
-        if (err) {
-            res.status(400).send('Error retrieving data for ' + req.params.username + ' error- ' + err);
-        } else {
-            res.json(user);
         }
     });
 });
@@ -70,7 +59,6 @@ router.post('/like/:id', function (req, res) {
 router.post('/comments/', function (req, res) {
     Video.findOne({ 'videoId': req.body.videoId }, function (err, video) {
         if (err) {
-            console.error(err);
             res.status(400).send(err);
         } else {
             if (video) {
@@ -90,11 +78,9 @@ router.post('/comments/', function (req, res) {
     });
 });
 
-// TODO : Handle time
 router.post('/viewed', function (req, res) {
     Video.findOne({ 'videoId': req.body.videoId }, function (err, video) {
         if (err) {
-            console.error(err);
             res.status(400).send(err);
         } else {
             if (video) {
@@ -105,7 +91,6 @@ router.post('/viewed', function (req, res) {
                     } else {
                         User.findOne({ 'username': req.body.username }, function (err, user) {
                             if (err) {
-                                console.error(err);
                                 res.status(400).send(err);
                             } else {
                                 if (user) {
@@ -113,12 +98,10 @@ router.post('/viewed', function (req, res) {
                                     user.time = user.time + req.body.time;
                                     user.save((err, user) => {
                                         if (err) {
-                                            console.error(err);
                                             res.status(400).send(err);
                                         } else {
                                             Enterprise.findOne({ 'enterpriseId': video.enterpriseId }, function (err, enterprise) {
                                                 if (err) {
-                                                    console.error(err);
                                                     res.status(400).send(err);
                                                 } else {
                                                     if (enterprise) {
@@ -130,7 +113,6 @@ router.post('/viewed', function (req, res) {
                                                         }
                                                         enterprise.save((err, ent) => {
                                                             if (err) {
-                                                                console.log(err);
                                                                 res.status(400).send(err);
                                                             } else {
                                                                 res.status(200).send('Video viewed');
@@ -170,17 +152,12 @@ router.get('/coins/:username', function (req, res) {
 });
 
 router.post('/profile/update', function (req, res) {
-    console.log(req.body.username);
-    //{"userId":1223, "username":"haramam", "emailId":"oko@bokka.com"}
-    // postman request - localhost:3000/user/profile/update
     var query = { "username": req.body.username }//, "emailId":req.body.emailId};
     User.findOne(query, { "username": true, "emailId": true },
         (err, user) => {
             if (err) {
                 res.status(400).send(err);
             }
-
-            // TODO : handle the if case properly
             if (user && (req.body.password === user.password)) {  // Search could come back empty, so we should protect against sending nothing back
                 user.password = req.body.newpassword || user.password;
                 //user.emailId = req.body.emailId || user.emailId;
@@ -323,7 +300,6 @@ router.post('/search', function (req, res) {
 router.post('/redeem', function (req, res) {
     User.findOne({ 'username': req.body.username }).exec(function (err, user) {
         if (err) {
-            console.error('Error retrieving data for ' + req.params.username);
             res.status(400).send(err);
         } else {
             if (user) {
@@ -345,7 +321,7 @@ router.post('/redeem', function (req, res) {
 router.get('/history/:username', function (req, res) {
     User.findOne({ 'username': req.params.username }).exec(function (err, user) {
         if (err) {
-            console.error('Error retrieving data for ' + req.params.username);
+            res.status(400).send(err);
         } else {
             if (user) {
                 var videoIds = [];
