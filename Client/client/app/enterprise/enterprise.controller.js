@@ -78,12 +78,12 @@ export default class enterpriseCtrl {
             return;
         }
         this.showLoading = true;
-        let tag = _.get(this.enterpriseSearchTag, 'type');
         this.uploadService.upload({url: 'http://localhost:3000/enterprise/uploadVideo', data:{file: this.selectedFile}})
             .then((response) => {
                 let videoDetails = {username: this.$stateParams.id, description: this.description,
                     title: this.title, fileId: _.get(response, 'data._id'),
-                    tags: _.isNull(tag) || _.isEmpty(tag) ? [] : [tag]};
+                    tags: _.isNull(this.enterpriseSearchTag) ||
+                    _.isEmpty(this.enterpriseSearchTag) ? [] : [this.enterpriseSearchTag]};
                 if (_.isUndefined(videoDetails.fileId)) {
                     this.dialogs.error('Error', 'Error in uploading the file. Please try again.');
                     return this.$q.reject('File not uploaded properly');
