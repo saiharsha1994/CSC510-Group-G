@@ -260,6 +260,17 @@ router.post('/search', function (req, res) {
     Enterprise.find({
         $where: 'this.coins > this.coinsPerHour'
     }, function (err, enterprises) {
+    var tags = [];
+    _(req.body.tags).forEach(function (tag) {
+        tags.push({ 'tag': tag });
+    });
+
+    var query = {};
+
+    if (!_.isEmpty(tags)) {
+        query["$or"] = tags;
+    }
+    Tag.find(query).distinct('videoId', function (err, results) {
         if (err) {
             res.status(400).send(err);
         } else {

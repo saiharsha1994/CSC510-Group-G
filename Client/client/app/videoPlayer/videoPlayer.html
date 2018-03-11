@@ -16,7 +16,7 @@
                             <div class="carousel slide" id="myCarousel">
                                 <!-- Carousel items -->
                                 <div class="carousel-inner">
-                                    <div ng-if="vm.currentVideoId.length > 0" class="videogular-container">
+                                    <div ng-if="vm.videosList.length" class="videogular-container">
                                         <videogular vg-player-ready="vm.onPlayerReady($API)"
                                                     vg-theme="vm.config.theme"
                                                     vg-complete="vm.onVideoComplete()">
@@ -50,7 +50,7 @@
                                             </div><!-- /thumbnail -->
                                         </div><!-- /col-sm-1 -->
 
-                                        <div class="col-sm-5">
+                                        <div ng-if="vm.videosList.length" class="col-sm-5">
                                             <textarea style="width: 200px;"  ng-keypress="vm.onCommentType($event)"
                                                       ng-model="vm.newComment"></textarea>
                                             <div style="margin-top: 15px;" class="panel panel-default">
@@ -84,4 +84,3 @@
         </div>
     </div>
 </div>
-<search-component multi-select="vm.multiSelect" search-tags="vm.searchTags" hidden></search-component>

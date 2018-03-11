@@ -104,8 +104,10 @@
                                                            id="videoTitle"
                                                            placeholder="Add Title" reuired>
                                                     <div style="margin-top: 10px">
-                                                        <search-component multi-select="vm.mutliSelect"
-                                                                          search-tags=vm.searchTags></search-component>
+                                                        <search-component is-user="vm.isUser"
+                                                                          enterprise-search-tag="vm.enterpriseSearchTag">
+
+                                                        </search-component>
                                                     </div>
                                                     <button class="btn btn-block btn-default" style="margin-top: 10px" type="submit"
                                                             ng-click="vm.uploadVideo()">submit

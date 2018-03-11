@@ -1,18 +1,19 @@
 'use strict';
 
 export default class userCtrl {
-    constructor($state, $stateParams, loginService, userService, dialogs, sessionService) {
+    constructor($state, $stateParams, loginService, userService, dialogs, sessionService, videoService) {
         this.state = $state;
         this.$stateParams = $stateParams;
         this.loginService = loginService;
         this.userService = userService;
         this.sessionService = sessionService;
         this.dialogs = dialogs;
+        this.videoService = videoService;
 
-        this.multiSelect = true;
         this.searchTags = [];
         this.shouldShowCoins = false;
         this.coins = 0;
+        this.isUser = true;
 
         this.updateProfile = {
             oldPassword: '',
@@ -29,7 +30,6 @@ export default class userCtrl {
             return (video.id === this.currentUrl);
         }), 'comments', []);
         this.commentText = '';
-        var options = [];
     }
 
     claimCoins() {
@@ -87,6 +87,22 @@ export default class userCtrl {
             this.state.go('home');
         });
     }
+
+    searchVideos() {
+        console.log(this.searchTags);
+        let tags = _.filter(this.searchTags, (tag) => {return tag.isSelected === true;});
+        let tagNames = _.map(tags, (tag) => {return tag.type; });
+        console.log(tags);
+        this.videoService.searchVideos(tagNames).then((response) => {
+            this.videosList = _.get(response, 'data', []);
+        }).catch(() => {
+            this.dialogs.error('Error', 'Unable to search videos');
+        });
+    }
+
+    $postLink() {
+        console.log('postlink of user');
+    }
 }
 
-userCtrl.$inject = ['$state', '$stateParams', 'loginService', 'userService', 'dialogs', 'sessionService'];
+userCtrl.$inject = ['$state', '$stateParams', 'loginService', 'userService', 'dialogs', 'sessionService', 'videoService'];
