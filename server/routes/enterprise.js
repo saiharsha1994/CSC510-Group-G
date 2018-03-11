@@ -195,10 +195,10 @@ router.post('/password/update', function (req, res) {
 });
 
 
-router.get('/stats', function (req, res) {
+router.get('/stats/:enterpriseId', function (req, res) {
     // replace below enterpriseId with session id or pass enterprise id as parameter to this route
     var query = {
-        enterpriseId :  4
+        enterpriseId :  req.params.enterpriseId
     };
 
     Video.find(query, function (err, videoLikes) {
