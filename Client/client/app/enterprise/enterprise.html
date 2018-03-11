@@ -31,13 +31,15 @@
                             </div>
                             <ul style="margin-top: 80px;" class="nav nav-pills center-pills">
                                     <li class="active" id="one"><a href  style="font-size: 15px" ng-click="vm.type = 'addCoins'" data-toggle="tab"
-                                                                   href="#enterpriseView">AddCoins</a></li>
+                                                                   href="addCoins">AddCoins</a></li>
                                     <li><a href style="font-size: 15px" ng-click="vm.type = 'updateCoinsPerHour'" data-toggle="tab"
-                                           href="#enterpriseView">UpdateCoinsPerHour</a></li>
-                                    <li><a href style="font-size: 15px" ng-click="vm.type = 'uploadVideo'" data-toggle="tab" href="#enterpriseView">Upload
+                                           href="updateCoinsPerHour">UpdateCoinsPerHour</a></li>
+                                    <li><a href style="font-size: 15px" ng-click="vm.type = 'uploadVideo'" data-toggle="tab" href="uploadVideo">Upload
                                         Video</a></li>
                                     <li><a href style="font-size: 15px" ng-click="vm.type = 'updateProfile'" data-toggle="tab"
-                                           href="enterpriseView">Update Profile</a></li>
+                                           href="updateProfile">Update Profile</a></li>
+                                <li><a href style="font-size: 15px" ng-click="vm.showStats()" data-toggle="tab"
+                                       href="shoeStats">Show Stats</a></li>
                                 </ul>
                             <br>
                             <div style="background-color: white ;border-radius: 10px;opacity:0.95;color: black;text-shadow: none;">
@@ -170,7 +172,7 @@
                         <br><br><br>
 
                         <span><div class="col-sm-4" ng-if="vm.currentVideo != {} && vm.videosList.length !== 0">
-                                <div><p>Video was viewed: {{vm.currentVideo.views}}</p></div>
+                                <div><p>Video was viewed: {{video.views}}</p></div>
                                 <button class="btn btn-default btn-xs"
                                         ng-click="vm.deleteSelectedVideo(video.id)">Delete</button>
                             </div></span>
@@ -180,7 +182,7 @@
         </div>
     </div>
 </div>
-<div style="position:relative" width="500" height="500">
+<div id="stats" ng-hide="vm.type !== 'showStats'" style="position:relative" width="500" height="500">
         <style type="text/css">
             .slice text {
                 font-size: 12pt;
@@ -190,5 +192,4 @@
                 stroke: #fff;
             }
         </style>
-<script type="text/javascript" src="../../../js/pie.js"></script>
 </div>
