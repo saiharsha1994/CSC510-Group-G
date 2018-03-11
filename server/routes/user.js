@@ -30,7 +30,6 @@ router.get('/', function (req, res) {
             console.error('Error retrieving videos');
         } else {
             res.json(videos);
-            //console.log('test');
         }
     });
 });
@@ -39,7 +38,7 @@ router.get('/', function (req, res) {
 router.get('/profile/:username', function (req, res) {
     User.find({ username: req.params.username }).exec(function (err, user) {
         if (err) {
-            console.error('Error retrieving data for ' + req.params.username);
+            res.status(400).send('Error retrieving data for ' + req.params.username+' error- '+err);
         } else {
             res.json(user);
         }
@@ -49,7 +48,6 @@ router.get('/profile/:username', function (req, res) {
 router.post('/like/:id', function (req, res) {
     Video.findOne({ 'videoId': req.params.id }, function (err, video) {
         if (err) {
-            console.error(err);
             res.status(400).send(err);
         } else {
             if (video) {
@@ -194,7 +192,6 @@ router.post('/profile/update', function (req, res) {
                     }
 
                 });
-                //res.status(200).send(user)
             } else {  // In case no user was found with the given query
                 res.status(404).send("No user found")
             }
@@ -204,7 +201,6 @@ router.post('/profile/update', function (req, res) {
 });
 
 router.get('/details/:username', function (req, res) {
-
     Enterprise.find({
         $where: 'this.coins > this.coinsPerHour'
     }, function (err, enterprises) {
@@ -220,91 +216,18 @@ router.get('/details/:username', function (req, res) {
             if (enterpriseIds.length != 0) {
                 query["$or"] = enterpriseIds;
             }
-            console.log(query);
 
             Video.find(query, function (err, videos) {
                 if (err) {
                     res.status(400).send(err);
                 } else {
-                    //console.log(videos.slice(0, 10)); 
+                    //limit the videos fetched to 10 and send the trimmed video ids
                     res.status(200).send(videos.slice(0, 10));
                 }
             });
-
-            //res.status(200).send(enterprises);
         }
 
     });
-
-    //console.log(req.body.username);
-    //{"userId":1223, "username":"haramam", "emailId":"oko@bokka.com"}
-    // postman request - localhost:3000/user/profile/update
-    //var query = {"userId":req.body.userId}//, "emailId":req.body.emailId};
-    // Enterprise.find().sort({ coinsPerHour: -1 }).exec(function (err, enterprises){
-    //     if(err){
-    //         res.status(400).send(err)
-    //     }
-    //     if(enterprises){
-    //         console.log(enterprises);
-    //         var enterprise_list=_.map(enterprises, function(e){
-    //             return e.enterpriseId;
-    //         });
-    //         console.log(enterprise_list);
-    //         var video_ids_to_display = [];
-    //             //fetch_video(array, element) {
-    //                 var found = false; // The element we've not found just yet.
-
-    //                 _(enterprise_list).forEach(function(item) {
-    //                 var query = {"enterpriseId":item};
-    //                 Video.find( query, (err,video)=>{
-    //                     var video_list=_.map(video, function(e){
-    //                         return e.videoId;
-    //                     });
-    //                     console.log(video_list);
-    //                     _.each(video_list, function(v,i){
-    //                         console.log(v);
-    //                         video_ids_to_display.push(v);
-    //                         console.log(video_ids_to_display+"ok ok ");
-    //                       });
-    //                     //video_ids_to_display.push(video_list);
-    //                     //Array.prototype.push.apply(video_ids_to_display, video_list);
-    //                 });
-    //                 console.log(video_ids_to_display+"present array");
-    //                 if(video_ids_to_display.length >=10)
-    //                     return false;
-    //                     // We found the element!
-    //                     // Let's acknowledge that, then break off the looping.                        
-    //                 });
-
-    //                // return found;
-    //             //}
-    //         res.status(200).send(video_ids_to_display);
-    //     }
-    //     else{
-    //         res.status(200).send("not a good query");
-    //     }
-    // });
-    // User.findOne(query, {"userId": true, "emailId": true}, 
-    //     (err, user) => {
-    //         if (err) {
-    //             res.status(200).send(err)
-    //         }
-    //         if (user) {  // Search could come back empty, so we should protect against sending nothing back
-    //             user.emailId = req.body.emailId || user.emailId;
-    //             user.username = req.body.username || user.username;
-    //             user.save((err, user) => {
-    //                 if (err) {
-    //                     res.status(500).send(err)
-    //                 }
-    //                 res.status(200).send("user details successfully updated"+user);
-    //             });
-    //             //res.status(200).send(user)
-    //         } else {  // In case no user was found with the given query
-    //             res.status(200).send("No user found")
-    //         }
-    //     }
-    // );
-    //res.send('User Profile updated successfully');
 });
 
 router.get('/fetch/:id', function (req, res) {
