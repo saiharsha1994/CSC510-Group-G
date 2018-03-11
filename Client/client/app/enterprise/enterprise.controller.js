@@ -69,12 +69,17 @@ export default class enterpriseCtrl {
     }
 
     uploadVideo() {
+        if (_.isEmpty(this.description) || _.isEmpty(this.title) || _.isEmpty(_.get(this.selectedFile, 'name'))) {
+            this.dialogs.error('Error', 'Please enter all the details.');
+            return;
+        }
         this.showLoading = true;
+        let tag = _.get(this.enterpriseSearchTag, 'type');
         this.uploadService.upload({url: 'http://localhost:3000/enterprise/uploadVideo', data:{file: this.selectedFile}})
             .then((response) => {
                 let videoDetails = {username: this.$stateParams.id, description: this.description,
                     title: this.title, fileId: _.get(response, 'data._id'),
-                    tags: [_.get(this.enterpriseSearchTag, 'type')]};
+                    tags: _.isNull(tag) || _.isEmpty(tag) ? [] : [tag]};
                 if (_.isUndefined(videoDetails.fileId)) {
                     this.dialogs.error('Error', 'Error in uploading the file. Please try again.');
                     return this.$q.reject('File not uploaded properly');
@@ -86,6 +91,7 @@ export default class enterpriseCtrl {
                 this.searchTags = [];
                 this.enterpriseSearchTag = {};
                 this.videosList.push(response.data);
+                this.selectedFile = '';
             }).catch(() => {
             this.dialogs.error('Error', 'Unable to upload video. Please try again.');
             }).finally(() => {

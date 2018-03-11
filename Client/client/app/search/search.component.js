@@ -3,10 +3,11 @@ import controller from './search.controller.js'
 import './search.component.scss';
 
 const searchComponent = {
-    scope: {
+    bindings: {
         searchTags: '=?',
-        enterpriseTag: '=?',
-        isUser: '='
+        enterpriseSearchTag: '=?',
+        isUser: '=',
+        searchVideos: '&?'
     },
     template,
     controller,

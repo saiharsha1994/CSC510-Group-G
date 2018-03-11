@@ -6,11 +6,15 @@ export default class videoService {
     }
 
     updateViewedList(obj) {
-        return this.http.post('http://localhost:3000/user/viewed', obj);
+        return this.http.post('https://afternoon-cliffs-24932.herokuapp.com/user/viewed', obj);
     }
 
     getVideo(id) {
-        return this.http.get(`http://localhost:3000/fetch/${id}`);
+        return this.http.get(`https://afternoon-cliffs-24932.herokuapp.com/fetch/${id}`);
+    }
+
+    searchVideos(tags) {
+        return this.http.post(`https://afternoon-cliffs-24932.herokuapp.com/user/search`, tags);
     }
 }
 
