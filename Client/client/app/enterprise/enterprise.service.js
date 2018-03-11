@@ -16,6 +16,10 @@ export default class enterpriseService {
         return this.http.post('http://localhost:3000/enterprise/videoDetails', videoDetails);
     }
 
+    getReport(id) {
+        return this.http.get(`http://localhost:3000/enterprise/stats/${id}`);
+    }
+
     deleteVideo(videoId) {
         return this.http.delete(`http://localhost:3000/enterprise/deleteVideo/${videoId}`);
     }

@@ -120,6 +120,12 @@ export default class enterpriseCtrl {
             console.log('the video is not deleted');
         });
     }
+
+    getStats() {
+        this.enterpriseService.getStats(this.$stateParams.id).then((response) => {
+            console.log(response.data);
+        });
+    }
 }
 
 enterpriseCtrl.$inject = ['$state', '$q', '$stateParams', 'Upload', 'enterpriseService', 'loginService', 'dialogs'];
