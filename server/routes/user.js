@@ -38,7 +38,11 @@ router.get('/', function (req, res) {
 router.get('/profile/:username', function (req, res) {
     User.find({ username: req.params.username }).exec(function (err, user) {
         if (err) {
+<<<<<<< HEAD
             res.status(400).send('Error retrieving data for ' + req.params.username + ' error- ' + err);
+=======
+            res.status(400).send('Error retrieving data for ' + req.params.username+' error- '+err);
+>>>>>>> feat: backend - pass json array to front end, stats displayed by D3Js in front end
         } else {
             res.json(user);
         }
