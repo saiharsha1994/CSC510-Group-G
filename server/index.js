@@ -58,7 +58,6 @@ app.put('/signup', function (req, res) {
             } else {
                 account_model.findOne().sort({ userId: -1 }).limit(1).exec(function (err, object) {
                     if (err) {
-                        console.error(err);
                         res.status(400).send(err);
                     } else {
 
@@ -148,17 +147,14 @@ app.post('/login', function (req, res) {
                 res.status(400).send(err);
             } else {
                 if (count != 1) {
-                    console.log('Login Failed');
                     res.status(401).send('Login Failed. Invalid username/password');
                 } else {
-                    console.log('login successful');
                     res.status(200).send('Login Successful');
                 }
             }
 
         });
     } else {
-        console.log("user not"+req.body.isUser);
         var query = {
             "$and": [
                 { 'ename': req.body.username },
@@ -168,15 +164,12 @@ app.post('/login', function (req, res) {
 
         enterprise_model.count(query, function (err, count) {
             if (err) {
-                console.log(err);
                 res.status(400).send(err);
             } else {
                 if(count != 1){
-                    console.log('Login Failed');
                     res.status(401).send('Login Failed. Invalid username/password');
                 } else{
                     sess.user = req.body.username;
-                    console.log('login successful');
                     res.status(200).send('Login Successful');
                 }
             }
@@ -186,20 +179,14 @@ app.post('/login', function (req, res) {
 
 app.delete('/logout', function (req, res) {
     req.session.destroy();
-    res.send("logout success!");
+    res.send("logout successful!");
 });
 
 app.get('/*', function (req, res) {
-    //console.log("redirect to"+sess);
     res.redirect('/' + account_type);
 });
 
-// app.listen(config.dev.port, () => {
-//     console.log('Server running on locahost:' + config.dev.port);
-// });
-
 // below code is modified for deployement, 0.0.0.0 is added to make this accept public requests, Port number doesnt matter, no need to include in URL
-var port = process.env.PORT || 3000;
-app.listen(port, "0.0.0.0", function () {
-    console.log('listening on', port);
+app.listen(config.dev.port, "0.0.0.0", function () {
+    console.log('listening on', config.dev.port);
 });
