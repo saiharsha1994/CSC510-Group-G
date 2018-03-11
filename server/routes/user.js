@@ -38,7 +38,7 @@ router.get('/', function (req, res) {
 router.get('/profile/:username', function (req, res) {
     User.find({ username: req.params.username }).exec(function (err, user) {
         if (err) {
-            res.status(400).send('Error retrieving data for ' + req.params.username+' error- '+err);
+            res.status(400).send('Error retrieving data for ' + req.params.username + ' error- ' + err);
         } else {
             res.json(user);
         }
@@ -160,11 +160,11 @@ router.post('/viewed', function (req, res) {
 });
 
 router.get('/coins/:username', function (req, res) {
-    User.findOne({ 'username': req.body.username }, function (err, user) {
+    User.findOne({ 'username': req.params.username }, function (err, user) {
         if (err) {
             res.status(400).send(err);
         } else {
-            res.status(200).send(user.coins);
+            res.status(200).send(user);
         }
     });
 });
@@ -260,62 +260,63 @@ router.post('/search', function (req, res) {
     Enterprise.find({
         $where: 'this.coins > this.coinsPerHour'
     }, function (err, enterprises) {
-    var tags = [];
-    _(req.body.tags).forEach(function (tag) {
-        tags.push({ 'tag': tag });
-    });
+        var tags = [];
+        _(req.body.tags).forEach(function (tag) {
+            tags.push({ 'tag': tag });
+        });
 
-    var query = {};
+        var query = {};
 
-    if (!_.isEmpty(tags)) {
-        query["$or"] = tags;
-    }
-    Tag.find(query).distinct('videoId', function (err, results) {
-        if (err) {
-            res.status(400).send(err);
-        } else {
-            var enterpriseIds = [];
-            _(enterprises).forEach(function (enterprise) {
-                enterpriseIds.push(enterprise.enterpriseId);
-            });
-
-            var tags = [];
-
-            _(req.body.tags).forEach(function (tag) {
-                tags.push({ 'tag': tag });
-            });
-
-            var query = {};
-            if (!_.isEmpty(tags)) {
-                query["$or"] = tags;
-            }
-
-            Tag.find(query).distinct('videoId', function (err, results) {
-                if (err) {
-                    res.status(400).send(err);
-                } else {
-                    var videoIds = [];
-                    var videoQuery = {};
-                    _(results).forEach(function (result) {
-                        videoIds.push({ 'videoId': result });
-                    });
-                    videoQuery["$or"] = videoIds;
-                    Video.find(videoQuery, function (err, videos) {
-                        if (err) {
-                            res.status(400).send(err);
-                        } else {
-                            var results = [];
-                            _(videos).forEach(function(video){
-                                if(enterpriseIds.indexOf(video.enterpriseId) != -1){
-                                    results.push(video);
-                                }
-                            });
-                            res.status(200).send(results);
-                        }
-                    });
-                }
-            });
+        if (!_.isEmpty(tags)) {
+            query["$or"] = tags;
         }
+        Tag.find(query).distinct('videoId', function (err, results) {
+            if (err) {
+                res.status(400).send(err);
+            } else {
+                var enterpriseIds = [];
+                _(enterprises).forEach(function (enterprise) {
+                    enterpriseIds.push(enterprise.enterpriseId);
+                });
+
+                var tags = [];
+
+                _(req.body.tags).forEach(function (tag) {
+                    tags.push({ 'tag': tag });
+                });
+
+                var query = {};
+                if (!_.isEmpty(tags)) {
+                    query["$or"] = tags;
+                }
+
+                Tag.find(query).distinct('videoId', function (err, results) {
+                    if (err) {
+                        res.status(400).send(err);
+                    } else {
+                        var videoIds = [];
+                        var videoQuery = {};
+                        _(results).forEach(function (result) {
+                            videoIds.push({ 'videoId': result });
+                        });
+                        videoQuery["$or"] = videoIds;
+                        Video.find(videoQuery, function (err, videos) {
+                            if (err) {
+                                res.status(400).send(err);
+                            } else {
+                                var results = [];
+                                _(videos).forEach(function (video) {
+                                    if (enterpriseIds.indexOf(video.enterpriseId) != -1) {
+                                        results.push(video);
+                                    }
+                                });
+                                res.status(200).send(results);
+                            }
+                        });
+                    }
+                });
+            }
+        });
     });
 });
 
