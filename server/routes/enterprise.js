@@ -186,26 +186,37 @@ router.post('/password/update', function (req, res) {
 });
 
 
-router.get('/stats/:enterpriseId', function (req, res) {
+router.get('/stats/:ename', function (req, res) {
     // replace below enterpriseId with session id or pass enterprise id as parameter to this route
     var query = {
-        enterpriseId: req.params.enterpriseId
+        ename: req.params.ename
     };
 
-    Video.find(query, function (err, videoLikes) {
-        if (err) {
+    Enterprise.findOne(query, function(err, enterprise){
+        if(err){
             res.status(400).send(err);
-        } else {
-            //fetches each videos and likes corresponding to one enterprise
-            var videoJSON = [];
-            // add logic below to connect to tag-model and fetch tags of all videos
-            // send response by grouping videos with tags and front end process this send data using d3JS
-            _(videoLikes).forEach(function (videoIterator) {
-                videoJSON.push({ 'label': ' videoid: ' + videoIterator.videoId + ' views:' + videoIterator.views, 'value': videoIterator.views });
+        }else{
+            var videoQuery = {
+                enterpriseId : enterprise.enterpriseId
+            };
+
+            Video.find(videoQuery, function (err, videoLikes) {
+                if (err) {
+                    res.status(400).send(err);
+                } else {
+                    //fetches each videos and likes corresponding to one enterprise
+                    var videoJSON = [];
+                    // add logic below to connect to tag-model and fetch tags of all videos
+                    // send response by grouping videos with tags and front end process this send data using d3JS
+                    _(videoLikes).forEach(function (videoIterator) {
+                        videoJSON.push({ 'label': ' videoid: ' + videoIterator.videoId + ' views:' + videoIterator.views, 'value': videoIterator.views });
+                    });
+                    res.status(200).send(videoJSON);
+                }
             });
-            res.status(200).send(videoJSON);
         }
     });
+    
 });
 
 router.delete('/deleteVideo/:videoId', function (req, res) {
