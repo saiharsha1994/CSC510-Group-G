@@ -13,6 +13,10 @@ export default class enterpriseCtrl {
         this.loginService = loginService;
         this.dialogs = dialogs;
 
+        if (_.isEmpty(_.get(this.$stateParams, 'id'))) {
+            this.state.go('home');
+        }
+
         this.selectedFile = {};
         this.tags = [];
         this.multiSelect = false;
