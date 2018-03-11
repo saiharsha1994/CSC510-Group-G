@@ -24,6 +24,10 @@ export default class enterpriseService {
         return this.http.get(`http://localhost:3000/enterprise/stats/${id}`);
     }
 
+    getReport(id) {
+        return this.http.get(`http://localhost:3000/enterprise/stats/${id}`);
+    }
+
     deleteVideo(videoId) {
         return this.http.delete(`https://afternoon-cliffs-24932.herokuapp.com/enterprise/deleteVideo/${videoId}`);
     }
