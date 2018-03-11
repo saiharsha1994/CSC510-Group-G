@@ -1,19 +1,6 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
- <!--<div>-->
-        <!--<button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">-->
-            <!--<span class="glyphicon glyphicon-cog"></span> <span class="caret"></span></button>-->
-        <!--<ul class="dropdown-menu">-->
-            <!--<li ng-repeat="tags in vm.defaultTags">-->
-                <!--<a id="{{tags.id}}" href="search" class="small" data-value=option{{tags.id}} tabIndex="-1">-->
-                    <!--<input ng-disabled="!tags.isSelected && !vm.canSelectMore()" ng-click="tags.isSelected = !tags.isSelected"-->
-                           <!--ng-model="tags.isSelected" type="checkbox"/>&nbsp;{{tags.type}}</a></li>-->
-            <!--<button class="btn" ng-click="vm.onSave()"></button>-->
-        <!--</ul>-->
-    <!--</div>-->
-
-<div ng-if="vm.isUser" class="btn-group" uib-dropdown is-open="true">
+<div ng-if="vm.isUser" class="btn-group" uib-dropdown is-open="false">
     <button id="single-button" type="button" class="btn btn-default" uib-dropdown-toggle ng-disabled="false">
         Button dropdown <span class="caret"></span>
     </button>
