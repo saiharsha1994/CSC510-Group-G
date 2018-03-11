@@ -27,8 +27,8 @@ export default class loginService {
         return this.http.get(`http://localhost:3000/user/coins/${username}`);
     }
 
-    redeemCoins(username) {
-        return this.http.post('this.http.get(`http://localhost:3000/user/coins/${username}', {username:username});
+    claimCoins(username) {
+        return this.http.post('http://localhost:3000/user/redeem/', {username:username});
     }
 
     getViewedHistory(id) {

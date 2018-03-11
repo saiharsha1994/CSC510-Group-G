@@ -67,6 +67,10 @@ export default class loginCtrl {
                         this.dialogs.error('Error', 'Please check the username you have entered');
                     } else if (response.status === 400) {
                         this.dialogs.error('Error', 'Please verify your password');
+                    } else if (response.status === 401) {
+                        this.dialogs.error('Error', 'Password and username do not match');
+                    } else {
+                        this.dialogs.error('Error', 'Unknown Error');
                     }
                 });
             } else {
