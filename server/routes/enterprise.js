@@ -76,6 +76,10 @@ router.post('/videoDetails', function (req, res) {
                             _(req.body.tags).forEach(function (tag) {
                                 tags.push({ 'tag': tag, 'videoId': new_videoId });
                             });
+
+                            if(_.isEmpty(tags)){
+                                tags.push({'tag' : 'No tag', 'videoId' : new_videoId});
+                            }
                             Tag.insertMany(tags, function (err, docs) {
                                 if (err) {
                                     res.status(400).send(err);
