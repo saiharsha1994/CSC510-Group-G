@@ -64,21 +64,16 @@ export default class loginCtrl {
                     }
                 }).catch((response) => {
                     if (response.status === 404) {
-                        this.dialogs.error('Error', 'Please check the username you have entered');
+                        this.dialogs.error('Error', 'Please check the username you have entered', {windowClass: 'error-dialog', keyboard: true, backdrop: true, size: 'sm'});
                     } else if (response.status === 400) {
-                        this.dialogs.error('Error', 'Please verify your password');
+                        this.dialogs.error('Error', 'Please verify your password', {windowClass: 'error-dialog', keyboard: true, backdrop: true, size: 'sm'});
                     } else if (response.status === 401) {
-                        this.dialogs.error('Error', 'Password and username do not match');
+                        this.dialogs.error('Error', 'Password and username do not match',  {windowClass: 'error-dialog', keyboard: true, backdrop: true, size: 'sm'});
                     } else {
-                        this.dialogs.error('Error', 'Unknown Error');
+                        this.dialogs.error('Error', 'Unknown Error', {windowClass: 'error-dialog', keyboard: true, backdrop: true, size: 'sm'});
                     }
                 });
             } else {
-                if (this.signUp.password !== this.signUp.confirmPassword) {
-                    this.errorMessage = 'Passwords do not match';
-                    this.showError = true;
-                    return;
-                }
                 this.signUp.isUser = this.isUser;
                 this.loginService.doSignUp(this.signUp).then((response) => {
                     return this.loginService.getDetails(this.signUp);
@@ -90,11 +85,13 @@ export default class loginCtrl {
                     }
                 }).catch((response) => {
                     if (response.status === 404) {
-                        this.dialogs.error('Error', 'Please check the username you have entered');
+                        this.dialogs.error('Error',
+                            'Please check the username you have entered', {windowClass: 'error-dialog', keyboard: true, backdrop: true, size: 'sm'});
                     } else if (response.status === 400) {
-                        this.dialogs.error('Error', 'Please verify your password');
+                        this.dialogs.error('Error', 'Please verify your password', {windowClass: 'error-dialog', keyboard: true, backdrop: true, size: 'sm'});
                     } else if (response.status === 409) {
-                        this.dialogs.error('Error', 'An account already exists. Please enter new details');
+                        this.dialogs.error('Error',
+                            'An account already exists. Please enter new details', {windowClass: 'error-dialog', keyboard: true, backdrop: true, size: 'sm'});
                     }
                 });
             }

@@ -6,7 +6,7 @@ const videoComponent = {
     bindings: {
         isVideoCompleted: '=?',
         videosList: '=?',
-        currentUrl: '=?'
+        currentUrl: '=?',
     },
   template,
     controller,

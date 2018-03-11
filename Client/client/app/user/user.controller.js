@@ -29,7 +29,7 @@ export default class userCtrl {
     $onInit() {
         this.videosList = this.$stateParams.uDetails;
         console.log(this.videosList);
-        this.comments = _.get(_.filter(this.vidoesList, (video) => {
+        this.comments = _.get(_.filter(this.videosList, (video) => {
             return (video.id === this.currentUrl);
         }), 'comments', []);
         this.commentText = '';
@@ -38,16 +38,18 @@ export default class userCtrl {
     claimCoins() {
         this.userService.claimCoins(this.$stateParams.id).then((response) => {
             this.coins = _.get(response, 'data.coins');
-        }).catch((response) => {
-            this.dialogs.error('Error', 'Unable to add this video to your viewed video list.');
+        }).catch(() => {
+            this.dialogs.error('Error' ,'Unable to add this video to your viewed video list.',
+                {windowClass: 'user-error-dialog', keyboard: true, backdrop: true, size: 'sm'});
         });
     }
 
     updateProfile() {
         this.loginService.updateProfile(this.updateProfile).then((response) => {
             console.log(response);
-        }).catch((response) => {
-            this.dialogs.error('Error', 'Unable to update profile now. Please try again');
+        }).catch(() => {
+            this.dialogs.error('Error', 'Unable to update profile now. Please try again',
+                {windowClass: 'user-error-dialog', keyboard: true, backdrop: true, size: 'sm'});
         });
     }
 
@@ -58,28 +60,23 @@ export default class userCtrl {
                 this.coins = _.get(response, 'data.coins');
                 this.shouldShowCoins = true;
             }).catch(() => {
-                this.dialogs.error('Error', 'Unable to fetch users coins. Please try again.');
+                this.dialogs.error('Error', 'Unable to fetch users coins. Please try again.',
+                    {windowClass: 'user-error-dialog', keyboard: true, backdrop: true, size: 'sm'});
         });
     }
 
     addComment() {
         this.userService.addComment({videoId: this.currentUrl, usernmae: this.$stateParams.id,
-            comment: this.commentText}).then((response) => {
-            console.log(response);
+            comment: this.commentText}).then(() => {
             this.commentText = '';
-        }).catch((response) => {
-            this.dialogs.error('Error', 'Unable to add comments now. Please try again');
+        }).catch(() => {
+            this.dialogs.error('Error', 'Unable to add comments now. Please try again',
+                {windowClass: 'user-error-dialog', keyboard: true, backdrop: true, size: 'sm'});
         });
     }
 
     logout() {
-        this.sessionService.deleteSession(this.$stateParams.id).then(() => {
-            this.state.go('home');
-        }).catch(() => {
-            //have to do logout
-        }).finally(() => {
-            this.state.go('home');
-        });
+        this.state.go('home');
     }
 
     searchVideos() {
@@ -90,13 +87,11 @@ export default class userCtrl {
         this.videoService.searchVideos(tagNames).then((response) => {
             this.videosList = _.get(response, 'data', []);
         }).catch(() => {
-            this.dialogs.error('Error', 'Unable to search videos');
+            this.dialogs.error('Error', 'Unable to search videos',
+                {windowClass: 'e1', keyboard: true, backdrop: true, size: 'sm'});
         });
-    }
-
-    $postLink() {
-        console.log('postlink of user');
     }
 }
 
-userCtrl.$inject = ['$state', '$stateParams', 'loginService', 'userService', 'dialogs', 'sessionService', 'videoService'];
+userCtrl.$inject = ['$state', '$stateParams', 'loginService', 'userService', 'dialogs',
+    'sessionService', 'videoService'];

@@ -50,7 +50,6 @@ export default class userCtrl {
     }
 
     onVideoComplete() {
-        console.log(this.currentVideoId);
         this.videoService.updateViewedList({username: this.$stateParams.id,
             videoId: this.currentVideoId, time: this.api.totalTime}).then((response) => {
             console.log(response);
@@ -61,11 +60,8 @@ export default class userCtrl {
     }
 
     logout() {
-        // this.loginService.logout()  
-        //TODO: delete the cookie or delete the session.
         this.state.go('home');
     }
 }
-
 
 userCtrl.$inject = ['$sce', '$stateParams', 'videoService', 'userService'];
