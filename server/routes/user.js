@@ -257,33 +257,55 @@ router.get('/fetch/:id', function (req, res) {
 
 router.post('/search', function (req, res) {
 
-    var tags = [];
-    _(req.body.tags).forEach(function (tag) {
-        tags.push({ 'tag': tag });
-    });
-
-    var query = {};
-    query["$or"] = tags;
-    Tag.find(query).distinct('videoId', function (err, results) {
+    Enterprise.find({
+        $where: 'this.coins > this.coinsPerHour'
+    }, function (err, enterprises) {
         if (err) {
             res.status(400).send(err);
         } else {
-            var videoIds = [];
-            var videoQuery = {};
-            _(results).forEach(function (result) {
-                videoIds.push({ 'videoId': result });
+            var enterpriseIds = [];
+            _(enterprises).forEach(function (enterprise) {
+                enterpriseIds.push(enterprise.enterpriseId);
             });
-            videoQuery["$or"] = videoIds;
-            Video.find(videoQuery, function (err, videos) {
+
+            var tags = [];
+
+            _(req.body.tags).forEach(function (tag) {
+                tags.push({ 'tag': tag });
+            });
+
+            var query = {};
+            if (!_.isEmpty(tags)) {
+                query["$or"] = tags;
+            }
+
+            Tag.find(query).distinct('videoId', function (err, results) {
                 if (err) {
                     res.status(400).send(err);
                 } else {
-                    res.status(200).send(videos);
+                    var videoIds = [];
+                    var videoQuery = {};
+                    _(results).forEach(function (result) {
+                        videoIds.push({ 'videoId': result });
+                    });
+                    videoQuery["$or"] = videoIds;
+                    Video.find(videoQuery, function (err, videos) {
+                        if (err) {
+                            res.status(400).send(err);
+                        } else {
+                            var results = [];
+                            _(videos).forEach(function(video){
+                                if(enterpriseIds.indexOf(video.enterpriseId) != -1){
+                                    results.push(video);
+                                }
+                            });
+                            res.status(200).send(results);
+                        }
+                    });
                 }
             });
         }
     });
-
 });
 
 router.post('/redeem', function (req, res) {
