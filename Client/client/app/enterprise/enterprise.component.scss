@@ -33,3 +33,10 @@
   display: flex;
   justify-content: center;
 }
+
+#div1 {
+  word-wrap: break-word;
+  width: 20em;
+  overflow: hidden;
+  text-overflow: clip;
+}

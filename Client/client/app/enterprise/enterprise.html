@@ -11,7 +11,7 @@
 <div id="main_area">
     <!-- Slider -->
     <div class="row">
-        <div class="col-sm-8">
+        <div class="col-sm-7">
             <div class="col-xs-12" id="slider">
                 <!-- Top part of the slider -->
                 <div class="row">
@@ -22,8 +22,7 @@
                                 <ul style="float: right !important;" class="nav navbar-nav navbar-right">
                                     <form class="navbar-form navbar-right">
                                         <div class="form-group">
-                                            <button style="padding-top: 5px; margin-left:500px; float: right !important;" type="submit"
-                                                    class="btn btn-default" ng-click="vm.logout()">Logout</button>
+                                            
                                         </div>
                                     </form>
                                 </ul>
@@ -50,7 +49,6 @@
                                                     <span class="input-group-addon"><i
                                                             class="glyphicon glyphicon-euro"></i></span>
                                                     <input type="number"
-                                                           style="width: 215px"
                                                            ng-model="vm.coinsToBeAdded"
                                                            min="1"
                                                            class="form-control text-box-width"
@@ -58,8 +56,7 @@
                                                            placeholder="Add Coins to be Added" required>
                                                 </div>
                                                 <div class="form-group">
-                                                    <button type="submit" style="width: 250px"
-                                                            class="btn btn-block btn-default"
+                                                    <button type="submit" class="btn btn-block btn-default"
                                                             ng-click="vm.addCoins()">AddCoins
                                                     </button>
                                                 </div>
@@ -72,7 +69,6 @@
                                                     <span class="input-group-addon"><i
                                                             class="glyphicon glyphicon-euro"></i></span>
                                                     <input type="number"
-                                                           style="width: 215px"
                                                            ng-model="vm.updatedCoinsPerHour"
                                                            min="1"
                                                            class="form-control text-box-width"
@@ -80,7 +76,7 @@
                                                            placeholder="Add Coins to be Added" required>
                                                 </div>
                                                 <div class="form-group">
-                                                    <button type="submit" style="width: 250px" class="btn btn-block btn-default"
+                                                    <button type="submit" class="btn btn-block btn-default"
                                                             ng-click="vm.updateCoinsPerHour()">Update Coins Per Hour
                                                     </button>
                                                 </div>
@@ -96,22 +92,22 @@
                                                            accept=".mp4"
                                                            ngf-max-size="250MB">
                                                     <input type="text"
-                                                           style="margin-top: 10px; width: 250px;"
+                                                           style="margin-top: 10px;"
                                                            ng-model="vm.description"
                                                            class="form-control text-box-width"
                                                            id="videoDescription"
                                                            placeholder="Add Description" required>
                                                     <input type="text"
-                                                           style="margin-top: 10px; width: 250px;"
+                                                           style="margin-top: 10px;"
                                                            ng-model="vm.title"
                                                            class="form-control text-box-width"
                                                            id="videoTitle"
                                                            placeholder="Add Title" reuired>
                                                     <div style="margin-top: 10px">
                                                         <search-component multi-select="vm.mutliSelect"
-                                                                          enterprise-tag=vm.enterpriseSearchTag></search-component>
+                                                                          search-tags=vm.searchTags></search-component>
                                                     </div>
-                                                    <button style="margin-top: 10px" type="submit"
+                                                    <button class="btn btn-block btn-default" style="margin-top: 10px" type="submit"
                                                             ng-click="vm.uploadVideo()">submit
                                                     </button>
                                                 </form>
@@ -125,25 +121,25 @@
                                                 Update Password
                                                 <div>
                                                     <input type="password"
-                                                           style="margin-top: 12px; width: 250px;"
+                                                           style="margin-top: 12px;"
                                                            ng-model="vm.updateProfile.oldPassword"
                                                            class="form-control text-box-width"
                                                            id="eOldPassword"
                                                            placeholder="Old Password" required>
                                                     <input type="password"
-                                                           style="margin-top: 12px; width: 250px;"
+                                                           style="margin-top: 12px;"
                                                            ng-model="vm.updateProfile.newPassword"
                                                            class="form-control text-box-width"
                                                            id="eNewPassword"
                                                            placeholder="New Password" required>
                                                     <input type="password"
-                                                           style="margin-top: 12px; width: 250px;"
+                                                           style="margin-top: 12px;"
                                                            ng-model="vm.updateProfile.confirmNewPassword"
                                                            class="form-control text-box-width"
                                                            id="eNewConfrimPassword"
                                                            placeholder="Confirm New Password" required>
                                                 </div>
-                                                <button style="margin-top: 12px" type="submit" ng-click="vm.updatePassword()">Update Password</button>
+                                                <button class="btn btn-block btn-default" style="margin-top: 12px" type="submit" ng-click="vm.updatePassword()">Update Password</button>
                                             </div>
                                         </div>
                                     </div>
@@ -155,23 +151,28 @@
             </div>
             <!--/Slider-->
         </div>
-        <div class="col-sm-4" id="layoutNav">
+
+        <button style="margin-top: 30px; margin-right: 50px; float: right !important;" type="submit"
+                                                    class="btn btn-default" ng-click="vm.logout()">Logout</button>
+
+        <div class="col-sm-5" id="layoutNav">
             <div id="slider-thumbs" class="no-scroll">
                 <!-- Bottom switcher of slider -->
-                <ul class="hide-bullets" id="dynamic">
+                <ul style="margin-top: 50px" class="hide-bullets" id="dynamic">
                     <li ng-repeat="video in vm.videosList" class="col-sm-12">
-                        <span><a class="thumbnail col-sm-3" id="carousel-selector-1"><img
-                                src="http://www.videogular.com/assets/images/videogular.png"> </a></span>
-                        <span><div style="margin-top: 200px;" class="col-sm-4" ng-if="vm.currentVideo != {} && vm.videosList.length !== 0">
-                            <div style="margin-top: 10px;"><p>Video was viewed: {{vm.currentVideo.views}}</p></div>
-                            <button style="margin-top: 10px;" class="btn btn-default"
-                                    ng-click="vm.deleteSelectedVideo(video.id)">Delete</button>
-                        </div></span>
-                        <div id="div1" class=" col-sm-9"><a ng-click="vm.onVideoChange(video)">{{video.title}}</a></div>
+                        <a class="thumbnail col-sm-4" id="carousel-selector-1"><img
+                                src="http://www.videogular.com/assets/images/videogular.png"> </a>
+                        <div id="div1" class=" col-sm-9"><a style="font-size: 20px" ng-click="vm.onVideoChange(video)">{{video.title}}</a></div>
+                        <br><br><br>
+
+                        <span><div class="col-sm-4" ng-if="vm.currentVideo != {} && vm.videosList.length !== 0">
+                                <div><p>Video was viewed: {{vm.currentVideo.views}}</p></div>
+                                <button class="btn btn-default btn-xs"
+                                        ng-click="vm.deleteSelectedVideo(video.id)">Delete</button>
+                            </div></span>
                     </li>
                 </ul>
             </div>
         </div>
     </div>
 </div>
-
