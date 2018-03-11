@@ -1,6 +1,8 @@
 <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+
+<script src="../../../js/d3v3min.js"></script>
 <link rel="shortcut icon" href="../favicon.ico">
 <link rel="stylesheet" type="text/css" href="css/normalize.css"/>
 <link rel="stylesheet" type="text/css" href="css/demo.css"/>
@@ -28,15 +30,15 @@
                                 </ul>
                             </div>
                             <ul style="margin-top: 80px;" class="nav nav-pills center-pills">
-                                <li class="active" id="one"><a href  style="font-size: 15px" ng-click="vm.type = 'addCoins'" data-toggle="tab"
-                                                               href="#enterpriseView">AddCoins</a></li>
-                                <li><a href style="font-size: 15px" ng-click="vm.type = 'updateCoinsPerHour'" data-toggle="tab"
-                                       href="#enterpriseView">UpdateCoinsPerHour</a></li>
-                                <li><a href style="font-size: 15px" ng-click="vm.type = 'uploadVideo'" data-toggle="tab" href="#enterpriseView">Upload
-                                    Video</a></li>
-                                <li><a href style="font-size: 15px" ng-click="vm.type = 'updateProfile'" data-toggle="tab"
-                                       href="enterpriseView">Update Profile</a></li>
-                            </ul>
+                                    <li class="active" id="one"><a href  style="font-size: 15px" ng-click="vm.type = 'addCoins'" data-toggle="tab"
+                                                                   href="#enterpriseView">AddCoins</a></li>
+                                    <li><a href style="font-size: 15px" ng-click="vm.type = 'updateCoinsPerHour'" data-toggle="tab"
+                                           href="#enterpriseView">UpdateCoinsPerHour</a></li>
+                                    <li><a href style="font-size: 15px" ng-click="vm.type = 'uploadVideo'" data-toggle="tab" href="#enterpriseView">Upload
+                                        Video</a></li>
+                                    <li><a href style="font-size: 15px" ng-click="vm.type = 'updateProfile'" data-toggle="tab"
+                                           href="enterpriseView">Update Profile</a></li>
+                                </ul>
                             <br>
                             <div style="background-color: white ;border-radius: 10px;opacity:0.95;color: black;text-shadow: none;">
                                 <br>
@@ -104,8 +106,10 @@
                                                            id="videoTitle"
                                                            placeholder="Add Title" reuired>
                                                     <div style="margin-top: 10px">
-                                                        <search-component multi-select="vm.mutliSelect"
-                                                                          search-tags=vm.searchTags></search-component>
+                                                        <search-component is-user="vm.isUser"
+                                                                          enterprise-search-tag="vm.enterpriseSearchTag">
+
+                                                        </search-component>
                                                     </div>
                                                     <button class="btn btn-block btn-default" style="margin-top: 10px" type="submit"
                                                             ng-click="vm.uploadVideo()">submit
@@ -175,4 +179,17 @@
             </div>
         </div>
     </div>
+</div>
+<div style="position:relative" width="500" height="500">
+        <style type="text/css">
+            .slice text {
+                font-size: 12pt;
+                font-family: Arial;
+            }  
+            .slice path{
+                stroke: #fff;
+            }
+        </style>
+<script type="text/javascript" src="../../../js/pie.js"></script>
+
 </div>
