@@ -24,7 +24,11 @@ export default class loginService {
     }
 
     getUserCoins(username) {
-        return this.http.get(`https://afternoon-cliffs-24932.herokuapp.com/user/coins/${username}`, obj);
+        return this.http.get(`http://localhost:3000/user/coins/${username}`);
+    }
+
+    redeemCoins(username) {
+        return this.http.post('this.http.get(`http://localhost:3000/user/coins/${username}', {username:username});
     }
 
     getViewedHistory(id) {

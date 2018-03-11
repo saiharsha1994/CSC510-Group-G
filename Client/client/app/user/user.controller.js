@@ -9,11 +9,14 @@ export default class userCtrl {
         this.sessionService = sessionService;
         this.dialogs = dialogs;
         this.videoService = videoService;
-
         this.searchTags = [];
         this.shouldShowCoins = false;
         this.coins = 0;
         this.isUser = true;
+
+        if (_.isEmpty(_.get(this.$stateParams, 'id'))) {
+            this.state.go('home');
+        }
 
         this.updateProfile = {
             oldPassword: '',
@@ -51,6 +54,7 @@ export default class userCtrl {
     }
 
     showCoins() {
+        console.log('enter showCoins');
         this.userService.getUserCoins(this.$stateParams.id)
             .then((response) => {
                 this.coins = _.get(response, 'data');

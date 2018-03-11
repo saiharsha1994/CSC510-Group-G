@@ -21,7 +21,7 @@ export default class enterpriseService {
     }
 
     deleteVideo(videoId) {
-        return this.http.delete('https://afternoon-cliffs-24932.herokuapp.com/enterprise/deleteVideo/${videoId}`);
+        return this.http.delete(`https://afternoon-cliffs-24932.herokuapp.com/enterprise/deleteVideo/${videoId}`);
     }
 }
 

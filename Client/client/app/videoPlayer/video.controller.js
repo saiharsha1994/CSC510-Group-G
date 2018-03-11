@@ -1,5 +1,5 @@
 'use strict';
-const baseUrl = 'http://localhost:3000/user/fetch/';
+const baseUrl = 'https://afternoon-cliffs-24932.herokuapp.com/user/fetch/';
 export default class userCtrl {
     constructor($sce, $stateParams, videoService, userService) {
         this.$sce = $sce;
@@ -13,7 +13,7 @@ export default class userCtrl {
     
     $onInit() {
         this.videoIds = _.map(this.videosList, 'videoId');
-        let currentVideo = (!_.isEmpty(this.videoList)) ? _.first(this.videosList) : {}
+        let currentVideo = (!_.isEmpty(this.videosList)) ? _.first(this.videosList) : {};
         this.currentVideoId = _.get(currentVideo, 'videoId', '');
         this.config.sources = [{src: `${baseUrl}${_.get(currentVideo, 'fileId')}`, type: 'video/mp4'}];
         this.comments = _.get(currentVideo, 'comments', []);
