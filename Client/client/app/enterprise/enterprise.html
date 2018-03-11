@@ -1,8 +1,6 @@
 <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-
-<script src="../../../js/d3v3min.js"></script>
 <link rel="shortcut icon" href="../favicon.ico">
 <link rel="stylesheet" type="text/css" href="css/normalize.css"/>
 <link rel="stylesheet" type="text/css" href="css/demo.css"/>
@@ -30,13 +28,13 @@
                                 </ul>
                             </div>
                             <ul style="margin-top: 80px;" class="nav nav-pills center-pills">
-                                <li class="active" id="one"><a href ng-click="vm.type = 'addCoins'" data-toggle="tab"
+                                <li class="active" id="one"><a href  style="font-size: 15px" ng-click="vm.type = 'addCoins'" data-toggle="tab"
                                                                href="#enterpriseView">AddCoins</a></li>
-                                <li><a href ng-click="vm.type = 'updateCoinsPerHour'" data-toggle="tab"
+                                <li><a href style="font-size: 15px" ng-click="vm.type = 'updateCoinsPerHour'" data-toggle="tab"
                                        href="#enterpriseView">UpdateCoinsPerHour</a></li>
-                                <li><a href ng-click="vm.type = 'uploadVideo'" data-toggle="tab" href="#enterpriseView">Upload
+                                <li><a href style="font-size: 15px" ng-click="vm.type = 'uploadVideo'" data-toggle="tab" href="#enterpriseView">Upload
                                     Video</a></li>
-                                <li><a href ng-click="vm.type = 'updateProfile'" data-toggle="tab"
+                                <li><a href style="font-size: 15px" ng-click="vm.type = 'updateProfile'" data-toggle="tab"
                                        href="enterpriseView">Update Profile</a></li>
                             </ul>
                             <br>
@@ -45,7 +43,7 @@
                                 <div class="tab-content">
                                     <div id="enterpriseView" class="tab-pane fade active in">
                                         <div ng-if="vm.type === 'addCoins'">
-                                            <p>Current Coins: {{vm.coins}}</p>
+                                            <p style="font-size: 12px">Current Coins: {{vm.coins}}</p>
                                             <form role="form">
                                                 <div class="form-group input-group">
                                                     <span class="input-group-addon"><i
@@ -65,7 +63,7 @@
                                             </form>
                                         </div>
                                         <div ng-if="vm.type === 'updateCoinsPerHour'">
-                                            <p>Current Coins Per Hour: {{vm.coinsPerHour}}</p>
+                                            <p style="font-size: 12px">Current Coins Per Hour: {{vm.coinsPerHour}}</p>
                                             <form role="form">
                                                 <div class="form-group input-group">
                                                     <span class="input-group-addon"><i
@@ -106,10 +104,8 @@
                                                            id="videoTitle"
                                                            placeholder="Add Title" reuired>
                                                     <div style="margin-top: 10px">
-                                                        <search-component is-user="vm.isUser"
-                                                                          enterprise-search-tag="vm.enterpriseSearchTag">
-
-                                                        </search-component>
+                                                        <search-component multi-select="vm.mutliSelect"
+                                                                          search-tags=vm.searchTags></search-component>
                                                     </div>
                                                     <button class="btn btn-block btn-default" style="margin-top: 10px" type="submit"
                                                             ng-click="vm.uploadVideo()">submit
@@ -117,12 +113,12 @@
                                                 </form>
                                             </div>
                                             <div ng-if="vm.coins <= vm.coinsPerHour">
-                                                <p>Please add coins to upload your videos</p></div>
+                                                <p style="font-size: 12px">Please add coins to upload your videos</p></div>
                                             <div ng-if="vm.showLoading"><p>Uploading...</p></div>
                                         </div>
                                         <div ng-if="vm.type === 'updateProfile'">
                                             <div name="update Password">
-                                                Update Password
+                                                <p style="font-size: 12px">Update Password</p>
                                                 <div>
                                                     <input type="password"
                                                            style="margin-top: 12px;"
@@ -179,17 +175,4 @@
             </div>
         </div>
     </div>
-</div>
-<div style="position:relative" width="500" height="500">
-        <style type="text/css">
-            .slice text {
-                font-size: 12pt;
-                font-family: Arial;
-            }  
-            .slice path{
-                stroke: #fff;
-            }
-        </style>
-<script type="text/javascript" src="../../../js/pie.js"></script>
-
 </div>
