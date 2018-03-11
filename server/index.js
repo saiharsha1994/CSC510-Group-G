@@ -190,7 +190,7 @@ app.delete('/logout', function (req, res) {
 });
 
 app.get('/*', function (req, res) {
-    console.log("redirect to"+sess);
+    //console.log("redirect to"+sess);
     res.redirect('/' + account_type);
 });
 

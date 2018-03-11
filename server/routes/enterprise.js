@@ -196,7 +196,25 @@ router.post('/password/update', function (req, res) {
 
 
 router.get('/stats', function (req, res) {
-    res.send('Statistics of videos uploaded till now');
+    // replace below enterpriseId with session id or pass enterprise id as parameter to this route
+    var query = {
+        enterpriseId :  4
+    };
+
+    Video.find(query, function (err, videoLikes) {
+        if (err) {
+            res.status(400).send(err);
+        } else {
+            //fetches each videos and likes corresponding to one enterprise
+            var videoJSON = [];
+            // add logic below to connect to tag-model and fetch tags of all videos
+            // send response by grouping videos with tags and front end process this send data using d3JS
+            _(videoLikes).forEach(function (videoIterator) {
+                videoJSON.push({ 'label':' videoid: '+ videoIterator.videoId+' views:'+videoIterator.views, 'value': videoIterator.views });
+            });
+            res.status(200).send(videoJSON);
+        }
+    });
 });
 
 // TODO : Add route to delete video
@@ -216,16 +234,17 @@ router.delete('/deleteVideo/:videoId', function (req, res) {
                 
                 gfs.remove(options, function(err, gridStore){   // remove video from files and chunks (fs.files nad fs.chunks)
                     if(err){
-                        console.log("Error in removing video file from db");
+                        res.status(404).send("Error removing video file from db"+err);
                     }
                     else{
-                        console.log("removed from fs, chunks successfully");
+                        //console.log("removed from fs, chunks successfully");
                         var query = {
                             videoId : video.videoId     // delete the videos and their mapping tags for this video
                         }
                         db.collection("tags").remove(query, function(err, tags){
                             if(err){
-                                console.log("video is removed but error removing tags");
+                                //console.log("video is removed but error removing tags");
+                                res.status(404).send("Error removing video corresponding tags"+err);
                             } else {
                                 res.status(200).send("Video removed from database and corresponding tags"+tags+" also removed");
                             }
