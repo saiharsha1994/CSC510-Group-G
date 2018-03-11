@@ -36,13 +36,11 @@ export default class userCtrl {
     }
 
     claimCoins() {
-        if (this.isVideoCompleted) {
-            this.userService.claimCoins(this.$stateParams.id).then((response) => {
-                this.isVideoCompleted = false;
-            }).catch((response) => {
-                this.dialogs.error('Error', 'Unable to add this video to your viewed video list.');
-            });
-        }
+        this.userService.claimCoins(this.$stateParams.id).then((response) => {
+            this.coins = _.get(response, 'data.coins');
+        }).catch((response) => {
+            this.dialogs.error('Error', 'Unable to add this video to your viewed video list.');
+        });
     }
 
     updateProfile() {
@@ -71,14 +69,6 @@ export default class userCtrl {
             this.commentText = '';
         }).catch((response) => {
             this.dialogs.error('Error', 'Unable to add comments now. Please try again');
-        });
-    }
-
-    redeemCoins() {
-        this.userService.redeemCoins(this.$stateParams.id).then((response)=> {
-            this.userCoins = _.get(response, 'data.coins', 0);
-        }).catch(() => {
-            this.dialogs.error('Error', 'Unable to redeem coins now. Please try again');
         });
     }
 
