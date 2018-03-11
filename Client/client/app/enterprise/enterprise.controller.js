@@ -13,6 +13,7 @@ export default class enterpriseCtrl {
         this.enterpriseService = enterpriseService;
         this.loginService = loginService;
         this.dialogs = dialogs;
+        this.statCount = -1;
 
         if (_.isEmpty(_.get(this.$stateParams, 'id'))) {
             this.state.go('home');
@@ -133,17 +134,22 @@ export default class enterpriseCtrl {
     }
 
     showStats() {
-        this.type= 'showStats';
+        if (this.statCount === 1) {
+            this.data = [];
+            d3.select("#stats").update();
+        }
+
         this.enterpriseService.getStats(this.$stateParams.id).then((response) => {
-            console.log('modda');
             var w = 400,                        //width
                 h = 400,                            //height
                 r = 200,                            //radius
-                color = d3.scale.category20c();     //builtin range of colors
-            let data = response.data;
+                color = d3.scale.category20c();
+            this.data = response.data;
+            this.type= 'showStats';
+            this.statCount = 1;
             var vis = d3.select("#stats")
                 .append("svg:svg")              //create the SVG element inside the <body>
-                .data([data])                   //associate our data with the document
+                .data([this.data])                   //associate our data with the document
                 .attr("width", w)           //set the width and height of our visualization (these will be attributes of the <svg> tag
                 .attr("height", h)
                 .append("svg:g")                //make a group to hold our pie chart
@@ -169,8 +175,7 @@ export default class enterpriseCtrl {
                     return "translate(" + arc.centroid(d) + ")";        //this gives us a pair of coordinates like [50, 50]
                 })
                 .attr("text-anchor", "middle")                          //center the text on it's origin
-                .text(function(d, i) { return data[i].label; });        //get the label from our original data array
-
+                .text((d, i) => { return this.data[i].label; });        //get the label from our original data array
         });
     }
 
@@ -179,8 +184,11 @@ export default class enterpriseCtrl {
     }
 
     $postLink() {
-        this.scope.$watch('vm.type', () => {
-            d3.select("#stats").remove();
+        this.scope.$watch('vm.type', (newValue) => {
+            // if (this.statCount === 1) {
+            //     this.statCount = 0;
+            //     d3.select("#stats").remove();
+            // }
         });
     }
 }
