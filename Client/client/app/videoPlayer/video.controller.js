@@ -9,6 +9,8 @@ export default class userCtrl {
         this.config = {};
         this.currentVideoId = '';
         this.newComment = '';
+        this.videoname = '';
+        this.videoview = '';
     }
     
     $onInit() {
@@ -17,6 +19,8 @@ export default class userCtrl {
         this.currentVideoId = _.get(currentVideo, 'videoId', '');
         this.config.sources = [{src: `${baseUrl}${_.get(currentVideo, 'fileId')}`, type: 'video/mp4'}];
         this.comments = _.get(currentVideo, 'comments', []);
+        this.videoname = _.get(currentVideo, 'title');
+        this.videoview = _.get(currentVideo, 'views');
             this.config.theme = 'node_modules/videogular-themes-default/videogular.css';
             this.config.plugins = {
                 poster: 'http://www.videogular.com/assets/images/videogular.png'
@@ -44,6 +48,8 @@ export default class userCtrl {
         this.config.sources = [{src: `${baseUrl}${_.get(video, 'fileId')}`, type: 'video/mp4'}];
         this.api.currentTime = 0;
         this.currentVideoId = _.get(video, 'videoId');
+        this.videoname = _.get(video, 'title');
+        this.videoview = _.get(video, 'views');
         this.comments = _.get(_.first(_.filter(this.videosList, (eachVideo) => {
             return eachVideo.videoId === video.videoId;
         })), 'comments', []);
