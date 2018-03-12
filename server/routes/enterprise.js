@@ -188,6 +188,7 @@ router.post('/password/update', function (req, res) {
 
 router.get('/stats/:ename', function (req, res) {
     // replace below enterpriseId with session id or pass enterprise id as parameter to this route
+    console.log("inside");
     var query = {
         ename: req.params.ename
     };

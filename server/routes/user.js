@@ -236,7 +236,7 @@ router.post('/search', function (req, res) {
         $where: 'this.coins > this.coinsPerHour'
     }, function (err, enterprises) {
         var tags = [];
-        _(req.body.tags).forEach(function (tag) {
+        _(req.body).forEach(function (tag) {
             tags.push({ 'tag': tag });
         });
 

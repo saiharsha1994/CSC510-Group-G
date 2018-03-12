@@ -40,3 +40,11 @@
   overflow: hidden;
   text-overflow: clip;
 }
+body, html { height: 90%; }
+
+.vl {
+  border-left: 2px solid black;
+  height: 600px;
+}
+
+
