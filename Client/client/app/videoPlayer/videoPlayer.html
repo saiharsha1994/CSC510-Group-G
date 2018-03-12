@@ -42,6 +42,12 @@
                                     </div>
 
 
+                                    <div class="row" style="margin-top:10px; margin-left: 10px">
+                                                        <strong style="font-size: 20px">Video Name</strong>
+                                                        <br>
+                                                        <p style="font-size: 15px"> Views</p>
+                                        </div>
+
                                     <div class="row" style="margin-top:50px ">
                                         <div class="col-sm-1">
                                             <div class="thumbnail">
@@ -52,7 +58,7 @@
 
                                         <div ng-if="vm.videosList.length" class="col-sm-5">
                                             <textarea style="width: 200px;"  ng-keypress="vm.onCommentType($event)"
-                                                      ng-model="vm.newComment"></textarea>
+                                                      ng-model="vm.newComment" placeholder="Add a public comment..."></textarea>
                                             <div style="margin-top: 15px;" class="panel panel-default">
                                                 <div ng-repeat="comment in vm.comments" class="panel-heading">
                                                     <strong>{{comment.username}}</strong>
@@ -75,8 +81,10 @@
                         <li ng-repeat="video in vm.videosList" class="col-sm-12">
                             <a class="thumbnail col-sm-3" id="carousel-selector-1"><img
                                     src="http://www.videogular.com/assets/images/videogular.png"> </a>
-                            <div id="div1" class=" col-sm-9"><a ng-click="vm.onVideoChange(video)">{{video.title}}</a>
-                            </div>
+                            <div id="div1" class=" col-sm-9"><a ng-click="vm.onVideoChange(video)">{{video.title}}</a></div>
+                            <span><div class="col-sm-4" ng-if="vm.currentVideo != {} && vm.videosList.length !== 0">
+                                    <div><p style="font-size: 10px">{{video.views}} Views</p></div>
+                            </div></span>
                         </li>
                     </ul>
                 </div>

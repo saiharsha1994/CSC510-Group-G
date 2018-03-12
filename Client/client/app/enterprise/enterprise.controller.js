@@ -80,7 +80,7 @@ export default class enterpriseCtrl {
             return;
         }
         this.showLoading = true;
-        this.uploadService.upload({url: 'http://localhost:3000/enterprise/uploadVideo', data:{file: this.selectedFile}})
+        this.uploadService.upload({url: 'https://afternoon-cliffs-24932.herokuapp.com/enterprise/uploadVideo', data:{file: this.selectedFile}})
             .then((response) => {
                 let videoDetails = {username: this.$stateParams.id, description: this.description,
                     title: this.title, fileId: _.get(response, 'data._id'),

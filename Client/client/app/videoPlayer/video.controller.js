@@ -9,6 +9,8 @@ export default class userCtrl {
         this.config = {};
         this.currentVideoId = '';
         this.newComment = '';
+        this.videoname = '';
+        this.videoview = '';
     }
     
     $onInit() {
@@ -44,9 +46,16 @@ export default class userCtrl {
         this.config.sources = [{src: `${baseUrl}${_.get(video, 'fileId')}`, type: 'video/mp4'}];
         this.api.currentTime = 0;
         this.currentVideoId = _.get(video, 'videoId');
+        this.videoname = _.get(video, 'title');
+        this.videoview = _.get(video, 'views');
         this.comments = _.get(_.first(_.filter(this.videosList, (eachVideo) => {
             return eachVideo.videoId === video.videoId;
         })), 'comments', []);
+    }
+
+    ontitle(){
+        this.videoname = this.videoname;
+        this.videoview = this.videoview;
     }
 
     onVideoComplete() {
