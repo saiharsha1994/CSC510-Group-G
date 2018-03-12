@@ -10,6 +10,6 @@
     </ul>
 </div>
 
-<select ng-if="!vm.isUser" style="width: 250px; height: 20px;" ng-model="vm.enterpriseSearchTag">
+<select class="form-control" ng-if="!vm.isUser" style="width: 173px; height: 33px;" ng-model="vm.enterpriseSearchTag">
     <option ng-repeat="tag in vm.searchTags" value="{{tag.type}}">{{tag.type}}</option>
 </select>

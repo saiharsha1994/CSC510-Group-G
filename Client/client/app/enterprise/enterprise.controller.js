@@ -41,6 +41,7 @@ export default class enterpriseCtrl {
     }
 
     $onInit() {
+        console.log(this.$stateParams.id);
         this.currentVideo = _.first(this.videosList);
     }
 
@@ -136,7 +137,7 @@ export default class enterpriseCtrl {
     showStats() {
         if (this.statCount === 1) {
             this.data = [];
-            d3.select("#stats").update();
+            d3.select("#stats").remove();
         }
 
         this.enterpriseService.getStats(this.$stateParams.id).then((response) => {
