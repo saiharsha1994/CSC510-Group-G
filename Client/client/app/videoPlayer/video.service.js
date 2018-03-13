@@ -2,7 +2,6 @@ export default class videoService {
 
     constructor($http) {
         this.http = $http;
-        console.log(this.http);
     }
 
     updateViewedList(obj) {
