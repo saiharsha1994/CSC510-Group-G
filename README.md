@@ -16,6 +16,8 @@ git clone https://github.com/saiharsha1994/CSC510-Group-G.git
 ```
 ### Run Server
 ```
+This need not to be done as the server is deployed in https://afternoon-cliffs-24932.herokuapp.com/
+To check the server loacally below commands can be executed
 cd <APP_ROOT>/server
 npm install
 node index.js
@@ -27,7 +29,8 @@ npm install
 npm run dev
 ```
 
-This should open up the application in your default browser.
+This should open up the application in your default browser. If not, please navigate to browser and run localhost:8080/
+This should open up login page.
 
 There are two types of accounts:
 
