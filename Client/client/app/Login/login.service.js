@@ -10,8 +10,6 @@ export default class loginService {
     }
 
     doLogin(details) {
-        console.log('login details');
-        console.log(details);
         return this.http.post('https://afternoon-cliffs-24932.herokuapp.com/login', details);
     }
 
@@ -21,7 +19,6 @@ export default class loginService {
 
 
     getDetails(details) {
-        console.log(details);
         const type = (details.isUser === true) ? 'user' : 'enterprise';
         return this.http.get(`https://afternoon-cliffs-24932.herokuapp.com/${type}/details/${details.username}`);
     }

@@ -42,7 +42,6 @@ export default class userCtrl {
     }
 
     onVideoChange(video) {
-        console.log(video);
         this.api.pause();
         this.config.sources = [];
         this.config.sources = [{src: `${baseUrl}${_.get(video, 'fileId')}`, type: 'video/mp4'}];
@@ -58,11 +57,8 @@ export default class userCtrl {
     onVideoComplete() {
         this.videoService.updateViewedList({username: this.$stateParams.id,
             videoId: this.currentVideoId, time: this.api.totalTime}).then((response) => {
-            console.log(response);
         }).catch((response) => {
-            console.log(response);
         });
-        console.log(this.api);
     }
 
     logout() {

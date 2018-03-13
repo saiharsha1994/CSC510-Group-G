@@ -28,7 +28,6 @@ export default class userCtrl {
 
     $onInit() {
         this.videosList = this.$stateParams.uDetails;
-        console.log(this.videosList);
         this.comments = _.get(_.filter(this.videosList, (video) => {
             return (video.id === this.currentUrl);
         }), 'comments', []);
@@ -46,7 +45,6 @@ export default class userCtrl {
 
     updateProfile() {
         this.loginService.updateProfile(this.updateProfile).then((response) => {
-            console.log(response);
         }).catch(() => {
             this.dialogs.error('Error', 'Unable to update profile now. Please try again',
                 {windowClass: 'user-error-dialog', keyboard: true, backdrop: true, size: 'sm'});
@@ -54,7 +52,6 @@ export default class userCtrl {
     }
 
     showCoins() {
-        console.log('enter showCoins');
         this.userService.getUserCoins(this.$stateParams.id)
             .then((response) => {
                 this.coins = _.get(response, 'data.coins');
@@ -80,10 +77,8 @@ export default class userCtrl {
     }
 
     searchVideos() {
-        console.log(this.searchTags);
         let tags = _.filter(this.searchTags, (tag) => {return tag.isSelected === true;});
         let tagNames = _.map(tags, (tag) => {return tag.type; });
-        console.log(tags);
         this.videoService.searchVideos(tagNames).then((response) => {
             this.videosList = _.get(response, 'data', []);
         }).catch(() => {

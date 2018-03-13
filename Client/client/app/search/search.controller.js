@@ -3,7 +3,6 @@
 export default class searchCtrl {
     constructor() {}
     $onInit() {
-        console.log(this.searchTags);
         this.searchTags = [
             {type: 'Laptops', id: 'tags1', sSelected: false},
             {type: 'Clothing', id: 'tags2', isSelected: false},

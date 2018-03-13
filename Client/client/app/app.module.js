@@ -49,7 +49,6 @@ angular.module('app', [ComponentsModule.name, 'ui.router', 'ngSanitize', 'ngFile
     .component('enterpriseComponent', enterpriseComponent)
     .component('videoComponent', videoComponent)
     .config(['$stateProvider', '$urlRouterProvider', ($stateProvider, $urlRouterProvider) => {
-        console.log('how');
         $urlRouterProvider.otherwise('/');
         $stateProvider
         .state('home', {

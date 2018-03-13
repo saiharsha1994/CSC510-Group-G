@@ -12,10 +12,7 @@ export default class loginService {
 
     doLogin() {
         return this.http.post('/loginwhatever').then((response) => {
-            console.log(response);
         }).catch((response) => {
-            console.log('catch');
-            console.log(response);
         });
     }
 

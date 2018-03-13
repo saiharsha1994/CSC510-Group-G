@@ -41,7 +41,6 @@ export default class enterpriseCtrl {
     }
 
     $onInit() {
-        console.log(this.$stateParams.id);
         this.currentVideo = _.first(this.videosList);
     }
 
@@ -54,7 +53,6 @@ export default class enterpriseCtrl {
             this.enterpriseService.addCoins(this.coinsToBeAdded, this.$stateParams.id)
                 .then((response) => {
                     this.coinsToBeAdded = 0;
-                    console.log(response.data);
                     this.coins = _.get(response, 'data.coins');
                 }).catch(() => {
                 this.dialogs.error('Error', 'Can not add coins. Please try again.');
@@ -67,7 +65,6 @@ export default class enterpriseCtrl {
             this.enterpriseService.updateCoinsPerHour(this.updatedCoinsPerHour, this.$stateParams.id)
                 .then((response) => {
                     this.updatedCoinsPerHour = 0;
-                    console.log(response.data);
                     this.coinsPerHour = _.get(response, 'data.coinsPerHour');
                 }).catch((response) => {
                 this.dialogs.error('Error', 'Can not update coinsPerHour. Please try again.');
@@ -130,7 +127,6 @@ export default class enterpriseCtrl {
                 return video.videoId === this.currentVideo.videoId;
             });
         }).catch((response) => {
-            console.log('the video is not deleted');
         });
     }
 
