@@ -24,8 +24,10 @@ node index.js
 ```
 ### Run Client
 ```
+open command prompt, navigate to \CSC510-Group-G\Client\
 cd <APP_ROOT>/Client
 npm install
+npm run build   // to reload latest updates
 npm run dev
 ```
 
